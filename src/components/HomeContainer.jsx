@@ -1,13 +1,7 @@
-import { ReactNode } from "react";
 import { Image } from "react-bootstrap";
-
 import HomePagePicture from "@/assets/images/1.jpg";
 
-interface HomeContainerProps {
-  children: ReactNode;
-}
-
-const HomeContainer: React.FC<HomeContainerProps> = ({ children }) => {
+const HomeContainer = ({ children }) => {
   return (
     <div style={{ position: "relative", height: "998px" }}>
       <Image

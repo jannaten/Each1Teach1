@@ -2,7 +2,7 @@ import { Container, Image } from "react-bootstrap";
 import WokrPicture from "@/assets/images/3.jpg";
 import WorkIcon from "@/assets/icons/huobitoken.svg";
 
-const SectionProcess: React.FC = () => {
+const SectionProcess = () => {
   return (
     <div style={{ position: "relative", minHeight: "1850px" }}>
       <Image

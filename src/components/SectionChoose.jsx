@@ -5,7 +5,7 @@ import NetworkingIcon from "@/assets/icons/colorfilter.svg";
 import QuestionIcon from "@/assets/icons/messagequestion.svg";
 import { Col, Container, Image, Row } from "react-bootstrap";
 
-const SectionChoose: React.FC = () => {
+const SectionChoose = () => {
   return (
     <div className="mt-5" style={{ minHeight: "650px" }}>
       <Container>

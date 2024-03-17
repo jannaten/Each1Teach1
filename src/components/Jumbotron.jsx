@@ -1,7 +1,10 @@
+"use client";
+import { useRouter } from "next/navigation";
 import ArrowRight from "@/assets/icons/arrowright.svg";
 import { Button, Container, Image, Row } from "react-bootstrap";
 
-const Jumbotron: React.FC = () => {
+const Jumbotron = () => {
+  const router = useRouter();
   return (
     <div
       style={{
@@ -45,6 +48,7 @@ const Jumbotron: React.FC = () => {
                   borderRadius: "0%",
                   fontWeight: "500",
                 }}
+                onClick={() => router.push("/login")}
               >
                 Log in
               </Button>
@@ -54,8 +58,9 @@ const Jumbotron: React.FC = () => {
                   color: "#4E008E",
                   fontWeight: "500",
                 }}
+                onClick={() => router.push("/register")}
               >
-                Already have an account?
+                Do not have an account?
               </Button>
             </div>
             <div className="d-flex flex-row align-items-center">

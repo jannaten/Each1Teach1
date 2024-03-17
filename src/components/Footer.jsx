@@ -1,7 +1,7 @@
 import { Col, Image, Row } from "react-bootstrap";
 import FooterPicture from "@/assets/images/4.jpg";
 
-const Footer: React.FC = () => {
+const Footer = () => {
   return (
     <div
       style={{

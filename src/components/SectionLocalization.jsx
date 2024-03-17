@@ -1,6 +1,6 @@
 import { Button, Container, Row, Table } from "react-bootstrap";
 
-const SectionLocalization: React.FC = () => {
+const SectionLocalization = () => {
   return (
     <Container>
       <Row className="my-5">

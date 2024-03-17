@@ -4,7 +4,7 @@ import NewsPicture from "@/assets/images/2.jpg";
 import NewsIcon from "@/assets/icons/voicesquare.svg";
 import ToggleIcon from "@/assets/icons/arrowcircledown.svg";
 
-const SectionNews: React.FC = () => {
+const SectionNews = () => {
   return (
     <div style={{ position: "relative", minHeight: "500px" }}>
       <Image
