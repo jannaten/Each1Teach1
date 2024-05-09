@@ -1,19 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { dbConnect } from "@/utilities/dbConnect";
 import { userValidationSchema } from "@/validation";
 import User from "@/models/user";
 import bcrypt from "bcrypt";
-
-export async function GET() {
-  try {
-    await dbConnect();
-    const users = await User.find();
-    return NextResponse.json(users);
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: error.message }, { status: 500 });
-  }
-}
+import * as jose from "jose";
 
 export async function POST(request) {
   try {
@@ -36,7 +26,19 @@ export async function POST(request) {
       ...value,
       password: hashedPassword,
     });
-    return NextResponse.json(user, { status: 201 });
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET_KEY);
+    const token = await new jose.SignJWT({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    })
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setIssuer("each1teach1")
+      .setAudience("students-teachers")
+      .setExpirationTime("10h")
+      .sign(secret);
+    return NextResponse.json({ token }, { status: 201 });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: error.message }, { status: 500 });

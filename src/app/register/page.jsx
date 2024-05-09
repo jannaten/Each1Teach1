@@ -1,15 +1,15 @@
 "use client";
 import {
-  Form,
-  FormGroup,
-  FormLabel,
-  FormControl,
-  FormText,
   Row,
   Col,
-  Container,
+  Form,
   Table,
   Button,
+  FormText,
+  FormLabel,
+  FormGroup,
+  Container,
+  FormControl,
 } from "react-bootstrap";
 import { useState } from "react";
 import Select from "react-select";
@@ -240,6 +240,7 @@ export default function Register() {
                       <td>
                         <Trash3Fill
                           className="mb-1"
+                          style={{ cursor: "pointer" }}
                           onClick={() => {
                             setTeachingLanguages((prevState) =>
                               prevState.filter((_, i) => i !== index)
@@ -376,6 +377,7 @@ export default function Register() {
                       <td>
                         <Trash3Fill
                           className="mb-1"
+                          style={{ cursor: "pointer" }}
                           onClick={() => {
                             setLearningLanguages((prevState) =>
                               prevState.filter((_, i) => i !== index)

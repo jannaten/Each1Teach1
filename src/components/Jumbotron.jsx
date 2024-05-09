@@ -8,21 +8,21 @@ const Jumbotron = () => {
   return (
     <div
       style={{
+        width: "50%",
+        height: "912px",
         position: "relative",
         backgroundColor: "#4E008ECC",
-        height: "912px",
-        width: "50%",
       }}
     >
       <Container className="d-flex flex-row justify-content-center align-items-center">
         <Row
           style={{
             top: "100px",
+            width: "500px",
+            height: "400px",
+            marginLeft: "200px",
             position: "absolute",
             backgroundColor: "white",
-            height: "400px",
-            width: "500px",
-            marginLeft: "200px",
             boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.15)",
           }}
         >
@@ -44,9 +44,9 @@ const Jumbotron = () => {
                 variant=""
                 style={{
                   color: "white",
-                  backgroundColor: "#4E008E",
-                  borderRadius: "0%",
                   fontWeight: "500",
+                  borderRadius: "0%",
+                  backgroundColor: "#4E008E",
                 }}
                 onClick={() => router.push("/login")}
               >
@@ -60,7 +60,7 @@ const Jumbotron = () => {
                 }}
                 onClick={() => router.push("/register")}
               >
-                Do not have an account?
+                Don't have an account?
               </Button>
             </div>
             <div className="d-flex flex-row align-items-center">
