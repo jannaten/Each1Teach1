@@ -7,22 +7,20 @@ const Jumbotron = () => {
   const router = useRouter();
   return (
     <div
+      className="w-50 position-relative"
       style={{
-        width: "50%",
         height: "912px",
-        position: "relative",
         backgroundColor: "#4E008ECC",
       }}
     >
       <Container className="d-flex flex-row justify-content-center align-items-center">
         <Row
+          className="position-absolute bg-light"
           style={{
             top: "100px",
             width: "500px",
             height: "400px",
             marginLeft: "200px",
-            position: "absolute",
-            backgroundColor: "white",
             boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.15)",
           }}
         >
@@ -40,12 +38,10 @@ const Jumbotron = () => {
               style={{ width: "90%" }}
             >
               <Button
-                className="px-5 py-2"
+                className="px-5 py-2 text-light rounded-0"
                 variant=""
                 style={{
-                  color: "white",
                   fontWeight: "500",
-                  borderRadius: "0%",
                   backgroundColor: "#4E008E",
                 }}
                 onClick={() => router.push("/login")}
@@ -76,8 +72,8 @@ const Jumbotron = () => {
               <Image
                 loading="lazy"
                 className="mx-3"
-                src={ArrowRight.src}
                 alt="Arrow Right"
+                src={ArrowRight.src}
               />
             </div>
           </div>

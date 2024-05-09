@@ -9,20 +9,13 @@ const SectionChoose = () => {
   return (
     <div className="mt-5" style={{ minHeight: "650px" }}>
       <Container>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <div className="d-flex flex-column justify-content-center align-items-center">
           <Image
-            loading="lazy"
             width={100}
+            loading="lazy"
+            alt="question icon"
             className="mx-3 mb-3"
             src={QuestionIcon.src}
-            alt="question icon"
           />
           <h1 style={{ color: "#4E008E", fontWeight: "700" }}>
             Why Each 1 Teach 1?
@@ -33,58 +26,37 @@ const SectionChoose = () => {
       <Container>
         <Row className="m-0 px-5 py-5">
           <Col sm={12} md={12} lg={4} xl={4} className="mt-3">
-            <div style={{ position: "relative" }}>
+            <div className="position-relative">
               <Image
-                loading="lazy"
-                src={MotivationPicture.src}
-                alt="Description of image"
                 fluid
-                style={{
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  position: "absolute",
-                  transition: "opacity 0.5s ease",
-                }}
+                loading="lazy"
+                alt="Description of image"
+                src={MotivationPicture.src}
+                className="top-0 left-0 w-100 h-100 object-fit-cover position-absolute"
               />
               <div
+                className="p-3 position-relative w-100 d-flex flex-column align-items-center justify-content-center"
                 style={{
-                  position: "relative",
-                  backgroundColor: "#4E008ED9",
                   minHeight: "300px",
-                  display: "flex",
-                  width: "100%",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "3rem",
+                  backgroundColor: "#4E008ED9",
                 }}
               >
                 <Image
-                  loading="lazy"
                   width={50}
-                  className="mx-3 mb-3"
-                  src={ShipIcon.src}
+                  loading="lazy"
                   alt="ship icon"
+                  src={ShipIcon.src}
+                  className="mx-3 mb-3"
                 />
                 <h2
-                  style={{
-                    color: "white",
-                    fontWeight: "700",
-                    textAlign: "center",
-                    marginBottom: "2rem",
-                  }}
+                  style={{ fontWeight: "700" }}
+                  className="mb-5 text-light text-center"
                 >
                   Possibilities
                 </h2>
                 <p
-                  style={{
-                    color: "white",
-                    fontWeight: "500",
-                    textAlign: "center",
-                  }}
+                  style={{ fontWeight: "500" }}
+                  className="text-light text-center"
                 >
                   An unmatched selection of languages available.
                 </p>
@@ -92,60 +64,39 @@ const SectionChoose = () => {
             </div>
           </Col>
           <Col sm={12} md={12} lg={4} xl={4} className="mt-3">
-            <div style={{ position: "relative" }}>
+            <div className="position-relative">
               <Image
-                loading="lazy"
-                src={MotivationPicture.src}
-                alt="Description of image"
                 fluid
-                style={{
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  position: "absolute",
-                  transition: "opacity 0.5s ease",
-                }}
+                loading="lazy"
+                alt="Description of image"
+                src={MotivationPicture.src}
+                className="top-0 left-0 w-100 h-100 object-fit-cover position-absolute"
               />
               <div
+                className="p-3 position-relative w-100 d-flex flex-column align-items-center justify-content-center"
                 style={{
-                  position: "relative",
-                  backgroundColor: "#4E008ED9",
                   minHeight: "300px",
-                  display: "flex",
-                  width: "100%",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "3rem",
+                  backgroundColor: "#4E008ED9",
                 }}
               >
                 <Image
-                  loading="lazy"
                   width={50}
+                  loading="lazy"
+                  alt="Square icon"
                   className="mx-3 mb-3"
                   src={SquareIcon.src}
-                  alt="Square icon"
                 />
                 <h2
-                  style={{
-                    color: "white",
-                    fontWeight: "700",
-                    textAlign: "center",
-                    marginBottom: "2rem",
-                  }}
+                  style={{ fontWeight: "700" }}
+                  className="mb-5 text-light text-center"
                 >
                   Flexibility
                 </h2>
                 <p
-                  style={{
-                    color: "white",
-                    fontWeight: "500",
-                    textAlign: "center",
-                  }}
+                  className="text-light text-center"
+                  style={{ fontWeight: "500" }}
                 >
-                  You can study 1–5 ECTS.
+                  You can study 1–5ECTS.
                 </p>
               </div>
             </div>
@@ -153,56 +104,35 @@ const SectionChoose = () => {
           <Col sm={12} md={12} lg={4} xl={4} className="mt-3">
             <div style={{ position: "relative" }}>
               <Image
-                loading="lazy"
-                src={MotivationPicture.src}
-                alt="Description of image"
                 fluid
-                style={{
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  position: "absolute",
-                  transition: "opacity 0.5s ease",
-                }}
+                loading="lazy"
+                alt="Description of image"
+                src={MotivationPicture.src}
+                className="top-0 left-0 w-100 h-100 object-fit-cover position-absolute"
               />
               <div
+                className="p-3 position-relative w-100 d-flex flex-column align-items-center justify-content-center"
                 style={{
-                  position: "relative",
-                  backgroundColor: "#4E008ED9",
                   minHeight: "300px",
-                  display: "flex",
-                  width: "100%",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "3rem",
+                  backgroundColor: "#4E008ED9",
                 }}
               >
                 <Image
-                  loading="lazy"
                   width={50}
+                  loading="lazy"
+                  alt="networking icon"
                   className="mx-3 mb-3"
                   src={NetworkingIcon.src}
-                  alt="networking icon"
                 />
                 <h2
-                  style={{
-                    color: "white",
-                    fontWeight: "700",
-                    textAlign: "center",
-                    marginBottom: "2rem",
-                  }}
+                  className="mb-5 text-light text-center"
+                  style={{ fontWeight: "700" }}
                 >
                   Networking
                 </h2>
                 <p
-                  style={{
-                    color: "white",
-                    fontWeight: "500",
-                    textAlign: "center",
-                  }}
+                  className="text-light text-center"
+                  style={{ fontWeight: "500" }}
                 >
                   UniTandem is a great way to make new friends.
                 </p>

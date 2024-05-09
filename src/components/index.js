@@ -1,12 +1,12 @@
-import Jumbotron from "./Jumbotron";
-import NavBar from "./NavBar";
 import Footer from "./Footer";
+import NavBar from "./NavBar";
+import Jumbotron from "./Jumbotron";
+import SectionNews from "./SectionNews";
 import SectionAbout from "./SectionAbout";
 import SectionChoose from "./SectionChoose";
-import SectionLocalization from "./SectionLocalization";
-import SectionProcess from "./SectionProcess";
 import HomeContainer from "./HomeContainer";
-import SectionNews from "./SectionNews";
+import SectionProcess from "./SectionProcess";
+import SectionLocalization from "./SectionLocalization";
 /**
  * This file exports the following components:
  * - Jumbotron: A jumbotron component.
@@ -20,13 +20,13 @@ import SectionNews from "./SectionNews";
  * - SectionNews: A section news component.
  */
 export {
-  Jumbotron,
-  NavBar,
-  Footer,
-  SectionAbout,
-  SectionChoose,
   SectionLocalization,
   SectionProcess,
+  SectionChoose,
   HomeContainer,
+  SectionAbout,
   SectionNews,
+  Jumbotron,
+  Footer,
+  NavBar,
 };

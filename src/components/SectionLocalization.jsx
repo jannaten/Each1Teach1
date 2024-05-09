@@ -1,5 +1,19 @@
 import { Button, Container, Row, Table } from "react-bootstrap";
 
+const localization = [
+  { language: "Albanian", students: 2, teachers: 1 },
+  { language: "Arabic", students: 8, teachers: 3 },
+  { language: "Belarusian", students: 0, teachers: 1 },
+  { language: "Bengali (Bangla)", students: 15, teachers: 9 },
+  { language: "Catalan", students: 4, teachers: 1 },
+  { language: "Chinese (Mandarin)", students: 12, teachers: 1 },
+  { language: "Czech", students: 6, teachers: 2 },
+  { language: "Dutch", students: 13, teachers: 3 },
+  { language: "English", students: 34, teachers: 5 },
+  { language: "Estonian", students: 9, teachers: 1 },
+  { language: "Finnish", students: 57, teachers: 4 },
+];
+
 const SectionLocalization = () => {
   return (
     <Container>
@@ -17,78 +31,62 @@ const SectionLocalization = () => {
           <Button
             variant=""
             style={{
-              backgroundColor: "#4E008E",
-              borderRadius: "0%",
-              fontWeight: "500",
-              color: "white",
-              height: "2rem",
               width: "2rem",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              height: "2rem",
+              fontWeight: "500",
+              backgroundColor: "#4E008E",
             }}
+            className="rounded-0 text-light d-flex justify-content-center align-items-center"
           >
             1
           </Button>
           <Button
             variant=""
             style={{
-              color: "#4E008E",
-              borderRadius: "0%",
-              fontWeight: "500",
-              height: "2rem",
               width: "2rem",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              height: "2rem",
+              color: "#4E008E",
+              fontWeight: "500",
             }}
+            className="rounded-0 d-flex justify-content-center align-items-center"
           >
             2
           </Button>
           <Button
             variant=""
             style={{
-              color: "#4E008E",
-              borderRadius: "0%",
-              fontWeight: "500",
-              height: "2rem",
               width: "2rem",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              height: "2rem",
+              color: "#4E008E",
+              fontWeight: "500",
             }}
+            className="rounded-0 d-flex justify-content-center align-items-center"
           >
             3
           </Button>
           <Button
             variant=""
             style={{
-              color: "#4E008E",
-              borderRadius: "0%",
-              fontWeight: "500",
-              height: "2rem",
               width: "2rem",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              height: "2rem",
+              color: "#4E008E",
+              fontWeight: "500",
             }}
+            className="rounded-0 d-flex justify-content-center align-items-center"
           >
             4
           </Button>
           <Button
             variant=""
             style={{
-              color: "#4E008E",
-              borderRadius: "0%",
-              fontWeight: "500",
-              height: "2rem",
               width: "2rem",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              height: "2rem",
+              color: "#4E008E",
+              fontWeight: "500",
             }}
+            className="rounded-0 d-flex justify-content-center align-items-center"
           >
-            6
+            5
           </Button>
         </div>
       </Row>
@@ -98,379 +96,61 @@ const SectionLocalization = () => {
             <th
               style={{
                 width: "70%",
-                fontWeight: "600",
                 color: "#4E008E",
+                fontWeight: "600",
                 padding: "0rem 0rem 1rem 4rem",
               }}
             >
               languages
             </th>
             <th
-              style={{
-                width: "15%",
-                fontWeight: "600",
-                color: "#4E008E",
-                textAlign: "center",
-                paddingBottom: "1rem",
-              }}
+              className="w-15 text-center pb-3"
+              style={{ color: "#4E008E", fontWeight: "600" }}
             >
               students
             </th>
             <th
-              style={{
-                width: "15%",
-                fontWeight: "600",
-                color: "#4E008E",
-                textAlign: "center",
-                paddingBottom: "1rem",
-              }}
+              className="w-15 text-center pb-3"
+              style={{ color: "#4E008E", fontWeight: "600" }}
             >
               teachers
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr style={{ borderBottom: "1px solid #4E008E" }}>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                padding: "1rem 0rem 0rem 4rem",
-              }}
+          {localization.map((localization) => (
+            <tr
+              key={localization.language}
+              style={{ borderBottom: "1px solid #4E008E" }}
             >
-              Albanian
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              2
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              1
-            </td>
-          </tr>
-          <tr style={{ borderBottom: "1px solid #4E008E" }}>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                padding: "1rem 0rem 0rem 4rem",
-              }}
-            >
-              Arabic
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              8
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              3
-            </td>
-          </tr>
-          <tr style={{ borderBottom: "1px solid #4E008E" }}>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                padding: "1rem 0rem 0rem 4rem",
-              }}
-            >
-              Belarusian
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              0
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              1
-            </td>
-          </tr>
-          <tr style={{ borderBottom: "1px solid #4E008E" }}>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                padding: "1rem 0rem 0rem 4rem",
-              }}
-            >
-              Bengali (Bangla)
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              15
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              9
-            </td>
-          </tr>
-          <tr style={{ borderBottom: "1px solid #4E008E" }}>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                padding: "1rem 0rem 0rem 4rem",
-              }}
-            >
-              Catalan
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              4
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              1
-            </td>
-          </tr>
-          <tr style={{ borderBottom: "1px solid #4E008E" }}>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                padding: "1rem 0rem 0rem 4rem",
-              }}
-            >
-              Chinese (Mandarin)
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              12
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              1
-            </td>
-          </tr>
-          <tr style={{ borderBottom: "1px solid #4E008E" }}>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                padding: "1rem 0rem 0rem 4rem",
-              }}
-            >
-              Czech
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              6
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              2
-            </td>
-          </tr>
-          <tr style={{ borderBottom: "1px solid #4E008E" }}>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                padding: "1rem 0rem 0rem 4rem",
-              }}
-            >
-              Dutch
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              13
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              3
-            </td>
-          </tr>
-          <tr style={{ borderBottom: "1px solid #4E008E" }}>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                padding: "1rem 0rem 0rem 4rem",
-              }}
-            >
-              English
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              34
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              5
-            </td>
-          </tr>
-          <tr style={{ borderBottom: "1px solid #4E008E" }}>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                padding: "1rem 0rem 0rem 4rem",
-              }}
-            >
-              Estonian
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              9
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              1
-            </td>
-          </tr>
-          <tr style={{ borderBottom: "1px solid #4E008E" }}>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                padding: "1rem 0rem 0rem 4rem",
-              }}
-            >
-              Finnish
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              57
-            </td>
-            <td
-              style={{
-                fontWeight: "500",
-                color: "#4E008E",
-                textAlign: "center",
-                padding: "1rem 0rem",
-              }}
-            >
-              4
-            </td>
-          </tr>
+              <td
+                style={{
+                  color: "#4E008E",
+                  padding: "1rem 0rem 0rem 4rem",
+                }}
+              >
+                {localization.language}
+              </td>
+              <td
+                style={{
+                  color: "#4E008E",
+                  textAlign: "center",
+                  padding: "1rem 0rem",
+                }}
+              >
+                {localization.students}
+              </td>
+              <td
+                style={{
+                  color: "#4E008E",
+                  textAlign: "center",
+                  padding: "1rem 0rem",
+                }}
+              >
+                {localization.teachers}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </Container>

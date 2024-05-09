@@ -5,8 +5,8 @@ const SectionAbout = () => {
   return (
     <Container>
       <div
-        className="d-flex flex-column justify-content-between align-items-center mt-5 mb-2"
         style={{ minHeight: "650px" }}
+        className="d-flex flex-column justify-content-between align-items-center mt-5 mb-2"
       >
         <Container>
           <Row className="mt-5">

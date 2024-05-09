@@ -3,21 +3,13 @@ import HomePagePicture from "@/assets/images/1.jpg";
 
 const HomeContainer = ({ children }) => {
   return (
-    <div style={{ position: "relative", height: "998px" }}>
+    <div className="position-relative" style={{ height: "998px" }}>
       <Image
-        src={HomePagePicture.src}
         fluid
-        alt="Description of image"
         loading="lazy"
-        style={{
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          position: "absolute",
-          transition: "opacity 0.5s ease",
-        }}
+        src={HomePagePicture.src}
+        alt="Description of image"
+        className="top-0 left-0 w-100 h-100 object-fit-cover position-absolute"
       />
       {children}
     </div>
