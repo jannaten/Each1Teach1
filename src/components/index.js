@@ -27,6 +27,7 @@ export {
   SectionAbout,
   SectionNews,
   Jumbotron,
+  Loader,
   Footer,
   NavBar,
 };

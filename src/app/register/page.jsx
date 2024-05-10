@@ -1,20 +1,10 @@
 "use client";
-import {
-  Row,
-  Col,
-  Form,
-  Table,
-  Button,
-  FormText,
-  FormLabel,
-  FormGroup,
-  Container,
-  FormControl,
-} from "react-bootstrap";
 import { useState } from "react";
 import Select from "react-select";
 import { useRouter } from "next/navigation";
 import { PlusCircleFill, Trash3Fill } from "react-bootstrap-icons";
+import { FormText, FormLabel, FormGroup, Container } from "react-bootstrap";
+import { Row, Col, Form, Table, Button, FormControl } from "react-bootstrap";
 import { languageLevels, languages, studyCredits } from "@/data";
 
 export default function Register() {
@@ -83,16 +73,12 @@ export default function Register() {
 
   return (
     <Container
-      className="my-5 d-flex flex-column justify-content-center align-items-center"
-      style={{
-        height: "100%",
-        maxWidth: "60rem",
-        border: "0.1rem solid #4E008E",
-      }}
+      className="h-100 my-5 d-flex flex-column justify-content-center align-items-center"
+      style={{ maxWidth: "60rem", border: "0.1rem solid #4E008E" }}
     >
       <h1
-        className="mt-5"
-        style={{ fontWeight: "700", textAlign: "center", color: "#4E008E" }}
+        className="mt-5 text-center"
+        style={{ fontWeight: "700", color: "#4E008E" }}
       >
         Each 1 <br />
         Teach 1
@@ -105,9 +91,8 @@ export default function Register() {
               <FormControl
                 type="text"
                 placeholder="Enter first name"
+                className="shadow-none rounded-0"
                 style={{
-                  boxShadow: "none",
-                  borderRadius: "0",
                   outline: "none !important",
                   border: `0.1rem solid ${
                     focusedInput === "firstName" ? "#A562E3" : "#4E008E"
@@ -126,9 +111,8 @@ export default function Register() {
               <FormControl
                 type="text"
                 placeholder="Enter last name"
+                className="shadow-none rounded-0"
                 style={{
-                  boxShadow: "none",
-                  borderRadius: "0",
                   outline: "none !important",
                   border: `0.1rem solid ${
                     focusedInput === "lastName" ? "#A562E3" : "#4E008E"
@@ -147,9 +131,8 @@ export default function Register() {
           <FormControl
             type="email"
             placeholder="Enter email"
+            className="shadow-none rounded-0"
             style={{
-              boxShadow: "none",
-              borderRadius: "0",
               outline: "none !important",
               border: `0.1rem solid ${
                 focusedInput === "email" ? "#A562E3" : "#4E008E"
@@ -166,9 +149,8 @@ export default function Register() {
           <FormControl
             type="password"
             placeholder="Password"
+            className="shadow-none rounded-0"
             style={{
-              boxShadow: "none",
-              borderRadius: "0",
               outline: "none !important",
               border: `0.1rem solid ${
                 focusedInput === "password" ? "#A562E3" : "#4E008E"
@@ -184,9 +166,8 @@ export default function Register() {
           <FormControl
             type="password"
             placeholder="Repeat Password"
+            className="shadow-none rounded-0"
             style={{
-              boxShadow: "none",
-              borderRadius: "0",
               outline: "none !important",
               border: `0.1rem solid ${
                 focusedInput === "repeatPassword" ? "#A562E3" : "#4E008E"
@@ -201,11 +182,10 @@ export default function Register() {
           <FormLabel>Short introduction</FormLabel>
           <FormControl
             as="textarea"
+            className="shadow-none rounded-0"
             placeholder="Short introduction about you"
             rows="3"
             style={{
-              boxShadow: "none",
-              borderRadius: "0",
               outline: "none !important",
               border: `0.1rem solid ${
                 focusedInput === "instroduction" ? "#A562E3" : "#4E008E"
@@ -239,8 +219,8 @@ export default function Register() {
                       <td>{level.label}</td>
                       <td>
                         <Trash3Fill
+                          role="button"
                           className="mb-1"
-                          style={{ cursor: "pointer" }}
                           onClick={() => {
                             setTeachingLanguages((prevState) =>
                               prevState.filter((_, i) => i !== index)
@@ -327,10 +307,8 @@ export default function Register() {
           </Row>
           <Button
             variant="link"
-            style={{
-              color: "#4E008E",
-              textDecoration: "underline",
-            }}
+            style={{ color: "#4E008E" }}
+            className="d-flex flex-direction-row flex-wrap align-items-center justify-content-center text-decoration-underline"
             disabled={
               !teachingLanguage.credits ||
               !teachingLanguage.level ||
@@ -347,7 +325,6 @@ export default function Register() {
                 level: "",
               });
             }}
-            className="d-flex flex-direction-row flex-wrap align-items-center justify-content-center"
           >
             <PlusCircleFill className="" />
             <p className="ps-2 m-0">Add language</p>
@@ -376,8 +353,8 @@ export default function Register() {
                       <td>{level.label}</td>
                       <td>
                         <Trash3Fill
+                          role="button"
                           className="mb-1"
-                          style={{ cursor: "pointer" }}
                           onClick={() => {
                             setLearningLanguages((prevState) =>
                               prevState.filter((_, i) => i !== index)
@@ -464,11 +441,8 @@ export default function Register() {
           </Row>
           <Button
             variant="link"
-            style={{
-              color: "#4E008E",
-              textDecoration: "underline",
-            }}
-            className="d-flex flex-direction-row flex-wrap align-items-center justify-content-center"
+            style={{ color: "#4E008E" }}
+            className="d-flex flex-direction-row flex-wrap align-items-center justify-content-center text-decoration-underline"
             disabled={
               !learningLanguage.credits ||
               !learningLanguage.level ||
@@ -494,13 +468,11 @@ export default function Register() {
           <Button
             variant=""
             type="submit"
+            className="text-light shadow-none rounded-0"
             style={{
-              boxShadow: "none",
-              borderRadius: "0",
+              width: "10rem",
               outline: "none !important",
               backgroundColor: "#4E008E",
-              color: "white",
-              width: "10rem",
             }}
             onMouseOver={(e) => {
               e.target.style.backgroundColor = "#A562E3";
@@ -514,13 +486,10 @@ export default function Register() {
         </Row>
         <Row className="mb-5 mt-3 mx-0">
           <p
+            role="button"
+            style={{ color: "#4E008E" }}
             onClick={() => router.push("/login")}
-            style={{
-              color: "#4E008E",
-              cursor: "pointer",
-              textAlign: "center",
-              textDecoration: "underline",
-            }}
+            className="text-center text-decoration-underline"
           >
             Already have an account?
           </p>
