@@ -38,6 +38,7 @@ export const languages = [
   { value: "croatian", label: "Croatian" },
   { value: "czech", label: "Czech" },
   { value: "danish", label: "Danish" },
+  { value: "dari", label: "Dari" },
   { value: "deccan", label: "Deccan" },
   { value: "dhundhari", label: "Dhundhari" },
   { value: "dutch", label: "Dutch" },
