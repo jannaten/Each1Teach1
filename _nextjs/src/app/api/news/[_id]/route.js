@@ -26,13 +26,6 @@ export async function PUT(request, context) {
   try {
     await dbConnect();
     const { params } = context;
-
-    const isNewsExist = await News.findById({ _id: params._id });
-    if (!isNewsExist)
-      return NextResponse.json(
-        { message: "news does not exist" },
-        { status: 404 }
-      );
     const body = await request.json();
     const { value, error } = newsValidationSchema.validate(body);
     if (error)
