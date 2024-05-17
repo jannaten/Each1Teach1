@@ -42,7 +42,7 @@ docker-compose exec -T server node manage createUsers <<< '
 	"firstName": "Jannaten",
 	"lastName": "Nayem",
 	"email": "jannaten.nayem@tuni.fi",
-	"password": "asdf123",
+	"password": "demoDEMO123",
 	"roles": ["superuser"],
 	"active": true
 }'
@@ -56,7 +56,7 @@ docker-compose exec -T server node manage createUsers <<< '
 	"firstName": "Emmanuel",
 	"lastName": "Abruquah",
 	"email": "emmanuel.abruquah@tuni.fi",
-	"password": "asdf123",
+	"password": "demoDEMO123",
 	"roles": ["teacher"],
 	"active": true
 }'
@@ -68,7 +68,7 @@ docker-compose exec -T server node manage createUsers <<< '
 	"firstName": "Henri",
 	"lastName": "Annala",
 	"email": "henri.annala@tuni.fi",
-	"password": "asdf123",
+	"password": "demoDEMO123",
 	"roles": ["teacher"],
 	"active": true
 }'
@@ -80,7 +80,7 @@ docker-compose exec -T server node manage createUsers <<< '
 	"firstName": "Ulkira",
 	"lastName": "Rancken",
 	"email": "ulkira.rancken@tuni.fi",
-	"password": "asdf123",
+	"password": "demoDEMO123",
 	"roles": ["teacher"],
 	"active": true
 }'
@@ -94,7 +94,7 @@ docker-compose exec -T server node manage createUsers <<< '
 	"firstName": "Masood",
 	"lastName": "Ahmadi",
 	"email": "masood.ahmadi@tuni.fi",
-	"password": "asdf123",
+	"password": "demoDEMO123",
 	"roles": ["student"],
 	"active": false
 }'
@@ -106,7 +106,7 @@ docker-compose exec -T server node manage createUsers <<< '
 	"firstName": "Mafruha",
 	"lastName": "Nuhari",
 	"email": "mafruha.nuhary@tuni.fi",
-	"password": "asdf123",
+	"password": "demoDEMO123",
 	"roles": ["student"],
 	"active": false
 }'

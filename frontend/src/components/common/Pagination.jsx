@@ -1,5 +1,5 @@
 import React from 'react';
-import { PaginationItem } from '../../styles/pagination.style';
+import { PaginationItem } from '../../styles';
 import { ChevronDoubleLeft, ChevronLeft } from 'react-bootstrap-icons';
 import { ChevronDoubleRight, ChevronRight } from 'react-bootstrap-icons';
 

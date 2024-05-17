@@ -1,4 +1,4 @@
-const AnalyticService = require('../services/demo/AnalyticService');
+const AnalyticService = require('../services/AnalyticService');
 const { logger } = require('../utilities/logger');
 const { resolveRemoteIp } = require('../utilities/request');
 

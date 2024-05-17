@@ -1,4 +1,5 @@
 import React from 'react';
+
 export default function LocalizationLists({ Languages }) {
   return (
     <tr style={{ borderBottom: '1px solid #4E008E' }}>

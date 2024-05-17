@@ -1,12 +1,11 @@
 import React from 'react';
-// import { useRouter } from 'next/navigation';
-import ArrowRight from '../assets/icons/arrowright.svg';
-import { Button, Container, Image, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { Button, Container, Image, Row } from 'react-bootstrap';
+import ArrowRight from '../assets/icons/arrowright.svg';
+import { AuthSubmitButton } from '../styles';
 
 const Jumbotron = () => {
   const navigate = useNavigate();
-  // const router = useRouter();
   return (
     <div
       className='w-50 position-relative'
@@ -36,16 +35,11 @@ const Jumbotron = () => {
             <div
               className='d-flex flex-row mt-5 mb-3 justify-content-between'
               style={{ width: '90%' }}>
-              <Button
-                className='px-5 py-2 text-light rounded-0'
-                variant=''
-                style={{
-                  fontWeight: '500',
-                  backgroundColor: '#4E008E'
-                }}
+              <AuthSubmitButton
+                className='px-5 py-2'
                 onClick={() => navigate('/login')}>
-                Log in
-              </Button>
+                Login
+              </AuthSubmitButton>
               <Button
                 variant='link'
                 style={{

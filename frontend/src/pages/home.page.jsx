@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { HomeContainer, Footer } from '../components';
 import { SectionLocalization, SectionProcess } from '../components';
-import { HomeContainer, Footer, NavBar, Jumbotron } from '../components';
 import { SectionNews, SectionAbout, SectionChoose } from '../components';
 
 export default function HomePage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem('access-token')) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
+
   return (
     <>
-      <HomeContainer>
-        <NavBar />
-        <Jumbotron />
-      </HomeContainer>
+      <HomeContainer />
       <SectionAbout />
       <SectionNews />
       <SectionChoose />

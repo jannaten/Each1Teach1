@@ -1,21 +1,26 @@
 import Select from 'react-select';
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Form, Table, Button } from 'react-bootstrap';
 import { PlusCircleFill, Trash3Fill } from 'react-bootstrap-icons';
 import { FormText, FormLabel, FormGroup, Container } from 'react-bootstrap';
 
-import { languageLevels, languages, studyCredits } from '../data';
+import { loadConfig } from '../redux/slices/configSlice';
 import { FormControlStyled, AuthSubmitButton } from '../styles';
 
 export default function RegisterPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const configState = useSelector((state) => state.config);
+
   const [teachingLanguage, setTeachingLanguage] = useState({
     language: '',
     credits: '',
     level: ''
   });
   const [teachingLanguages, setTeachingLanguages] = useState([]);
+
   const [learningLanguage, setLearningLanguage] = useState({
     language: '',
     credits: '',
@@ -29,6 +34,7 @@ export default function RegisterPage() {
       language: selectedOptions
     }));
   };
+
   const handleChangeTeachingCredits = (selectedOptions) => {
     setTeachingLanguage((prevState) => ({
       ...prevState,
@@ -62,6 +68,10 @@ export default function RegisterPage() {
       level: selectedOptions
     }));
   };
+
+  useEffect(() => {
+    dispatch(loadConfig());
+  }, []);
 
   return (
     <Container
@@ -154,7 +164,7 @@ export default function RegisterPage() {
             <Col>
               <Select
                 isDisabled={teachingLanguages.length >= 3}
-                options={languages.filter(
+                options={configState?.data?.languages?.filter(
                   (language) =>
                     !teachingLanguages.some(
                       (lang) => lang.language.label === language.label
@@ -182,7 +192,7 @@ export default function RegisterPage() {
             </Col>
             <Col>
               <Select
-                options={studyCredits}
+                options={configState?.data?.study_credits}
                 isDisabled={teachingLanguages.length >= 3}
                 onChange={(selectedOptions) =>
                   handleChangeTeachingCredits(selectedOptions)
@@ -202,7 +212,7 @@ export default function RegisterPage() {
             </Col>
             <Col>
               <Select
-                options={languageLevels}
+                options={configState.data.language_level}
                 isDisabled={teachingLanguages.length >= 3}
                 onChange={(selectedOptions) =>
                   handleChangeTeachingLevel(selectedOptions)
@@ -287,7 +297,7 @@ export default function RegisterPage() {
             <Col>
               <Select
                 isDisabled={learningLanguages.length >= 3}
-                options={languages.filter(
+                options={configState?.data?.languages?.filter(
                   (language) =>
                     !teachingLanguages.some(
                       (lang) => lang.language.label === language.label
@@ -315,7 +325,7 @@ export default function RegisterPage() {
             </Col>
             <Col>
               <Select
-                options={studyCredits}
+                options={configState?.data?.study_credits}
                 isDisabled={learningLanguages.length >= 3}
                 onChange={(selectedOptions) =>
                   handleChangeLearningCredits(selectedOptions)
@@ -335,7 +345,7 @@ export default function RegisterPage() {
             </Col>
             <Col>
               <Select
-                options={languageLevels}
+                options={configState.data.language_level}
                 isDisabled={learningLanguages.length >= 3}
                 onChange={(selectedOptions) =>
                   handleChangeLearningLevel(selectedOptions)

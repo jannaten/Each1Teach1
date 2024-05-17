@@ -14,14 +14,18 @@ export const FormControlStyled = styled(FormControl)`
 `;
 
 export const AuthSubmitButton = styled(Button)`
+  opacity: 1;
+  border: none;
   color: white;
   width: 10rem;
   border-radius: 0%;
   outline: none !important;
-  background-color: #4e008e;
   box-shadow: none !important;
+  transition: opacity 0.3s ease-in-out;
+  background-color: #4e008e !important;
   &:hover {
+    opacity: 0.8;
     color: white;
-    background-color: #a562e3;
+    background-color: #4e008e !important;
   }
 `;

@@ -13,7 +13,6 @@ const localization = [
   { id: 6, language: 'Chinese (Mandarin)', students: 12, teachers: 1 },
   { id: 7, language: 'Czech', students: 6, teachers: 2 },
   { id: 8, language: 'Dutch', students: 13, teachers: 3 },
-  { id: 8, language: 'Dari', students: 3, teachers: 1 },
   { id: 9, language: 'English', students: 34, teachers: 5 },
   { id: 10, language: 'Estonian', students: 9, teachers: 1 },
   { id: 11, language: 'Finnish', students: 57, teachers: 4 },
@@ -27,7 +26,8 @@ const localization = [
   { id: 19, language: 'Dutch', students: 13, teachers: 3 },
   { id: 20, language: 'English', students: 34, teachers: 5 },
   { id: 21, language: 'Estonian', students: 9, teachers: 1 },
-  { id: 22, language: 'Finnish', students: 57, teachers: 4 }
+  { id: 22, language: 'Finnish', students: 57, teachers: 4 },
+  { id: 23, language: 'Dari', students: 3, teachers: 1 }
 ];
 
 const SectionLocalization = () => {
@@ -38,7 +38,7 @@ const SectionLocalization = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  const pagintedLanguages = paginate(localization, currentPage, pageSize);
+  const paginatedLanguages = paginate(localization, currentPage, pageSize);
   return (
     <Container>
       <Row className='my-5'>
@@ -84,10 +84,10 @@ const SectionLocalization = () => {
           </tr>
         </thead>
         <tbody>
-          {pagintedLanguages?.map((Languages) => (
+          {paginatedLanguages?.map((Languages) => (
             <LocalizationLists
-              Languages={Languages}
               key={Languages.id}
+              Languages={Languages}
               currentPage={currentPage}
             />
           ))}

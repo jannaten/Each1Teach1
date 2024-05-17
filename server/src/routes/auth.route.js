@@ -3,6 +3,7 @@ const AuthService = require('../services/AuthService');
 const UserService = require('../services/UserService');
 const { userValidationSchema } = require('../validation');
 const { loginValidationSchema } = require('../validation');
+const { authHandler } = require('../middlewares/authHandler');
 const { createError } = require('../middlewares/errorHandler');
 const asyncErrorHandler = require('../middlewares/asyncMiddleware');
 
@@ -22,10 +23,18 @@ router.post(
     if (error) throw createError(400, error.details[0].message);
     const authService = new AuthService();
     const { user, token } = await authService.login(value);
-    if (user && token) {
-      return res.json(userToJson(user, token));
-    }
+    if (user && token) return res.json(userToJson(user, token));
     throw createError(401, 'invalid user credentials');
+  })
+);
+
+router.get(
+  '/user',
+  authHandler(),
+  asyncErrorHandler(async (req, res, next) => {
+    if (!req.user) throw createError(403, 'forbidden');
+    const token = await AuthService.createToken(req.user);
+    return res.json(userToJson(req.user, token));
   })
 );
 

@@ -24,8 +24,6 @@ const SectionNews = () => {
     fetchNews();
   }, []);
 
-  console.log('news ', news);
-
   return (
     <div className='position-relative' style={{ minHeight: '500px' }}>
       <Image
@@ -56,8 +54,8 @@ const SectionNews = () => {
         </div>
         <Container>
           <Row className='m-0 px-5 py-5'>
-            {news?.map(({ _id, title, author, content, updatedAt }) => (
-              <Col sm={12} md={12} lg={6} xl={6} className='mt-3' key={_id}>
+            {news?.map(({ title, author, content, updatedAt }, index) => (
+              <Col sm={12} md={12} lg={6} xl={6} className='mt-3' key={index}>
                 <div
                   style={{ minHeight: '300px' }}
                   className='p-3 bg-light d-flex flex-column align-items-center'>

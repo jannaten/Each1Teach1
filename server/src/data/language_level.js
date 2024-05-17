@@ -1,4 +1,4 @@
-export const language_level = [
+const languageLevels = [
   { value: 'a1', label: 'A1' },
   { value: 'a2', label: 'A2' },
   { value: 'b1', label: 'B1' },
@@ -6,3 +6,5 @@ export const language_level = [
   { value: 'c1', label: 'C1' },
   { value: 'c2', label: 'C2' }
 ];
+
+module.exports = { languageLevels };

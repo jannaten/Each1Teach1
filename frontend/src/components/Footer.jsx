@@ -13,7 +13,7 @@ const Footer = () => {
       <Image
         fluid
         loading='lazy'
-        src={FooterPicture.src}
+        src={FooterPicture}
         alt='Description of image'
         className='top-0 left-0 w-100 h-100 object-fit-cover position-absolute'
       />
