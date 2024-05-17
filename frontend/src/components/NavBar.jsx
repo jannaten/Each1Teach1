@@ -70,7 +70,9 @@ const NavBar = () => {
             {!userState.data?.roles.includes('student') && (
               <>
                 <NavDropdown.Item>User Management</NavDropdown.Item>
+                <NavDropdown.Divider />
                 <NavDropdown.Item>News Management</NavDropdown.Item>
+                <NavDropdown.Divider />
               </>
             )}
             <NavDropdown.Item>My Profile</NavDropdown.Item>

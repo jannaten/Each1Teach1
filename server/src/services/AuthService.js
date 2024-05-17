@@ -16,7 +16,7 @@ class AuthService {
 
   localLogin = async function (email, password) {
     const user = await this.userService.getByEmail(email);
-    if (user && user.active && !user.deletedAt) {
+    if (user && !user.deletedAt) {
       const validPassword = AuthService.comparePasswordHash(
         password,
         user.password

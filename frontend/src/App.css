@@ -47,3 +47,10 @@ body {
 .navbar .dropdown-toggle::after {
   display: none;
 }
+
+.dropdown-menu {
+  width: 100%;
+  border-radius: 0%;
+  text-align: center;
+  padding: 1rem;
+}

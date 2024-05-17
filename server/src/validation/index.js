@@ -22,7 +22,7 @@ const userValidationSchema = Joi.object({
     .message(
       'Password must contain at least one lowercase letter, one uppercase letter, one digit, and be 8-20 characters long.'
     ),
-  description: Joi.string().max(200),
+  description: Joi.string().min(0).max(200).default(''),
   roles: Joi.array()
     .items(Joi.string().valid('superuser', 'teacher', 'student'))
     .unique(),

@@ -51,8 +51,8 @@ export default function LoginPage() {
       }
     } catch (error) {
       errorToast(error);
-      console.error('error: ', error);
       setLoading(false);
+      console.error('error: ', error);
     }
   };
 

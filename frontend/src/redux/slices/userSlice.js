@@ -18,6 +18,21 @@ export const login = createAsyncThunk(
   }
 );
 
+export const register = createAsyncThunk(
+  'user/register',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${axios.defaults.url}/auth/register`,
+        data
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const getUserInfo = createAsyncThunk(
   'user/getUserInfo',
   async (_, { rejectWithValue }) => {
@@ -137,7 +152,14 @@ const userSlice = createSlice({
         state.data = action.payload;
         state.loading = false;
       })
-
+      // REGISTER
+      .addCase(register.fulfilled, (state, action) => {
+        const token = action?.payload?.token;
+        window.localStorage.setItem('access-token', token);
+        axios.defaults.headers.common['Auth'] = `Bearer ${token}`;
+        state.data = action.payload;
+        state.loading = false;
+      })
       // GET USER INFO / RELOGIN
       .addCase(getUserInfo.fulfilled, (state, action) => {
         const token = action?.payload?.token;
@@ -146,12 +168,10 @@ const userSlice = createSlice({
         state.data = action.payload;
         state.loading = false;
       })
-
       // CHANGE PASSWORD
       .addCase(changePassword.fulfilled, (state, action) => {
         state.loading = false;
       })
-
       // LOGOUT
       .addCase(logout, (state) => {
         window.localStorage.removeItem('access-token');
@@ -160,24 +180,20 @@ const userSlice = createSlice({
         state.errors = false;
         state.data = null;
       })
-
       // UPDATE
       .addCase(updateUser.fulfilled, (state, action) => {
         state.data = action.payload.user;
         state.loading = false;
       })
-
       // LOADING / PENDING
       .addMatcher(isPendingAction, (state) => {
         state.loading = true;
         state.errors = false;
       })
-
       // ERROR /FAILURE / REJECTED
       .addMatcher(isRejectedAction, (state, action) => {
         window.localStorage.removeItem('access-token');
         axios.defaults.headers.common['Auth'] = null;
-
         state.loading = false;
         state.data = null;
         state.errors = action.payload;
