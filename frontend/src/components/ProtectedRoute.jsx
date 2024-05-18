@@ -28,7 +28,7 @@ export default function ProtectedRoute({ access, children, ...rest }) {
       return;
     }
     checkAccess();
-  }, [userState.data]);
+  }, [location]);
 
   const checkAccess = () => {
     const isLoggedIn = !!userState.data;

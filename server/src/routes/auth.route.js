@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const AuthService = require('../services/AuthService');
 const UserService = require('../services/UserService');
+const FileService = require('../services/FileService');
 const { userValidationSchema } = require('../validation');
 const { loginValidationSchema } = require('../validation');
 const { authHandler } = require('../middlewares/authHandler');
@@ -13,6 +14,18 @@ const userToJson = (user, token) => ({
   lastName: user.lastName,
   loginName: `${user.firstName} ${user.lastName}`,
   roles: user.roles,
+  avatar: user.avatar,
+  email: user.email,
+  description: user.description,
+  approved: user.approved,
+  expiresAt: user.expiresAt,
+  lastUserAccess: user.lastUserAccess,
+  images: user.images,
+  languages_to_learn: user.languages_to_learn,
+  languages_for_teach: user.languages_for_teach,
+  deletedAt: user.deletedAt,
+  updatedAt: user.updatedAt,
+  createdAt: user.createdAt,
   token
 });
 
@@ -31,7 +44,7 @@ router.post(
 router.get(
   '/user',
   authHandler(),
-  asyncErrorHandler(async (req, res, next) => {
+  asyncErrorHandler(async (req, res) => {
     if (!req.user) throw createError(403, 'forbidden');
     const token = await AuthService.createToken(req.user);
     return res.json(userToJson(req.user, token));
@@ -47,8 +60,16 @@ router.post(
     let user = await userService.getByEmail(value.email);
     if (user) throw createError(400, 'email is already taken');
     const hashedPassword = AuthService.createPasswordHash(value.password);
+    if (req.files && Object.keys(req.files).length) {
+      const fileService = new FileService(req.dbContext);
+      for (let [fileId, fileData] of Object.entries(req.files)) {
+        const file = await fileService.create({ ...fileData, fileId });
+        value.images = file.id;
+      }
+    }
     user = await userService.create({
       ...value,
+      approved: false,
       password: hashedPassword
     });
     const token = await AuthService.createToken(user);

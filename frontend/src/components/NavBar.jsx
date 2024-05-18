@@ -45,18 +45,20 @@ const NavBar = () => {
               <div
                 className='d-flex flex-wrap flex-row align-items-center justify-content-around px-3 py-2 opacity-nav-forward'
                 style={{ minWidth: '15rem' }}>
-                <Avatar
-                  size={40}
-                  variant='beam'
-                  name={userState.data?.loginName}
-                  colors={[
-                    '#92A1C6',
-                    '#146A7C',
-                    '#F0AB3D',
-                    '#C271B4',
-                    '#C20D90'
-                  ]}
-                />
+                {!userState.data?.image && (
+                  <Avatar
+                    size={40}
+                    name={userState.data?.loginName}
+                    variant={userState.data?.avatar[0] || 'beam'}
+                    colors={[
+                      '#92A1C6',
+                      '#146A7C',
+                      '#F0AB3D',
+                      '#C271B4',
+                      '#C20D90'
+                    ]}
+                  />
+                )}
                 <p className='opacity-nav-font my-auto'>
                   {userState.data?.loginName}
                 </p>
@@ -67,15 +69,9 @@ const NavBar = () => {
               borderRadius: '0%',
               border: '0.1rem solid white'
             }}>
-            {!userState.data?.roles.includes('student') && (
-              <>
-                <NavDropdown.Item>User Management</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item>News Management</NavDropdown.Item>
-                <NavDropdown.Divider />
-              </>
-            )}
-            <NavDropdown.Item>My Profile</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => navigate('/dashboard/my-profile')}>
+              My Profile
+            </NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={localLogout}>Logout</NavDropdown.Item>
           </NavDropdown>

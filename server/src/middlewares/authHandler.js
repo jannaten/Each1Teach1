@@ -12,7 +12,7 @@ const authHandler =
           const authService = new AuthService();
           const user = await authService.getUserByToken(token);
           if (user) {
-            if (!user.isSuperuser && permissions?.length) {
+            if (!user.isSuperuser && !user.active && permissions?.length) {
               for (let permission of permissions) {
                 if (!user.hasRole(permission)) {
                   throw createError(403, 'forbidden');

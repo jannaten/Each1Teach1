@@ -55,7 +55,7 @@ router.post(
     if (!req.user.isSuperuser && !value?.roles?.includes('student'))
       throw createError(403, 'forbidden');
     const hashedPassword = AuthService.createPasswordHash(value.password);
-    if (!value.roles.includes('student')) value.active = true;
+    if (value.roles.includes('student')) value.approved = false;
     user = await userService.create({
       ...value,
       password: hashedPassword
@@ -85,6 +85,7 @@ router.patch(
       delete value?.roles;
     if (value?.password)
       value.password = AuthService.createPasswordHash(value.password);
+    else delete value.password;
     user = await userService.update(user.id, value);
     res.json(user);
   })

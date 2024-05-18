@@ -1,11 +1,11 @@
 import * as formik from 'formik';
+import { useDispatch } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { login } from '../redux/slices/userSlice';
 import { ArrowLeft } from 'react-bootstrap-icons';
 import { loginSchema } from '../utilities/schema';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getUserInfo, login } from '../redux/slices/userSlice';
 import { FormControlStyled, AuthSubmitButton } from '../styles';
 import { errorToast, successToast } from '../components/common/Toast';
 import { FormLabel, FormGroup, Row, Form, Container } from 'react-bootstrap';
@@ -15,17 +15,14 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  const [loading, setLoading] = useState(false);
   const initialValues = { email: '', password: '' };
 
   const [showPassword, setShowPassword] = useState(false);
-  const userState = useSelector((state) => state.user);
 
   const onLocalLogin = async (form) => {
     try {
       const response = unwrapResult(await dispatch(login(form)));
       navigate('/dashboard');
-      // navigate(from.pathname, { replace: true });
       successToast(`Welcome ${response?.firstName}`);
     } catch (error) {
       errorToast(error);
@@ -34,27 +31,14 @@ export default function LoginPage() {
   };
 
   const { from } = location.state || {
-    from: { pathname: '/' }
+    from: { pathname: '/dashboard' }
   };
 
   useEffect(() => {
-    loadUser();
-  }, []);
-
-  const loadUser = async () => {
-    try {
-      if (!userState?.data && localStorage.getItem('access-token')) {
-        setLoading(true);
-        unwrapResult(await dispatch(getUserInfo()));
-        navigate(from.pathname, { replace: true });
-        setLoading(false);
-      }
-    } catch (error) {
-      errorToast(error);
-      setLoading(false);
-      console.error('error: ', error);
+    if (localStorage.getItem('access-token')) {
+      navigate(from.pathname, { replace: true });
     }
-  };
+  }, [navigate]);
 
   return (
     <Container
@@ -77,9 +61,9 @@ export default function LoginPage() {
         Teach 1
       </h1>
       <Formik
+        onSubmit={onLocalLogin}
         initialValues={initialValues}
-        validationSchema={loginSchema}
-        onSubmit={onLocalLogin}>
+        validationSchema={loginSchema}>
         {({ handleSubmit, handleChange, touched, values, errors }) => (
           <Form className='mt-5 w-100 px-5' onSubmit={handleSubmit}>
             <FormGroup className='mb-3' controlId='formEmail'>

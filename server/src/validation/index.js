@@ -26,9 +26,16 @@ const userValidationSchema = Joi.object({
   roles: Joi.array()
     .items(Joi.string().valid('superuser', 'teacher', 'student'))
     .unique(),
+  avatar: Joi.array()
+    .items(
+      Joi.string().valid('beam', 'marble', 'pixel', 'sunset', 'ring', 'bauhaus')
+    )
+    .unique(),
   active: Joi.boolean(),
+  approved: Joi.boolean(),
+  expiresAt: Joi.date(),
   lastUserAccess: Joi.date(),
-  images: Joi.string(),
+  images: Joi.any(),
   languages_to_learn: Joi.array()
     .items(
       Joi.object({
@@ -66,21 +73,25 @@ const userValidationSchema = Joi.object({
 });
 
 const userPatchSchema = Joi.object({
+  id: Joi.string(),
   firstName: Joi.string().max(50),
   lastName: Joi.string().max(50),
   email: Joi.string().email().regex(getEmailDomainRegex(allowedEmailDomains)),
-  password: Joi.string()
-    .pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/)
-    .message(
-      'Password must contain at least one lowercase letter, one uppercase letter, one digit, and be 8-20 characters long.'
-    ),
-  description: Joi.string().max(200),
+  password: Joi.string().min(0).default(''),
+  description: Joi.string().min(0).max(200).default(''),
   roles: Joi.array()
     .items(Joi.string().valid('superuser', 'teacher', 'student'))
     .unique(),
+  avatar: Joi.array()
+    .items(
+      Joi.string().valid('beam', 'marble', 'pixel', 'sunset', 'ring', 'bauhaus')
+    )
+    .unique(),
   active: Joi.boolean(),
+  approved: Joi.boolean(),
+  expiresAt: Joi.date(),
   lastUserAccess: Joi.date(),
-  images: Joi.string(),
+  images: Joi.any(),
   languages_to_learn: Joi.array()
     .items(
       Joi.object({

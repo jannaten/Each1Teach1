@@ -43,8 +43,7 @@ docker-compose exec -T server node manage createUsers <<< '
 	"lastName": "Nayem",
 	"email": "jannaten.nayem@tuni.fi",
 	"password": "demoDEMO123",
-	"roles": ["superuser"],
-	"active": true
+	"roles": ["superuser"]
 }'
 ```
 
@@ -57,8 +56,7 @@ docker-compose exec -T server node manage createUsers <<< '
 	"lastName": "Abruquah",
 	"email": "emmanuel.abruquah@tuni.fi",
 	"password": "demoDEMO123",
-	"roles": ["teacher"],
-	"active": true
+	"roles": ["teacher"]
 }'
 ```
 
@@ -69,8 +67,7 @@ docker-compose exec -T server node manage createUsers <<< '
 	"lastName": "Annala",
 	"email": "henri.annala@tuni.fi",
 	"password": "demoDEMO123",
-	"roles": ["teacher"],
-	"active": true
+	"roles": ["teacher"]
 }'
 ```
 
@@ -81,8 +78,7 @@ docker-compose exec -T server node manage createUsers <<< '
 	"lastName": "Rancken",
 	"email": "ulkira.rancken@tuni.fi",
 	"password": "demoDEMO123",
-	"roles": ["teacher"],
-	"active": true
+	"roles": ["teacher"]
 }'
 ```
 
@@ -96,7 +92,7 @@ docker-compose exec -T server node manage createUsers <<< '
 	"email": "masood.ahmadi@tuni.fi",
 	"password": "demoDEMO123",
 	"roles": ["student"],
-	"active": false
+	"approved": false
 }'
 ```
 
@@ -108,7 +104,7 @@ docker-compose exec -T server node manage createUsers <<< '
 	"email": "mafruha.nuhary@tuni.fi",
 	"password": "demoDEMO123",
 	"roles": ["student"],
-	"active": false
+	"approved": false
 }'
 
 ## VSCode rest-client env

@@ -9,7 +9,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 import { ErrorBoundary, NavBar } from './components';
 import { UserManagementPage, DashboardPage } from './pages';
-import { HomePage, LoginPage, RegisterPage, NotFoundPage } from './pages';
+import { HomePage, LoginPage, RegisterPage } from './pages';
+import { ProfileManagementPage, NotFoundPage } from './pages';
 
 export default function App() {
   const location = useLocation();
@@ -56,6 +57,10 @@ export default function App() {
             <ProtectedRoute access={['superuser', 'teacher', 'student']} />
           }>
           <Route path='/dashboard' element={<DashboardPage />} />
+          <Route
+            path='/dashboard/my-profile'
+            element={<ProfileManagementPage />}
+          />
         </Route>
         <Route
           path='/'

@@ -1,6 +1,5 @@
-import React from 'react';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Container, Image, Row } from 'react-bootstrap';
 
 import { getDate } from '../utilities/getDate';
@@ -79,7 +78,8 @@ const SectionNews = () => {
                       color: '#4E008E',
                       fontWeight: '500'
                     }}>
-                    {author.firstName} {author.lastName} - {getDate(updatedAt)}
+                    {author?.firstName} {author?.lastName} -{' '}
+                    {getDate(updatedAt)}
                   </p>
                   <div
                     className='mb-3'

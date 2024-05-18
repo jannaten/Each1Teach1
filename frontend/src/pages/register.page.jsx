@@ -9,10 +9,10 @@ import { Row, Col, Form, Table, Button } from 'react-bootstrap';
 import { FormLabel, FormGroup, Container } from 'react-bootstrap';
 import { PlusCircleFill, Trash3Fill } from 'react-bootstrap-icons';
 
+import { register } from '../redux/slices/userSlice';
 import { registerSchema } from '../utilities/schema';
 import { loadConfig } from '../redux/slices/configSlice';
 import { FormControlStyled, AuthSubmitButton } from '../styles';
-import { getUserInfo, register } from '../redux/slices/userSlice';
 import { errorToast, successToast } from '../components/common/Toast';
 
 export default function RegisterPage() {
@@ -20,7 +20,6 @@ export default function RegisterPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userState = useSelector((state) => state.user);
   const configState = useSelector((state) => state.config);
 
   const [showPassword, setShowPassword] = useState(false);
@@ -38,64 +37,22 @@ export default function RegisterPage() {
   });
   const [learningLanguages, setLearningLanguages] = useState([]);
 
-  const handleChangeTeachingLanguage = (selectedOptions) => {
-    setTeachingLanguage((prevState) => ({
-      ...prevState,
-      language: selectedOptions
-    }));
-  };
-
-  const handleChangeTeachingCredits = (selectedOptions) => {
-    setTeachingLanguage((prevState) => ({
-      ...prevState,
-      credits: selectedOptions
-    }));
-  };
-
-  const handleChangeTeachingLevel = (selectedOptions) => {
-    setTeachingLanguage((prevState) => ({
-      ...prevState,
-      level: selectedOptions
-    }));
-  };
-
-  const handleChangeLearningLanguage = (selectedOptions) => {
-    setLearningLanguage((prevState) => ({
-      ...prevState,
-      language: selectedOptions
-    }));
-  };
-  const handleChangeLearningCredits = (selectedOptions) => {
-    setLearningLanguage((prevState) => ({
-      ...prevState,
-      credits: selectedOptions
-    }));
-  };
-
-  const handleChangeLearningLevel = (selectedOptions) => {
-    setLearningLanguage((prevState) => ({
-      ...prevState,
-      level: selectedOptions
-    }));
+  const handleLocaleChange = (type, field, selectedOptions) => {
+    if (type === 'teaching') {
+      setTeachingLanguage((prevState) => ({
+        ...prevState,
+        [field]: selectedOptions
+      }));
+    } else if (type === 'learning') {
+      setLearningLanguage((prevState) => ({
+        ...prevState,
+        [field]: selectedOptions
+      }));
+    }
   };
 
   const { from } = location.state || {
-    from: { pathname: '/' }
-  };
-
-  const loadUser = async () => {
-    try {
-      if (!userState?.data && localStorage.getItem('access-token')) {
-        setLoading(true);
-        unwrapResult(await dispatch(getUserInfo()));
-        navigate(from.pathname, { replace: true });
-        setLoading(false);
-      }
-    } catch (error) {
-      errorToast(error);
-      setLoading(false);
-      console.error('error: ', error);
-    }
+    from: { pathname: '/dashboard' }
   };
 
   const refactorLocalization = (data) => {
@@ -126,9 +83,14 @@ export default function RegisterPage() {
   };
 
   useEffect(() => {
-    loadUser();
     dispatch(loadConfig());
   }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('access-token')) {
+      navigate(from.pathname, { replace: true });
+    }
+  }, [navigate]);
 
   const initialValues = {
     firstName: '',
@@ -148,8 +110,8 @@ export default function RegisterPage() {
           height={35}
           role='button'
           color='#4E008E'
-          onClick={() => navigate('/')}
           className='opacity-forward mx-5 my-2'
+          onClick={() => navigate(from.pathname, { replace: true })}
         />
       </div>
       <h1
@@ -308,7 +270,11 @@ export default function RegisterPage() {
                         !(learningLanguage.language.label === language.label)
                     )}
                     onChange={(selectedOptions) =>
-                      handleChangeTeachingLanguage(selectedOptions)
+                      handleLocaleChange(
+                        'teaching',
+                        'language',
+                        selectedOptions
+                      )
                     }
                     value={teachingLanguage.language}
                     styles={{
@@ -328,7 +294,7 @@ export default function RegisterPage() {
                     options={configState?.data?.study_credits}
                     isDisabled={teachingLanguages.length >= 3}
                     onChange={(selectedOptions) =>
-                      handleChangeTeachingCredits(selectedOptions)
+                      handleLocaleChange('teaching', 'credits', selectedOptions)
                     }
                     value={teachingLanguage.credits}
                     styles={{
@@ -348,7 +314,7 @@ export default function RegisterPage() {
                     options={configState.data.language_level}
                     isDisabled={teachingLanguages.length >= 3}
                     onChange={(selectedOptions) =>
-                      handleChangeTeachingLevel(selectedOptions)
+                      handleLocaleChange('teaching', 'level', selectedOptions)
                     }
                     value={teachingLanguage.level}
                     styles={{
@@ -441,7 +407,11 @@ export default function RegisterPage() {
                         !(teachingLanguage.language.label === language.label)
                     )}
                     onChange={(selectedOptions) =>
-                      handleChangeLearningLanguage(selectedOptions)
+                      handleLocaleChange(
+                        'learning',
+                        'language',
+                        selectedOptions
+                      )
                     }
                     value={learningLanguage.language}
                     styles={{
@@ -461,7 +431,7 @@ export default function RegisterPage() {
                     options={configState?.data?.study_credits}
                     isDisabled={learningLanguages.length >= 3}
                     onChange={(selectedOptions) =>
-                      handleChangeLearningCredits(selectedOptions)
+                      handleLocaleChange('learning', 'credits', selectedOptions)
                     }
                     value={learningLanguage.credits}
                     styles={{
@@ -481,7 +451,7 @@ export default function RegisterPage() {
                     options={configState.data.language_level}
                     isDisabled={learningLanguages.length >= 3}
                     onChange={(selectedOptions) =>
-                      handleChangeLearningLevel(selectedOptions)
+                      handleLocaleChange('learning', 'level', selectedOptions)
                     }
                     value={learningLanguage.level}
                     styles={{

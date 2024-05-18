@@ -1,7 +1,7 @@
 const UserService = require('./UserService');
 const jwt = require('jsonwebtoken');
 const { createSHA256, compareSHA256 } = require('../utilities/crypto');
-const { logger } = require('../utilities/logger');
+
 const {
   SERVER_TOKEN_SECRET: tokenSecret,
   SERVER_PASSWORD_SECRET: passwordSecret,
@@ -15,8 +15,11 @@ class AuthService {
   }
 
   localLogin = async function (email, password) {
-    const user = await this.userService.getByEmail(email);
-    if (user && !user.deletedAt) {
+    let user = await this.userService.getByEmail(email);
+    if (user && user.active && !user.deletedAt) {
+      user = await this.userService.update(user.id, {
+        lastUserAccess: new Date()
+      });
       const validPassword = AuthService.comparePasswordHash(
         password,
         user.password
@@ -55,7 +58,8 @@ class AuthService {
       {
         id: user.id,
         email: user.email,
-        roles: user.roles
+        roles: user.roles,
+        avatar: user.avatar
       },
       tokenSecret,
       {
