@@ -16,6 +16,20 @@ export const loadConfig = createAsyncThunk(
   }
 );
 
+export const loadLocalizations = createAsyncThunk(
+  'config/loadLocalizations',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `${axios.defaults.url}/config/getLocalization`
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const isPendingAction = (action) => {
   return action.type.startsWith('config/') && action.type.endsWith('/pending');
 };
@@ -31,7 +45,8 @@ const configSlice = createSlice({
     data: {
       languages,
       language_level,
-      study_credits
+      study_credits,
+      localizations: []
     }
   },
   reducers: {},
@@ -43,6 +58,13 @@ const configSlice = createSlice({
           languages: payload.languages[0],
           language_level: payload.language_level[0],
           study_credits: payload.study_credits[0]
+        };
+        state.loading = false;
+      })
+      .addCase(loadLocalizations.fulfilled, (state, { payload }) => {
+        state.data = {
+          ...state.data,
+          localizations: payload
         };
         state.loading = false;
       })

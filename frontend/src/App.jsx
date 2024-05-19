@@ -7,10 +7,10 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { getUserInfo } from './redux/slices/userSlice';
 import ProtectedRoute from './components/ProtectedRoute';
 
-import { ErrorBoundary, NavBar } from './components';
 import { UserManagementPage, DashboardPage } from './pages';
 import { HomePage, LoginPage, RegisterPage } from './pages';
 import { ProfileManagementPage, NotFoundPage } from './pages';
+import { ErrorBoundary, NavBar, ModalRootComponent } from './components';
 
 export default function App() {
   const location = useLocation();
@@ -47,6 +47,7 @@ export default function App() {
       location.pathname === '/register' ? null : (
         <NavBar />
       )}
+      <ModalRootComponent />
       <Routes>
         <Route exact path='/' element={<HomePage />} />
         <Route exact path='/login' element={<LoginPage />} />

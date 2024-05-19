@@ -1,14 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { DashboardButton } from '../styles';
+import { useNavigate } from 'react-router-dom';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { ChatDotsFill, Newspaper } from 'react-bootstrap-icons';
 import { PersonFillGear, Shuffle } from 'react-bootstrap-icons';
-import { useNavigate } from 'react-router-dom';
 
-const DashboardButtonCol = ({ icon, title }) => {
+const DashboardButtonCol = ({ icon, title, ...props }) => {
   return (
-    <Col className='mt-5'>
+    <Col className='mt-5' {...props}>
       <DashboardButton>
         <Card.Body>
           <div className='text-center my-3'>{icon}</div>

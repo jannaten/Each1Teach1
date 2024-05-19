@@ -12,6 +12,23 @@ router.get(
   })
 );
 
+router.get(
+  '/getLocalization',
+  asyncErrorHandler(async (req, res) => {
+    const configService = new ConfigService();
+    const config = await configService.getAll();
+    function getRandomNumber() {
+      return Math.floor(Math.random() * 21);
+    }
+    const languages = config[0]?.languages[0].map((el) => ({
+      language: el.label,
+      students: getRandomNumber(),
+      teachers: getRandomNumber()
+    }));
+    return res.json(languages);
+  })
+);
+
 router.post(
   '/',
   authHandler('teacher'),

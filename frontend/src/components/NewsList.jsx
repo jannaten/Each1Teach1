@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function LocalizationList({ language }) {
+export default function NewsList({ news }) {
   return (
     <tr style={{ borderBottom: '1px solid #4E008E' }}>
       <td
@@ -8,7 +8,7 @@ export default function LocalizationList({ language }) {
           color: '#4E008E',
           padding: '1rem 0rem 0rem 4rem'
         }}>
-        {language.language}
+        {news.title}
       </td>
       <td
         style={{
@@ -16,7 +16,7 @@ export default function LocalizationList({ language }) {
           textAlign: 'center',
           padding: '1rem 0rem'
         }}>
-        {language.students}
+        {news.author?.firstName} {news.author?.lastName}
       </td>
       <td
         style={{
@@ -24,7 +24,7 @@ export default function LocalizationList({ language }) {
           textAlign: 'center',
           padding: '1rem 0rem'
         }}>
-        {language.teachers}
+        {news.content}
       </td>
     </tr>
   );
