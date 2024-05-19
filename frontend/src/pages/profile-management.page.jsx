@@ -14,6 +14,7 @@ import { userUpdateSchema } from '../utilities/schema';
 import { loadConfig } from '../redux/slices/configSlice';
 import { FormControlStyled, AuthSubmitButton } from '../styles';
 import { errorToast, successToast } from '../components/common/Toast';
+import Avatar from 'boring-avatars';
 
 const refactorLocalization = (data) => {
   if (data.length === 0) return [];
@@ -61,6 +62,7 @@ export default function UserManagementPage() {
   };
 
   const [showPassword, setShowPassword] = useState(false);
+  const [avatar, setAvatar] = useState(userState.data?.avatar[0] || 'beam');
   const [teachingLanguage, setTeachingLanguage] = useState({
     language: '',
     credits: '',
@@ -104,7 +106,8 @@ export default function UserManagementPage() {
             ...form,
             id: userState.data?.id,
             languages_to_learn,
-            languages_for_teach
+            languages_for_teach,
+            avatar: [avatar]
           })
         )
       );
@@ -143,11 +146,37 @@ export default function UserManagementPage() {
         />
       </div>
       <h1
-        className='mt-2 text-center'
+        className='my-1 text-center'
         style={{ fontWeight: '700', color: '#4E008E' }}>
         Profile <br />
         Management
       </h1>
+      {!userState.data?.image && (
+        <div className='w-100 d-flex flex-column align-items-center justify-content-center'>
+          <div className='my-5'>
+            <Avatar
+              size={50}
+              variant={avatar}
+              name={userState.data?.loginName}
+              colors={['#92A1C6', '#146A7C', '#F0AB3D', '#C271B4', '#C20D90']}
+            />
+          </div>
+          <div className='d-flex flex-row flex-wrap align-items-center justify-content-center'>
+            {configState.data?.avatars.map((variant) => (
+              <Form.Check
+                inline
+                type='radio'
+                key={variant}
+                label={variant}
+                name='group1'
+                id={`radio-${variant}`}
+                checked={variant === avatar}
+                onChange={() => setAvatar(variant)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
       <Formik
         onSubmit={onUpdate}
         initialValues={initialValues}

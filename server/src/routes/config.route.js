@@ -20,7 +20,7 @@ router.get(
     function getRandomNumber() {
       return Math.floor(Math.random() * 21);
     }
-    const languages = config[0]?.languages[0].map((el) => ({
+    const languages = config[0]?.languages.map((el) => ({
       language: el.label,
       students: getRandomNumber(),
       teachers: getRandomNumber()

@@ -46,7 +46,8 @@ const configSlice = createSlice({
       languages,
       language_level,
       study_credits,
-      localizations: []
+      localizations: [],
+      avatars: ['beam', 'marble', 'pixel', 'sunset', 'ring', 'bauhaus']
     }
   },
   reducers: {},
@@ -55,9 +56,10 @@ const configSlice = createSlice({
       // LOAD
       .addCase(loadConfig.fulfilled, (state, { payload }) => {
         state.data = {
-          languages: payload.languages[0],
-          language_level: payload.language_level[0],
-          study_credits: payload.study_credits[0]
+          languages: payload.languages,
+          language_level: payload.language_level,
+          study_credits: payload.study_credits,
+          avatars: payload.avatars
         };
         state.loading = false;
       })

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { avatars } = require('../data/avatars');
 const { toJSON } = require('../utilities/models');
 const { languages } = require('../data/localizations');
 const { studyCredits } = require('../data/study_credits');
@@ -8,15 +9,19 @@ const configSchema = new mongoose.Schema(
   {
     language_level: {
       type: [Object],
-      default: [languageLevels]
+      default: languageLevels
     },
     languages: {
       type: [Object],
-      default: [languages]
+      default: languages
     },
     study_credits: {
       type: [Object],
-      default: [studyCredits]
+      default: studyCredits
+    },
+    avatars: {
+      type: [String],
+      default: avatars
     },
     deletedAt: {
       type: Date,
