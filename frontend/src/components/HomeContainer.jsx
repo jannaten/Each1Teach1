@@ -1,6 +1,7 @@
 import React from 'react';
-import Jumbotron from './Jumbotron';
 import { Image } from 'react-bootstrap';
+
+import Jumbotron from './Jumbotron';
 import HomePagePicture from '../assets/images/1.jpg';
 
 const HomeContainer = () => (

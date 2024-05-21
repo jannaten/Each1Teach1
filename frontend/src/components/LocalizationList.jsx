@@ -1,18 +1,20 @@
 import React from 'react';
+import { useTheme } from 'styled-components';
 
 export default function LocalizationList({ language }) {
+  const { primary } = useTheme();
   return (
-    <tr style={{ borderBottom: '1px solid #4E008E' }}>
+    <tr style={{ borderBottom: `1px solid ${primary}` }}>
       <td
         style={{
-          color: '#4E008E',
+          color: primary,
           padding: '1rem 0rem 0rem 4rem'
         }}>
         {language.language}
       </td>
       <td
         style={{
-          color: '#4E008E',
+          color: primary,
           textAlign: 'center',
           padding: '1rem 0rem'
         }}>
@@ -20,7 +22,7 @@ export default function LocalizationList({ language }) {
       </td>
       <td
         style={{
-          color: '#4E008E',
+          color: primary,
           textAlign: 'center',
           padding: '1rem 0rem'
         }}>

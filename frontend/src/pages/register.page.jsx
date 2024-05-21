@@ -12,14 +12,16 @@ import { PlusCircleFill, Trash3Fill } from 'react-bootstrap-icons';
 import { register } from '../redux/slices/userSlice';
 import { registerSchema } from '../utilities/schema';
 import { loadConfig } from '../redux/slices/configSlice';
-import { FormControlStyled, AuthSubmitButton } from '../styles';
+import { FormControlStyled, PrimaryButton } from '../styles';
 import { errorToast, successToast } from '../components/common/Toast';
+import { useTheme } from 'styled-components';
 
 export default function RegisterPage() {
   const { Formik } = formik;
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { primary } = useTheme();
   const configState = useSelector((state) => state.config);
 
   const [showPassword, setShowPassword] = useState(false);
@@ -103,20 +105,20 @@ export default function RegisterPage() {
   return (
     <Container
       className='h-100 my-5 d-flex flex-column justify-content-center align-items-center'
-      style={{ maxWidth: '60rem', border: '0.1rem solid #4E008E' }}>
+      style={{ maxWidth: '60rem', border: `0.1rem solid ${primary}` }}>
       <div className='w-100'>
         <ArrowLeft
           width={35}
           height={35}
           role='button'
-          color='#4E008E'
+          color={primary}
           className='opacity-forward mx-5 my-2'
           onClick={() => navigate(from.pathname, { replace: true })}
         />
       </div>
       <h1
         className='mt-5 text-center'
-        style={{ fontWeight: '700', color: '#4E008E' }}>
+        style={{ fontWeight: '700', color: primary }}>
         Each 1 <br />
         Teach 1
       </h1>
@@ -202,7 +204,7 @@ export default function RegisterPage() {
             </FormGroup>
             <FormGroup className='mb-3' controlId='formDescription'>
               <FormLabel>Short introduction</FormLabel>
-              <FormControlStyled
+              <Form.Control
                 rows='3'
                 as='textarea'
                 name='description'
@@ -212,6 +214,13 @@ export default function RegisterPage() {
                 placeholder='Short introduction about you'
                 isValid={touched.description && !errors.description}
                 isInvalid={touched.description && errors.description}
+                style={{
+                  outline: 'none',
+                  boxShadow: 'none',
+                  borderRadius: '0%',
+                  border: `0.1rem solid ${primary}`,
+                  transition: 'border-color 0.3s ease-in-out'
+                }}
               />
               <Form.Control.Feedback type='invalid'>
                 {errors.description}
@@ -283,7 +292,7 @@ export default function RegisterPage() {
                         boxShadow: 'none',
                         borderRadius: '0',
                         outline: 'none !important',
-                        border: '0.1rem solid #4E008E'
+                        border: `0.1rem solid ${primary}`
                       })
                     }}
                     placeholder='Select languages'
@@ -303,7 +312,7 @@ export default function RegisterPage() {
                         boxShadow: 'none',
                         borderRadius: '0',
                         outline: 'none !important',
-                        border: '0.1rem solid #4E008E'
+                        border: `0.1rem solid ${primary}`
                       })
                     }}
                     placeholder='Select credits'
@@ -323,7 +332,7 @@ export default function RegisterPage() {
                         boxShadow: 'none',
                         borderRadius: '0',
                         outline: 'none !important',
-                        border: '0.1rem solid #4E008E'
+                        border: `0.1rem solid ${primary}`
                       })
                     }}
                     placeholder='Select level'
@@ -332,7 +341,7 @@ export default function RegisterPage() {
               </Row>
               <Button
                 variant='link'
-                style={{ color: '#4E008E' }}
+                style={{ color: primary }}
                 className='d-flex flex-direction-row flex-wrap align-items-center justify-content-center text-decoration-underline'
                 disabled={
                   !teachingLanguage.credits ||
@@ -420,7 +429,7 @@ export default function RegisterPage() {
                         boxShadow: 'none',
                         borderRadius: '0',
                         outline: 'none !important',
-                        border: '0.1rem solid #4E008E'
+                        border: `0.1rem solid ${primary}`
                       })
                     }}
                     placeholder='Select languages'
@@ -440,7 +449,7 @@ export default function RegisterPage() {
                         boxShadow: 'none',
                         borderRadius: '0',
                         outline: 'none !important',
-                        border: '0.1rem solid #4E008E'
+                        border: `0.1rem solid ${primary}`
                       })
                     }}
                     placeholder='Select credits'
@@ -460,7 +469,7 @@ export default function RegisterPage() {
                         boxShadow: 'none',
                         borderRadius: '0',
                         outline: 'none !important',
-                        border: '0.1rem solid #4E008E'
+                        border: `0.1rem solid ${primary}`
                       })
                     }}
                     placeholder='Select level'
@@ -469,7 +478,7 @@ export default function RegisterPage() {
               </Row>
               <Button
                 variant='link'
-                style={{ color: '#4E008E' }}
+                style={{ color: primary }}
                 className='d-flex flex-direction-row flex-wrap align-items-center justify-content-center text-decoration-underline'
                 disabled={
                   !learningLanguage.credits ||
@@ -492,14 +501,14 @@ export default function RegisterPage() {
               </Button>
             </Form.Group>
             <Row className='mx-5 mt-5 d-flex justify-content-center'>
-              <AuthSubmitButton variant='' type='submit'>
+              <PrimaryButton variant='' type='submit'>
                 Register
-              </AuthSubmitButton>
+              </PrimaryButton>
             </Row>
             <Row className='mb-5 mt-3 mx-0'>
               <p
                 role='button'
-                style={{ color: '#4E008E' }}
+                style={{ color: primary }}
                 onClick={() => navigate('/login')}
                 className='text-center text-decoration-underline'>
                 Already have an account?

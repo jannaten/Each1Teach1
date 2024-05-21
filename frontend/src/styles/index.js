@@ -1,5 +1,13 @@
-import { AuthSubmitButton, FormControlStyled } from './auth.styles';
+import { ErrorToastStyle, SuccessToastStyle } from './common.styles';
+import { PrimaryButton, FormControlStyled } from './auth.styles';
 import { PaginationItem } from './pagination.style';
 import { DashboardButton } from './common.styles';
 
-export { AuthSubmitButton, FormControlStyled, PaginationItem, DashboardButton };
+export {
+  PrimaryButton,
+  PaginationItem,
+  DashboardButton,
+  ErrorToastStyle,
+  FormControlStyled,
+  SuccessToastStyle
+};

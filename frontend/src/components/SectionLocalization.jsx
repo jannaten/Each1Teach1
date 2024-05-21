@@ -1,13 +1,16 @@
+import { useTheme } from 'styled-components';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { paginate } from '../utilities/paginate';
-import { Pagination, LocalizationList } from '.';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Table } from 'react-bootstrap';
+
+import { Pagination, LocalizationList } from '.';
 import { loadLocalizations } from '../redux/slices/configSlice';
 
 const SectionLocalization = () => {
   const dispatch = useDispatch();
+  const { primary } = useTheme();
   const [pageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const configState = useSelector((state) => state.config);
@@ -31,7 +34,7 @@ const SectionLocalization = () => {
       <Row className='my-5'>
         <h1
           className='text-center'
-          style={{ color: '#4E008E', fontWeight: '700' }}>
+          style={{ color: primary, fontWeight: '700' }}>
           Languages available
           <br /> in Each 1 Teach 1
         </h1>
@@ -48,11 +51,11 @@ const SectionLocalization = () => {
       </Row>
       <Table hover size='sm' className='mb-5'>
         <thead>
-          <tr style={{ borderBottom: '1px solid #4E008E' }}>
+          <tr style={{ borderBottom: `1px solid ${primary}` }}>
             <th
               style={{
                 width: '70%',
-                color: '#4E008E',
+                color: primary,
                 fontWeight: '600',
                 padding: '0rem 0rem 1rem 4rem'
               }}>
@@ -60,12 +63,12 @@ const SectionLocalization = () => {
             </th>
             <th
               className='w-15 text-center pb-3'
-              style={{ color: '#4E008E', fontWeight: '600' }}>
+              style={{ color: primary, fontWeight: '600' }}>
               students
             </th>
             <th
               className='w-15 text-center pb-3'
-              style={{ color: '#4E008E', fontWeight: '600' }}>
+              style={{ color: primary, fontWeight: '600' }}>
               teachers
             </th>
           </tr>

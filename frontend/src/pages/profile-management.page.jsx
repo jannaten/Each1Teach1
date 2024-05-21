@@ -1,5 +1,6 @@
 import * as formik from 'formik';
 import Select from 'react-select';
+import Avatar from 'boring-avatars';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { ArrowLeft } from 'react-bootstrap-icons';
 import React, { useState, useEffect } from 'react';
@@ -9,12 +10,12 @@ import { Row, Col, Form, Table, Button } from 'react-bootstrap';
 import { FormLabel, FormGroup, Container } from 'react-bootstrap';
 import { PlusCircleFill, Trash3Fill } from 'react-bootstrap-icons';
 
-import { getUserInfo, updateUser } from '../redux/slices/userSlice';
 import { userUpdateSchema } from '../utilities/schema';
 import { loadConfig } from '../redux/slices/configSlice';
-import { FormControlStyled, AuthSubmitButton } from '../styles';
+import { FormControlStyled, PrimaryButton } from '../styles';
+import { getUserInfo, updateUser } from '../redux/slices/userSlice';
 import { errorToast, successToast } from '../components/common/Toast';
-import Avatar from 'boring-avatars';
+import { useTheme } from 'styled-components';
 
 const refactorLocalization = (data) => {
   if (data.length === 0) return [];
@@ -51,6 +52,7 @@ function filterAndStructure(configState, target_languages) {
 
 export default function UserManagementPage() {
   const { Formik } = formik;
+  const { primary } = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -134,20 +136,20 @@ export default function UserManagementPage() {
   return (
     <Container
       className='h-100 my-5 d-flex flex-column justify-content-center align-items-center'
-      style={{ maxWidth: '60rem', border: '0.1rem solid #4E008E' }}>
+      style={{ maxWidth: '60rem', border: `0.1rem solid ${primary}` }}>
       <div className='w-100'>
         <ArrowLeft
           width={35}
           height={35}
           role='button'
-          color='#4E008E'
+          color={primary}
           className='opacity-forward mx-5 my-2'
           onClick={() => navigate(from.pathname, { replace: true })}
         />
       </div>
       <h1
         className='my-1 text-center'
-        style={{ fontWeight: '700', color: '#4E008E' }}>
+        style={{ fontWeight: '700', color: primary }}>
         Profile <br />
         Management
       </h1>
@@ -168,7 +170,6 @@ export default function UserManagementPage() {
                 type='radio'
                 key={variant}
                 label={variant}
-                name='group1'
                 id={`radio-${variant}`}
                 checked={variant === avatar}
                 onChange={() => setAvatar(variant)}
@@ -347,7 +348,7 @@ export default function UserManagementPage() {
                             boxShadow: 'none',
                             borderRadius: '0',
                             outline: 'none !important',
-                            border: '0.1rem solid #4E008E'
+                            border: `0.1rem solid ${primary}`
                           })
                         }}
                         placeholder='Select languages'
@@ -371,7 +372,7 @@ export default function UserManagementPage() {
                             boxShadow: 'none',
                             borderRadius: '0',
                             outline: 'none !important',
-                            border: '0.1rem solid #4E008E'
+                            border: `0.1rem solid ${primary}`
                           })
                         }}
                         placeholder='Select credits'
@@ -395,7 +396,7 @@ export default function UserManagementPage() {
                             boxShadow: 'none',
                             borderRadius: '0',
                             outline: 'none !important',
-                            border: '0.1rem solid #4E008E'
+                            border: `0.1rem solid ${primary}`
                           })
                         }}
                         placeholder='Select level'
@@ -404,7 +405,7 @@ export default function UserManagementPage() {
                   </Row>
                   <Button
                     variant='link'
-                    style={{ color: '#4E008E' }}
+                    style={{ color: primary }}
                     className='d-flex flex-direction-row flex-wrap align-items-center justify-content-center text-decoration-underline'
                     disabled={
                       !teachingLanguage.credits ||
@@ -496,7 +497,7 @@ export default function UserManagementPage() {
                             boxShadow: 'none',
                             borderRadius: '0',
                             outline: 'none !important',
-                            border: '0.1rem solid #4E008E'
+                            border: `0.1rem solid ${primary}`
                           })
                         }}
                         placeholder='Select languages'
@@ -520,7 +521,7 @@ export default function UserManagementPage() {
                             boxShadow: 'none',
                             borderRadius: '0',
                             outline: 'none !important',
-                            border: '0.1rem solid #4E008E'
+                            border: `0.1rem solid ${primary}`
                           })
                         }}
                         placeholder='Select credits'
@@ -544,7 +545,7 @@ export default function UserManagementPage() {
                             boxShadow: 'none',
                             borderRadius: '0',
                             outline: 'none !important',
-                            border: '0.1rem solid #4E008E'
+                            border: `0.1rem solid ${primary}`
                           })
                         }}
                         placeholder='Select level'
@@ -553,7 +554,7 @@ export default function UserManagementPage() {
                   </Row>
                   <Button
                     variant='link'
-                    style={{ color: '#4E008E' }}
+                    style={{ color: primary }}
                     className='d-flex flex-direction-row flex-wrap align-items-center justify-content-center text-decoration-underline'
                     disabled={
                       !learningLanguage.credits ||
@@ -578,9 +579,9 @@ export default function UserManagementPage() {
               </>
             )}
             <Row className='mx-5 my-5 d-flex justify-content-center'>
-              <AuthSubmitButton variant='' type='submit'>
+              <PrimaryButton variant='' type='submit'>
                 Save
-              </AuthSubmitButton>
+              </PrimaryButton>
             </Row>
           </Form>
         )}

@@ -4,8 +4,8 @@ import { ChevronDoubleLeft, ChevronLeft } from 'react-bootstrap-icons';
 import { ChevronDoubleRight, ChevronRight } from 'react-bootstrap-icons';
 
 export default function PaginationComponent({
-  itemsCount,
   pageSize,
+  itemsCount,
   currentPage,
   onPageChange
 }) {

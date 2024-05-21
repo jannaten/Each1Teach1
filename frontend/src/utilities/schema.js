@@ -78,3 +78,12 @@ export const userUpdateSchema = Yup.object().shape({
   languages_to_learn: Yup.array().of(languageSchema).default([]),
   languages_for_teach: Yup.array().of(languageSchema).default([])
 });
+
+export const newsSchema = Yup.object().shape({
+  title: Yup.string()
+    .required('Title is required')
+    .max(100, 'Title cannot exceed 100 characters'),
+  content: Yup.string()
+    .required('Content is required')
+    .max(500, 'Content cannot exceed 500 characters')
+});

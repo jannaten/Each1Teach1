@@ -1,12 +1,15 @@
 import React from 'react';
+import { useTheme } from 'styled-components';
+import { Col, Container, Image, Row } from 'react-bootstrap';
+
 import ShipIcon from '../assets/icons/ship.svg';
 import SquareIcon from '../assets/icons/element4.svg';
 import MotivationPicture from '../assets/images/5.jpg';
 import NetworkingIcon from '../assets/icons/colorfilter.svg';
 import QuestionIcon from '../assets/icons/messagequestion.svg';
-import { Col, Container, Image, Row } from 'react-bootstrap';
 
 const SectionChoose = () => {
+  const { primary } = useTheme();
   return (
     <div className='mt-5' style={{ minHeight: '650px' }}>
       <Container>
@@ -18,7 +21,7 @@ const SectionChoose = () => {
             alt='question icon'
             className='mx-3 mb-3'
           />
-          <h1 style={{ color: '#4E008E', fontWeight: '700' }}>
+          <h1 style={{ color: primary, fontWeight: '700' }}>
             Why Each 1 Teach 1?
           </h1>
         </div>
@@ -39,7 +42,7 @@ const SectionChoose = () => {
                 className='p-3 position-relative w-100 d-flex flex-column align-items-center justify-content-center'
                 style={{
                   minHeight: '300px',
-                  backgroundColor: '#4E008ED9'
+                  backgroundColor: `${primary}D9`
                 }}>
                 <Image
                   width={50}
@@ -74,7 +77,7 @@ const SectionChoose = () => {
                 className='p-3 position-relative w-100 d-flex flex-column align-items-center justify-content-center'
                 style={{
                   minHeight: '300px',
-                  backgroundColor: '#4E008ED9'
+                  backgroundColor: `${primary}D9`
                 }}>
                 <Image
                   width={50}

@@ -1,33 +1,41 @@
 import React from 'react';
+import { useTheme } from 'styled-components';
 import { Container, Image } from 'react-bootstrap';
 
 import { processes } from '../data';
 import WorkPicture from '../assets/images/3.jpg';
 import WorkIcon from '../assets/icons/huobitoken.svg';
 
-const processTitle = (step) => (
-  <div
-    style={{ width: '20%' }}
-    className='d-flex flex-row justify-content-center align-items-center bg-light'>
-    <h1 style={{ fontWeight: '700', color: '#4E008E' }}>{step}</h1>
-  </div>
-);
+const processTitle = (step) => {
+  const { primary } = useTheme();
+  return (
+    <div
+      style={{ width: '20%' }}
+      className='d-flex flex-row justify-content-center align-items-center bg-light'>
+      <h1 style={{ fontWeight: '700', color: primary }}>{step}</h1>
+    </div>
+  );
+};
 
-const processDescription = (description) => (
-  <div
-    style={{
-      width: '80%',
-      minHeight: '10rem',
-      backgroundColor: '#A562E3'
-    }}
-    className='py-3 px-5 d-flex flex-row justify-content-center align-items-center'>
-    <p className='text-light' style={{ fontWeight: '500', color: 'white' }}>
-      {description}
-    </p>
-  </div>
-);
+const processDescription = (description) => {
+  const { secondary } = useTheme();
+  return (
+    <div
+      style={{
+        width: '80%',
+        minHeight: '10rem',
+        backgroundColor: secondary
+      }}
+      className='py-3 px-5 d-flex flex-row justify-content-center align-items-center'>
+      <p className='text-light' style={{ fontWeight: '500', color: 'white' }}>
+        {description}
+      </p>
+    </div>
+  );
+};
 
 const SectionProcess = () => {
+  const { primary, secondary } = useTheme();
   return (
     <div className='position-relative' style={{ minHeight: '1850px' }}>
       <Image
@@ -40,7 +48,7 @@ const SectionProcess = () => {
       <div
         style={{
           minHeight: '1850px',
-          backgroundColor: '#4E008ECC'
+          backgroundColor: `${primary}CC`
         }}
         className='pb-5 position-relative w-100'>
         <div className='d-flex flex-column justify-content-center align-items-center pt-5'>

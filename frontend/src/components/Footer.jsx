@@ -1,14 +1,16 @@
 import React from 'react';
+import { useTheme } from 'styled-components';
 import { Col, Image, Row } from 'react-bootstrap';
 import FooterPicture from '../assets/images/4.jpg';
 
 const Footer = () => {
+  const { primary } = useTheme();
   return (
     <div
       className='position-relative'
       style={{
         height: '300px',
-        backgroundColor: '#4E008EE6'
+        backgroundColor: `${primary}E6`
       }}>
       <Image
         fluid
@@ -21,7 +23,7 @@ const Footer = () => {
         className='w-100 position-relative'
         style={{
           height: '300px',
-          backgroundColor: '#4E008EE6'
+          backgroundColor: `${primary}E6`
         }}>
         <Row className='text-center m-0'>
           <Col>

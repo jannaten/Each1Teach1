@@ -6,12 +6,14 @@ import { ArrowLeft } from 'react-bootstrap-icons';
 import { loginSchema } from '../utilities/schema';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FormControlStyled, AuthSubmitButton } from '../styles';
+import { FormControlStyled, PrimaryButton } from '../styles';
 import { errorToast, successToast } from '../components/common/Toast';
 import { FormLabel, FormGroup, Row, Form, Container } from 'react-bootstrap';
+import { useTheme } from 'styled-components';
 
 export default function LoginPage() {
   const { Formik } = formik;
+  const { primary } = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -49,14 +51,14 @@ export default function LoginPage() {
           width={35}
           height={35}
           role='button'
-          color='#4E008E'
+          color={primary}
           onClick={() => navigate('/')}
           className='opacity-forward mx-5 my-2'
         />
       </div>
       <h1
         className='mt-5 text-center'
-        style={{ fontWeight: '700', color: '#4E008E' }}>
+        style={{ fontWeight: '700', color: primary }}>
         Each 1 <br />
         Teach 1
       </h1>
@@ -105,9 +107,9 @@ export default function LoginPage() {
               />
             </FormGroup>
             <Row className='mx-5 mt-5 d-flex justify-content-center'>
-              <AuthSubmitButton variant='' type='submit'>
+              <PrimaryButton variant='' type='submit'>
                 Login
-              </AuthSubmitButton>
+              </PrimaryButton>
             </Row>
           </Form>
         )}
@@ -115,7 +117,7 @@ export default function LoginPage() {
       <Row className='mb-5 mt-3 mx-0'>
         <p
           role='button'
-          style={{ color: '#4E008E' }}
+          style={{ color: primary }}
           onClick={() => navigate('/register')}
           className='text-center text-decoration-underline'>
           Don't have an account?

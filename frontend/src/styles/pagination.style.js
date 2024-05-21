@@ -4,14 +4,15 @@ export const PaginationItem = styled.button`
   ${({ className, active }) =>
     className === 'page-item' &&
     css`
-      border: none;
       width: 2rem;
+      border: none;
       height: 2rem;
       display: flex;
       cursor: pointer;
       align-items: center;
       justify-content: center;
-      color: ${active && '#fff'};
-      background-color: ${active ? '#4E008E' : '#fff'};
+      color: ${({ theme }) => (active ? theme.basic.bright : theme.basic.dark)};
+      background-color: ${({ theme }) =>
+        active ? theme.primary : theme.basic.bright};
     `}
 `;

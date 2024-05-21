@@ -1,7 +1,9 @@
 import React from 'react';
+import { useTheme } from 'styled-components';
 import { Col, Container, Row } from 'react-bootstrap';
 
 const SectionAbout = () => {
+  const { primary } = useTheme();
   return (
     <Container>
       <div
@@ -10,12 +12,12 @@ const SectionAbout = () => {
         <Container>
           <Row className='mt-5'>
             <Col>
-              <h1 style={{ color: '#4E008E', fontWeight: '700' }}>
+              <h1 style={{ color: primary, fontWeight: '700' }}>
                 What is tandem leaning?
               </h1>
             </Col>
             <Col>
-              <p style={{ color: '#4E008ECC', fontWeight: '500' }}>
+              <p style={{ color: `${primary}CC`, fontWeight: '500' }}>
                 Tandem (also known as Each One Teach One) is a method where two
                 students teach each other their native (or native-like)
                 languages in informal meetings, acting both in the teacher’s and

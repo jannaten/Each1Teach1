@@ -1,13 +1,16 @@
 import React from 'react';
 import Avatar from 'boring-avatars';
+import { useTheme } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { logout } from '../redux/slices/userSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { errorToast, successToast } from './common/Toast';
 import { Container, Navbar, NavDropdown, NavbarBrand } from 'react-bootstrap';
 
+import { logout } from '../redux/slices/userSlice';
+import { errorToast, successToast } from './common/Toast';
+
 const NavBar = () => {
+  const { primary } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userState = useSelector((state) => state.user);
@@ -27,7 +30,7 @@ const NavBar = () => {
   return (
     <Navbar
       expand='lg'
-      style={{ backgroundColor: '#4E008E' }}
+      style={{ backgroundColor: primary }}
       className='z-1 text-light position-relative'>
       <Container>
         <NavbarBrand className='text-center' role='button'>
