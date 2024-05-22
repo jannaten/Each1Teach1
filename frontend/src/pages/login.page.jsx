@@ -1,5 +1,6 @@
 import * as formik from 'formik';
 import { useDispatch } from 'react-redux';
+import { useTheme } from 'styled-components';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { login } from '../redux/slices/userSlice';
 import { ArrowLeft } from 'react-bootstrap-icons';
@@ -9,7 +10,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FormControlStyled, PrimaryButton } from '../styles';
 import { errorToast, successToast } from '../components/common/Toast';
 import { FormLabel, FormGroup, Row, Form, Container } from 'react-bootstrap';
-import { useTheme } from 'styled-components';
 
 export default function LoginPage() {
   const { Formik } = formik;
@@ -44,7 +44,7 @@ export default function LoginPage() {
 
   return (
     <Container
-      style={{ maxWidth: '60rem', border: '0.1rem solid #4E008E' }}
+      style={{ maxWidth: '60rem', border: `0.1rem solid ${primary}` }}
       className='h-100 my-5 d-flex flex-column justify-content-center align-items-center'>
       <div className='w-100'>
         <ArrowLeft

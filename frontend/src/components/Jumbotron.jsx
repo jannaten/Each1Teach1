@@ -1,14 +1,14 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { Button, Container, Image, Row } from 'react-bootstrap';
+import { Button, Container, Row } from 'react-bootstrap';
 
 import { PrimaryButton } from '../styles';
-import ArrowRight from '../assets/icons/arrowright.svg';
+import { ArrowRight } from 'react-bootstrap-icons';
 
 const Jumbotron = () => {
-  const { primary, basic } = useTheme();
   const navigate = useNavigate();
+  const { primary, basic } = useTheme();
   return (
     <div
       className='w-50 position-relative'
@@ -62,11 +62,11 @@ const Jumbotron = () => {
                 }}>
                 Go to <b>Tuni moodle</b>
               </p>
-              <Image
-                loading='lazy'
-                className='mx-3'
-                alt='Arrow Right'
-                src={ArrowRight}
+              <ArrowRight
+                width={20}
+                height={20}
+                color={primary}
+                className='mx-2'
               />
             </div>
           </div>
