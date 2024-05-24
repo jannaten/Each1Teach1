@@ -72,7 +72,7 @@ const SectionNews = () => {
               ({ title, author, content, updatedAt }, index) => (
                 <Col sm={12} md={12} lg={6} xl={6} className='mt-3' key={index}>
                   <div
-                    style={{ minHeight: '300px' }}
+                    style={{ minHeight: '26rem' }}
                     className='p-3 bg-light d-flex flex-column align-items-center'>
                     <div className='mx-3 mb-3'>
                       <SvgExample color={primary} />

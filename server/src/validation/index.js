@@ -79,6 +79,7 @@ const userPatchSchema = Joi.object({
   email: Joi.string().email().regex(getEmailDomainRegex(allowedEmailDomains)),
   password: Joi.string().min(0).default(''),
   description: Joi.string().min(0).max(200).default(''),
+  deletedAt: Joi.alternatives().try(Joi.date(), Joi.allow(null)),
   roles: Joi.array()
     .items(Joi.string().valid('superuser', 'teacher', 'student'))
     .unique(),

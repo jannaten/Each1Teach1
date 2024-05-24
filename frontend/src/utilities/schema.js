@@ -44,10 +44,15 @@ export const registerSchema = Yup.object().shape({
 });
 
 export const userUpdateSchema = Yup.object().shape({
-  firstName: Yup.string().max(50, 'First name cannot exceed 50 characters'),
-  lastName: Yup.string().max(50, 'Last name cannot exceed 50 characters'),
+  firstName: Yup.string()
+    .required('First name is required')
+    .max(50, 'First name cannot exceed 50 characters'),
+  lastName: Yup.string()
+    .required('Last name is required')
+    .max(50, 'Last name cannot exceed 50 characters'),
   email: Yup.string()
     .email('Invalid email')
+    .required('Email is required')
     .matches(/^[a-zA-Z0-9._%+-]+@tuni\.fi$/, 'Email must end with @tuni.fi'),
   password: Yup.string().matches(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,

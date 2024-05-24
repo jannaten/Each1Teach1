@@ -1,6 +1,6 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useTheme } from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
 import { Trash2, VectorPen } from 'react-bootstrap-icons';
 
 import { PrimaryButton } from '../styles';

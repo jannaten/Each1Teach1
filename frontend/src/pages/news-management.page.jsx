@@ -49,11 +49,12 @@ export default function NewsManagementPage() {
           height={35}
           role='button'
           color={primary}
-          onClick={() => navigate('/dashboard')}
           className='opacity-forward p-0 m-0'
+          onClick={() => navigate('/dashboard')}
         />
       </div>
-      <h1 className='text-left mt-4 mb-5'>News management</h1>
+      <h1 className='text-left mt-4 mb-3'>News management</h1>
+      <p className='text-left'>{paginatedNews?.length} news found</p>
       <Row className='my-3 mx-0 p-0 w-100 d-flex flex-wrap align-items-center'>
         <Col sm={12} md={10} lg={10}>
           <FormControlStyled
@@ -89,7 +90,7 @@ export default function NewsManagementPage() {
           />
         </div>
       </Row>
-      <Table hover size='sm' className='mb-5'>
+      <Table hover size='sm' className='mb-5' responsive>
         <thead>
           <tr style={{ borderBottom: `1px solid ${primary}` }}>
             <th

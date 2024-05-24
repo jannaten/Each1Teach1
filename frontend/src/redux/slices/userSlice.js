@@ -18,21 +18,6 @@ export const login = createAsyncThunk(
   }
 );
 
-export const register = createAsyncThunk(
-  'user/register',
-  async (data, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(
-        `${axios.defaults.url}/auth/register`,
-        data
-      );
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
 export const getUserInfo = createAsyncThunk(
   'user/getUserInfo',
   async (_, { rejectWithValue }) => {
@@ -50,15 +35,38 @@ export const getUserInfo = createAsyncThunk(
   }
 );
 
+export const loadUsers = createAsyncThunk(
+  'user/loadUsers',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${axios.defaults.url}/users`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const updateUser = createAsyncThunk(
   'user/updateUser',
-  async (data, { rejectWithValue }) => {
+  async (
+    { data, isManagement, isEdit = true, isRegister = false },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await axios.patch(
-        `${axios.defaults.url}/users/${data.id}`,
-        data
-      );
-      return response.data;
+      let response;
+      if (isEdit)
+        response = await axios.patch(`${axios.defaults.url}/users/${data.id}`, {
+          ...data,
+          id: undefined
+        });
+      else if (isRegister)
+        response = await axios.post(
+          `${axios.defaults.url}/auth/register`,
+          data
+        );
+      else response = await axios.post(`${axios.defaults.url}/users`, data);
+      return { data: response.data, isManagement, isEdit, isRegister };
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -111,6 +119,18 @@ export const forgotPassword = createAsyncThunk(
   }
 );
 
+export const removeUser = createAsyncThunk(
+  'user/removeUser',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`${axios.defaults.url}/users/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const validateToken = createAsyncThunk(
   'user/validateToken',
   async ({ path, token }) => {
@@ -139,7 +159,8 @@ const userSlice = createSlice({
   initialState: {
     loading: false,
     errors: false,
-    data: null
+    data: null,
+    users: []
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -152,12 +173,9 @@ const userSlice = createSlice({
         state.data = action.payload;
         state.loading = false;
       })
-      // REGISTER
-      .addCase(register.fulfilled, (state, action) => {
-        const token = action?.payload?.token;
-        window.localStorage.setItem('access-token', token);
-        axios.defaults.headers.common['Auth'] = `Bearer ${token}`;
-        state.data = action.payload;
+      // LOAD USERS
+      .addCase(loadUsers.fulfilled, (state, action) => {
+        state.users = action.payload;
         state.loading = false;
       })
       // GET USER INFO / RELOGIN
@@ -181,8 +199,32 @@ const userSlice = createSlice({
         state.data = null;
       })
       // UPDATE
-      .addCase(updateUser.fulfilled, (state, action) => {
-        state.data = action.payload.user;
+      .addCase(updateUser.fulfilled, (state, { payload }) => {
+        if (payload.isManagement) {
+          state.users = state.users.map((user) =>
+            user.id === payload.data.id ? payload.data : user
+          );
+        } else if (payload.isRegister) {
+          const token = payload?.data.token;
+          window.localStorage.setItem('access-token', token);
+          axios.defaults.headers.common['Auth'] = `Bearer ${token}`;
+          state.data = payload.data;
+          state.loading = false;
+        } else
+          state.data = {
+            ...payload.data,
+            loginName: payload.data.firstName + ' ' + payload.data.lastName
+          };
+
+        state.loading = false;
+      })
+      .addCase(removeUser.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.users = state.users.map((user) => {
+          if (user.id === action.payload.id)
+            user.deletedAt = action.payload.deletedAt;
+          return user;
+        });
         state.loading = false;
       })
       // LOADING / PENDING

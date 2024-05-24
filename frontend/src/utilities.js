@@ -109,23 +109,6 @@ export const isObject = (value) => {
   return typeof value === 'object' && !Array.isArray(value) && value !== null;
 };
 
-const dayjs = require('dayjs');
-// Returns true if 'betweenDate' is between 'startDate' and 'endDate'
-export const isBetweenDates = (
-  startDate,
-  endDate,
-  betweenDate = new Date()
-) => {
-  const date1 = dayjs(new Date(startDate));
-  const date2 = dayjs(new Date(endDate));
-  const between = dayjs(new Date(betweenDate));
-
-  const val1 = date1.diff(between);
-  const val2 = date2.diff(between);
-
-  return val1 <= 0 && val2 >= 0;
-};
-
 export const postAnalytics = async (path, eventType, data) => {
   try {
     await axios.post('/api/analytics', { path, eventType, data });
@@ -215,3 +198,36 @@ export const isMobileDevice = () => {
     navigator.userAgent
   );
 };
+
+export const refactorLocalization = (data) => {
+  if (data.length === 0) return [];
+  return data.map((item) => ({
+    language: item.language.value,
+    level: item.level.value,
+    credits: parseInt(item.credits.value)
+  }));
+};
+
+export function filterAndStructure(configState, target_languages) {
+  const { languages, language_level, study_credits } = configState.data;
+  return target_languages?.map((userLang) => {
+    const language = languages?.find(
+      (lang) => lang.value === userLang.language
+    );
+    const level = language_level?.find((lvl) => lvl.value === userLang.level);
+    const credits = study_credits?.find(
+      (cred) => cred.value == userLang.credits
+    );
+    return {
+      language: language || {
+        value: userLang.language,
+        label: userLang.language
+      },
+      level: level || { value: userLang.level, label: userLang.level },
+      credits: credits || {
+        value: userLang.credits.toString(),
+        label: userLang.credits.toString()
+      }
+    };
+  });
+}

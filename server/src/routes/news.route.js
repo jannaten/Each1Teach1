@@ -39,8 +39,6 @@ router.post(
   '/',
   authHandler('teacher'),
   asyncErrorHandler(async (req, res) => {
-    if (!(req.user.id === req.body.author || req.user.isSuperuser))
-      throw createError(403, 'forbidden');
     const { value, error } = newsValidationSchema.validate(req.body);
     if (error) throw createError(400, error.details[0].message);
     const newsService = await getNewsService();
@@ -54,8 +52,6 @@ router.patch(
   validateObjectId,
   authHandler('teacher'),
   asyncErrorHandler(async (req, res) => {
-    if (!(req.user.id === req.body.author || req.user.isSuperuser))
-      throw createError(403, 'forbidden');
     const { value, error } = newsPatchSchema.validate(req.body);
     if (error) throw createError(400, error.details[0].message);
     const newsService = await getNewsService();
@@ -73,8 +69,6 @@ router.delete(
     const newsService = await getNewsService();
     const news = await newsService.getById(req.params.id);
     if (!news) throw createError(404, 'news not found');
-    if (!(req.user.id === news.author || req.user.isSuperuser))
-      throw createError(403, 'forbidden');
     const deletedNews = await newsService.delete(req.params.id);
     res.status(200).send(deletedNews);
   })

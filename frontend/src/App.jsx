@@ -5,14 +5,13 @@ import { ThemeProvider } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
+import { themes } from './utilities/colors';
 import { getUserInfo } from './redux/slices/userSlice';
 import ProtectedRoute from './components/ProtectedRoute';
-
-import { themes } from './utilities/colors';
-import { UserManagementPage, DashboardPage } from './pages';
 import { HomePage, LoginPage, RegisterPage } from './pages';
 import { ProfileManagementPage, NotFoundPage } from './pages';
 import { ErrorBoundary, NavBar, ModalRootComponent } from './components';
+import { UserManagementPage, NewsManagementPage, DashboardPage } from './pages';
 
 export default function App() {
   const location = useLocation();
@@ -76,7 +75,7 @@ export default function App() {
             />
             <Route
               path='/dashboard/news-management'
-              element={<UserManagementPage />}
+              element={<NewsManagementPage />}
             />
           </Route>
           <Route element={<NotFoundPage />} />
