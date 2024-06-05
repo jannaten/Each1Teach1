@@ -121,7 +121,14 @@ const developmentConfig = {
     }
   },
   devtool: 'source-map',
-  plugins: [new webpack.HotModuleReplacementPlugin()]
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      SERVER_PUBLIC_PORT: JSON.stringify(
+        `http://127.0.0.1:${process.env.SERVER_PUBLIC_PORT}`
+      )
+    })
+  ]
 };
 
 const productionConfig = {

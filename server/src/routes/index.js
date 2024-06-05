@@ -1,15 +1,17 @@
 const router = require('express').Router();
 
 const authRouter = require('./auth.route');
-const analyticRouter = require('./analytics.route');
 const newsRouter = require('./news.route');
 const userRouter = require('./user.route');
+const matchRouter = require('./match.route');
 const configRouter = require('./config.route');
+const analyticRouter = require('./analytics.route');
 
 router.use('/news', newsRouter);
 router.use('/auth', authRouter);
-router.use('/analytics', analyticRouter);
 router.use('/users', userRouter);
 router.use('/config', configRouter);
+router.use('/matches', matchRouter);
+router.use('/analytics', analyticRouter);
 
 module.exports = router;

@@ -10,6 +10,7 @@ export default function UserManagementPage() {
   const navigate = useNavigate();
   const { primary } = useTheme();
   const userState = useSelector((state) => state.user);
+  const { from } = { from: { pathname: '/dashboard' } };
   return (
     <Container
       className='h-100 my-5 d-flex flex-column justify-content-center align-items-center'

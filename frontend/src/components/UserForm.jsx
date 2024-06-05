@@ -238,7 +238,8 @@ const UserForm = ({
                 {errors.description}
               </Form.Control.Feedback>
             </FormGroup>
-            {(user?.roles.includes('student') || !isManagement) && (
+            {(user?.roles.includes('student') ||
+              (!isManagement && isRegister)) && (
               <>
                 <Form.Group
                   className='mb-3'

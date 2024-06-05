@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const UserService = require('../services/UserService');
 const ConfigService = require('../services/ConfigService');
 const { authHandler } = require('../middlewares/authHandler');
 const asyncErrorHandler = require('../middlewares/asyncMiddleware');
@@ -17,15 +18,35 @@ router.get(
   asyncErrorHandler(async (req, res) => {
     const configService = new ConfigService();
     const config = await configService.getAll();
-    function getRandomNumber() {
-      return Math.floor(Math.random() * 21);
-    }
-    const languages = config[0]?.languages.map((el) => ({
-      language: el.label,
-      students: getRandomNumber(),
-      teachers: getRandomNumber()
-    }));
-    return res.json(languages);
+    const userService = new UserService();
+    const users = await userService.getAll({});
+    const languageStats = config[0]?.languages.map((el) => {
+      const languageLabel = el.label;
+      const targetLanguage = el.value;
+      const studentsCount = users.filter((user) =>
+        user.languages_to_learn.some((lang) => lang.language === targetLanguage)
+      ).length;
+      const teachersCount = users.filter((user) =>
+        user.languages_for_teach.some(
+          (lang) => lang.language === targetLanguage
+        )
+      ).length;
+      return {
+        language: languageLabel,
+        students: studentsCount,
+        teachers: teachersCount
+      };
+    });
+    // const filteredLanguageStats = languageStats.filter(
+    //   (lang) => lang.students > 0 || lang.teachers > 0
+    // );
+    languageStats.sort((a, b) => {
+      const totalA = a.students + a.teachers;
+      const totalB = b.students + b.teachers;
+      if (totalA === totalB) return b.students - a.students;
+      return totalB - totalA;
+    });
+    return res.json(languageStats);
   })
 );
 

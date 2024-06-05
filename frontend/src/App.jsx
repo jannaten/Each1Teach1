@@ -8,9 +8,9 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { themes } from './utilities/colors';
 import { getUserInfo } from './redux/slices/userSlice';
 import ProtectedRoute from './components/ProtectedRoute';
-import { HomePage, LoginPage, RegisterPage } from './pages';
 import { ProfileManagementPage, NotFoundPage } from './pages';
 import { ErrorBoundary, NavBar, ModalRootComponent } from './components';
+import { HomePage, LoginPage, RegisterPage, MatchesPage } from './pages';
 import { UserManagementPage, NewsManagementPage, DashboardPage } from './pages';
 
 export default function App() {
@@ -26,9 +26,8 @@ export default function App() {
 
   const loadUser = async () => {
     try {
-      if (!userState?.data && localStorage.getItem('access-token')) {
+      if (!userState?.data && localStorage.getItem('access-token'))
         unwrapResult(await dispatch(getUserInfo()));
-      }
     } catch (error) {
       console.error('error: ', error);
     }
@@ -65,6 +64,7 @@ export default function App() {
               path='/dashboard/my-profile'
               element={<ProfileManagementPage />}
             />
+            <Route path='/dashboard/matches' element={<MatchesPage />} />
           </Route>
           <Route
             path='/'
@@ -86,3 +86,50 @@ export default function App() {
     </ErrorBoundary>
   );
 }
+// import React, { useState, useEffect } from 'react';
+// import io from 'socket.io-client';
+// import './App.css';
+
+// const socket = io(SERVER_PUBLIC_PORT);
+// console.log(SERVER_PUBLIC_PORT);
+// function App() {
+//   const [messages, setMessages] = useState([]);
+//   const [message, setMessage] = useState('');
+
+//   useEffect(() => {
+//     socket.on('chat message', (msg) => {
+//       setMessages((prevMessages) => [...prevMessages, msg]);
+//     });
+
+//     return () => {
+//       socket.off('chat message');
+//     };
+//   }, []);
+
+//   const sendMessage = (e) => {
+//     e.preventDefault();
+//     socket.emit('chat message', message);
+//     setMessage('');
+//   };
+
+//   return (
+//     <div className='App'>
+//       <ul id='messages'>
+//         {messages.map((msg, index) => (
+//           <li key={index}>{msg}</li>
+//         ))}
+//       </ul>
+//       <form id='form' onSubmit={sendMessage}>
+//         <input
+//           id='input'
+//           autoComplete='off'
+//           value={message}
+//           onChange={(e) => setMessage(e.target.value)}
+//         />
+//         <button>Send</button>
+//       </form>
+//     </div>
+//   );
+// }
+
+// export default App;

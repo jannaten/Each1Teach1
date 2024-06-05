@@ -30,10 +30,14 @@ const matchSchema = new mongoose.Schema(
     matchEndDate: {
       type: Date
     },
+    active: {
+      type: Boolean,
+      default: true
+    },
     status: {
-      type: String,
-      enum: ['active', 'inactive'],
-      default: 'active'
+      type: [String],
+      enum: ['approved', 'rejected', 'pending'],
+      default: ['pending']
     },
     deletedAt: {
       type: Date,
