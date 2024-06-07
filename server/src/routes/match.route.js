@@ -104,8 +104,15 @@ router.post(
   '/',
   authHandler('student'),
   asyncErrorHandler(async (req, res) => {
+    const { requestUser, recipientUser } = req.body;
     const matchService = new MatchService();
-    const match = await matchService.create(req.body);
+    const existingMatch = await matchService.findExistingMatch(
+      requestUser,
+      recipientUser
+    );
+    if (existingMatch)
+      return res.status(400).json({ message: 'Invitation already sent.' });
+    const match = await matchService.create({ requestUser, recipientUser });
     res.status(201).json(match);
   })
 );
@@ -117,9 +124,7 @@ router.put(
   asyncErrorHandler(async (req, res) => {
     const matchService = new MatchService();
     const match = await matchService.getById(req.params.id);
-    if (!match) {
-      throw createError(404, 'match not found');
-    }
+    if (!match) throw createError(404, 'match not found');
     const updatedMatch = await matchService.update(req.params.id, req.body);
     res.json(updatedMatch);
   })

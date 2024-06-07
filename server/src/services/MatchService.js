@@ -15,6 +15,16 @@ class MatchService {
     return await MatchService.getModel().then((Model) => Model.findById(id));
   };
 
+  findExistingMatch = async function (requestUserId, recipientUserId) {
+    const Model = await MatchService.getModel();
+    return await Model.findOne({
+      $or: [
+        { requestUser: requestUserId, recipientUser: recipientUserId },
+        { requestUser: recipientUserId, recipientUser: requestUserId }
+      ]
+    });
+  };
+
   create = async function (data) {
     const Model = await MatchService.getModel();
     const match = new Model(data);

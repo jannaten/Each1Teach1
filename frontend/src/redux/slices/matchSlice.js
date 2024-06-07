@@ -46,7 +46,8 @@ export const acceptInvitation = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.put(`${axios.defaults.url}/matches/${id}`, {
-        status: ['approved']
+        status: ['approved'],
+        matchStartDate: new Date()
       });
       return response.data;
     } catch (error) {
@@ -97,7 +98,13 @@ const matchSlice = createSlice({
       })
       .addCase(acceptInvitation.fulfilled, (state, { payload }) => {
         state.data = [...state.data]?.map((match) => {
-          if (match.invited?.matchId === payload.id) match.invited = {};
+          if (match.invited?.matchId === payload.id)
+            match.invited = {
+              matchId: payload.id,
+              requestUser: payload.requestUser,
+              recipientUser: payload.recipientUser,
+              status: payload.status
+            };
           return match;
         });
       })

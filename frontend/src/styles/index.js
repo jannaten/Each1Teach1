@@ -1,9 +1,10 @@
 import { ErrorToastStyle, SuccessToastStyle } from './common.styles';
 import { PrimaryButton, FormControlStyled } from './auth.styles';
+import { DashboardButton, ToggleButton } from './common.styles';
 import { PaginationItem } from './pagination.style';
-import { DashboardButton } from './common.styles';
 
 export {
+  ToggleButton,
   PrimaryButton,
   PaginationItem,
   DashboardButton,
