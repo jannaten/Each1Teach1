@@ -100,9 +100,6 @@ body {
   padding: 0%;
 }
 
-.progressbar {
-  padding-left: 5rem !important;
+.progress-bar {
+  background-color: lightslategray;
 }
-
-/* .progress-bar {
-} */

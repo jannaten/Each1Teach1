@@ -18,7 +18,10 @@ export default function App() {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
 
-  const isRootPage = location.pathname === '/';
+  const isRootPage =
+    location.pathname === '/' ||
+    location.pathname === '/login' ||
+    location.pathname === '/register';
 
   useEffect(() => {
     if (!isRootPage) loadUser();
@@ -32,14 +35,6 @@ export default function App() {
       console.error('error: ', error);
     }
   };
-
-  // useEffect(() => {
-  //   return () => {
-  //     if (localStorage.getItem('access-token')) {
-  //       unwrapResult(dispatch(getUserInfo()));
-  //     }
-  //   };
-  // }, [location]);
 
   return (
     <ErrorBoundary>

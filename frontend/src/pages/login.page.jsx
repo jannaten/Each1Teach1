@@ -1,24 +1,26 @@
 import * as formik from 'formik';
-import { useDispatch } from 'react-redux';
 import { useTheme } from 'styled-components';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { login } from '../redux/slices/userSlice';
 import { ArrowLeft } from 'react-bootstrap-icons';
-import { loginSchema } from '../utilities/schema';
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FormControlStyled, PrimaryButton } from '../styles';
-import { errorToast, successToast } from '../components/common/Toast';
 import { FormLabel, FormGroup, Row, Form, Container } from 'react-bootstrap';
+
+import { loginSchema } from '../utilities/schema';
+import { FormControlStyled, PrimaryButton } from '../styles';
+import { getUserInfo, login } from '../redux/slices/userSlice';
+import { errorToast, successToast } from '../components/common/Toast';
 
 export default function LoginPage() {
   const { Formik } = formik;
-  const { primary } = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  const initialValues = { email: '', password: '' };
+  const { primary } = useTheme();
+  const userState = useSelector((state) => state.user);
 
+  const initialValues = { email: '', password: '' };
   const [showPassword, setShowPassword] = useState(false);
 
   const onLocalLogin = async (form) => {
@@ -32,15 +34,21 @@ export default function LoginPage() {
     }
   };
 
-  const { from } = location.state || {
-    from: { pathname: '/dashboard' }
-  };
-
   useEffect(() => {
-    if (localStorage.getItem('access-token')) {
-      navigate(from.pathname, { replace: true });
+    loadUser();
+  }, []);
+
+  const loadUser = async () => {
+    try {
+      if (!userState.data && localStorage.getItem('access-token')) {
+        unwrapResult(await dispatch(getUserInfo()));
+        const from = location.state?.from || { pathname: '/dashboard' };
+        navigate(from);
+      }
+    } catch (error) {
+      console.error('error: ', error);
     }
-  }, [navigate]);
+  };
 
   return (
     <Container

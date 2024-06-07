@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import { useTheme } from 'styled-components';
+import { unwrapResult } from '@reduxjs/toolkit';
 import { ArrowLeft } from 'react-bootstrap-icons';
+import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { UserForm } from '../components';
+import { getUserInfo } from '../redux/slices/userSlice';
 import { loadConfig } from '../redux/slices/configSlice';
 
 export default function RegisterPage() {
@@ -13,20 +15,27 @@ export default function RegisterPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { primary } = useTheme();
-
-  const { from } = location.state || {
-    from: { pathname: '/dashboard' }
-  };
+  const userState = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(loadConfig());
   }, []);
 
   useEffect(() => {
-    if (localStorage.getItem('access-token')) {
-      navigate(from.pathname, { replace: true });
+    loadUser();
+  }, []);
+
+  const loadUser = async () => {
+    try {
+      if (!userState?.data && localStorage.getItem('access-token')) {
+        unwrapResult(await dispatch(getUserInfo()));
+        const from = location.state?.from || { pathname: '/dashboard' };
+        navigate(from);
+      }
+    } catch (error) {
+      console.error('error: ', error);
     }
-  }, [navigate]);
+  };
 
   return (
     <Container
@@ -38,8 +47,8 @@ export default function RegisterPage() {
           height={35}
           role='button'
           color={primary}
+          onClick={() => navigate('/login')}
           className='opacity-forward mx-5 my-2'
-          onClick={() => navigate(from.pathname, { replace: true })}
         />
       </div>
       <h1

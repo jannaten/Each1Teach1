@@ -25,10 +25,11 @@ const matchSchema = new mongoose.Schema(
     },
     matchStartDate: {
       type: Date,
-      default: Date.now
+      default: null
     },
     matchEndDate: {
-      type: Date
+      type: Date,
+      default: null
     },
     active: {
       type: Boolean,

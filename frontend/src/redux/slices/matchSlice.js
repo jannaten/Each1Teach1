@@ -15,6 +15,46 @@ export const loadMatches = createAsyncThunk(
   }
 );
 
+export const sendInvitation = createAsyncThunk(
+  'match/sendInvitation',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${axios.defaults.url}/matches`, data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const cancelInvitation = createAsyncThunk(
+  'match/cancelInvitation',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(
+        `${axios.defaults.url}/matches/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const acceptInvitation = createAsyncThunk(
+  'match/acceptInvitation',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(`${axios.defaults.url}/matches/${id}`, {
+        status: ['approved']
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const isPendingAction = (action) => {
   return action.type.startsWith('config/') && action.type.endsWith('/pending');
 };
@@ -36,6 +76,30 @@ const matchSlice = createSlice({
       .addCase(loadMatches.fulfilled, (state, { payload }) => {
         state.data = payload;
         state.loading = false;
+      })
+      .addCase(sendInvitation.fulfilled, (state, { payload }) => {
+        state.data = [...state.data]?.map((match) => {
+          if (match.id === payload.recipientUser)
+            match.invited = {
+              matchId: payload.id,
+              requestUser: payload.requestUser,
+              recipientUser: payload.recipientUser,
+              status: payload.status
+            };
+          return match;
+        });
+      })
+      .addCase(cancelInvitation.fulfilled, (state, { payload }) => {
+        state.data = [...state.data]?.map((match) => {
+          if (match.invited?.matchId === payload.id) match.invited = {};
+          return match;
+        });
+      })
+      .addCase(acceptInvitation.fulfilled, (state, { payload }) => {
+        state.data = [...state.data]?.map((match) => {
+          if (match.invited?.matchId === payload.id) match.invited = {};
+          return match;
+        });
       })
       // LOADING / PENDING
       .addMatcher(isPendingAction, (state) => {

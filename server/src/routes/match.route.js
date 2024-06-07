@@ -1,10 +1,12 @@
 const router = require('express').Router();
-const { authHandler } = require('../middlewares/authHandler');
-const asyncErrorHandler = require('../middlewares/asyncMiddleware');
 const UserService = require('../services/UserService');
+const MatchService = require('../services/MatchService');
+const { authHandler } = require('../middlewares/authHandler');
+const validateObjectId = require('../middlewares/validateObjectId');
+const asyncErrorHandler = require('../middlewares/asyncMiddleware');
 
 const userJSON = (user) => ({
-  id: user.id,
+  id: user._id,
   firstName: user.firstName,
   lastName: user.lastName,
   loginName: `${user.firstName} ${user.lastName}`,
@@ -20,7 +22,8 @@ const userJSON = (user) => ({
   languages_for_teach: user.languages_for_teach,
   deletedAt: user.deletedAt,
   updatedAt: user.updatedAt,
-  createdAt: user.createdAt
+  createdAt: user.createdAt,
+  invited: user.invited
 });
 
 function calculateMatchPercentage(learnLang, teachLang) {
@@ -73,58 +76,66 @@ router.get(
           ?.match_percentage || 0;
       return bMatchPercentage - aMatchPercentage;
     });
+    const matchService = new MatchService();
+    const matches = await matchService.getAll();
+    if (matchUsers.length > 0) {
+      matchUsers = matchUsers.map((user) => {
+        const match = matches.find(
+          (m) =>
+            m.requestUser.toString() === user._id.toString() ||
+            m.recipientUser.toString() === user._id.toString()
+        );
+        user.invited = match
+          ? {
+              matchId: match._id.toString(),
+              requestUser: match.requestUser.toString(),
+              recipientUser: match.recipientUser.toString(),
+              status: match.status
+            }
+          : {};
+        return user;
+      });
+    }
     res.json(matchUsers.map((user) => userJSON(user)));
   })
 );
 
-// router.get(
-//   '/:id',
-//   validateObjectId,
-//   asyncErrorHandler(async (req, res) => {
-//     const newsService = await getNewsService();
-//     const news = await newsService.getById(req.params.id);
-//     if (!news) throw createError(404, 'news not found');
-//     res.json(news);
-//   })
-// );
+router.post(
+  '/',
+  authHandler('student'),
+  asyncErrorHandler(async (req, res) => {
+    const matchService = new MatchService();
+    const match = await matchService.create(req.body);
+    res.status(201).json(match);
+  })
+);
 
-// router.post(
-//   '/',
-//   authHandler('teacher'),
-//   asyncErrorHandler(async (req, res) => {
-//     const { value, error } = newsValidationSchema.validate(req.body);
-//     if (error) throw createError(400, error.details[0].message);
-//     const newsService = await getNewsService();
-//     const news = await newsService.create(value);
-//     res.status(201).json(news);
-//   })
-// );
+router.put(
+  '/:id',
+  validateObjectId,
+  authHandler('student'),
+  asyncErrorHandler(async (req, res) => {
+    const matchService = new MatchService();
+    const match = await matchService.getById(req.params.id);
+    if (!match) {
+      throw createError(404, 'match not found');
+    }
+    const updatedMatch = await matchService.update(req.params.id, req.body);
+    res.json(updatedMatch);
+  })
+);
 
-// router.patch(
-//   '/:id',
-//   validateObjectId,
-//   authHandler('teacher'),
-//   asyncErrorHandler(async (req, res) => {
-//     const { value, error } = newsPatchSchema.validate(req.body);
-//     if (error) throw createError(400, error.details[0].message);
-//     const newsService = await getNewsService();
-//     const updatedNews = await newsService.update(req.params.id, value);
-//     if (!updatedNews) throw createError(404, 'news not found');
-//     res.json(updatedNews);
-//   })
-// );
-
-// router.delete(
-//   '/:id',
-//   validateObjectId,
-//   authHandler('teacher'),
-//   asyncErrorHandler(async (req, res) => {
-//     const newsService = await getNewsService();
-//     const news = await newsService.getById(req.params.id);
-//     if (!news) throw createError(404, 'news not found');
-//     const deletedNews = await newsService.delete(req.params.id);
-//     res.status(200).send(deletedNews);
-//   })
-// );
+router.delete(
+  '/:id',
+  validateObjectId,
+  authHandler('student'),
+  asyncErrorHandler(async (req, res) => {
+    const matchService = new MatchService();
+    const match = await matchService.getById(req.params.id);
+    if (!match) throw createError(404, 'match not found');
+    const deletedMatch = await matchService.delete(req.params.id);
+    res.status(200).send(deletedMatch);
+  })
+);
 
 module.exports = router;
