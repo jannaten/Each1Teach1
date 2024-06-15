@@ -3,15 +3,19 @@ const { toJSON } = require('../utilities/models');
 
 const chatSchema = new mongoose.Schema(
   {
-    channelId: {
+    matchId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Channel',
+      ref: 'Match',
       required: true
     },
     sender: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true
+    },
+    receiver: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     },
     message: {
       type: String,
@@ -20,6 +24,10 @@ const chatSchema = new mongoose.Schema(
     attachment: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'File'
+    },
+    seen: {
+      type: Boolean,
+      default: false
     },
     deletedAt: {
       type: Date,

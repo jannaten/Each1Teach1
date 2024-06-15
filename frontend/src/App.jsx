@@ -8,7 +8,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { themes } from './utilities/colors';
 import { getUserInfo } from './redux/slices/userSlice';
 import ProtectedRoute from './components/ProtectedRoute';
-import { ProfileManagementPage, NotFoundPage } from './pages';
+import { ProfileManagementPage, NotFoundPage, ChatPage } from './pages';
 import { ErrorBoundary, NavBar, ModalRootComponent } from './components';
 import { HomePage, LoginPage, RegisterPage, MatchesPage } from './pages';
 import { UserManagementPage, NewsManagementPage, DashboardPage } from './pages';
@@ -60,6 +60,7 @@ export default function App() {
               element={<ProfileManagementPage />}
             />
             <Route path='/dashboard/matches' element={<MatchesPage />} />
+            <Route path='/dashboard/chat' element={<ChatPage />} />
           </Route>
           <Route
             path='/'

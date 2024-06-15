@@ -82,10 +82,8 @@ router.get(
       matchUsers = matchUsers.map((user) => {
         const match = matches.find(
           (m) =>
-            (m.requestUser.toString() === req.user.id &&
-              m.recipientUser.toString() === user._id.toString()) ||
-            (m.requestUser.toString() === user._id.toString() &&
-              m.recipientUser.toString() === req.user.id)
+            m.requestUser.toString() === user._id.toString() ||
+            m.recipientUser.toString() === user._id.toString()
         );
         user.invited = match
           ? {
@@ -102,32 +100,18 @@ router.get(
   })
 );
 
-router.get(
-  '/all',
-  authHandler('student'),
-  asyncErrorHandler(async (req, res) => {
-    const matchService = new MatchService();
-    const matches = await matchService.getMatchesWithChats({
-      $or: [{ requestUser: req.user.id }, { recipientUser: req.user.id }],
-      $and: [{ status: 'approved' }]
-    });
-    res.json(matches);
-  })
-);
-
 router.post(
   '/',
   authHandler('student'),
   asyncErrorHandler(async (req, res) => {
     const { requestUser, recipientUser } = req.body;
     const matchService = new MatchService();
-    const existingMatch = await matchService.getExistingMatch(
+    const existingMatch = await matchService.findExistingMatch(
       requestUser,
       recipientUser
     );
     if (existingMatch)
       return res.status(400).json({ message: 'Invitation already sent.' });
-    s;
     const match = await matchService.create({ requestUser, recipientUser });
     res.status(201).json(match);
   })

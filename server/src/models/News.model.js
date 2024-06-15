@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const UserModel = require('./User.model');
 const { toJSON } = require('../utilities/models');
 
 const newsSchema = new mongoose.Schema(

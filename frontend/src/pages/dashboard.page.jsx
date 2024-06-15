@@ -50,7 +50,7 @@ export default function DashboardPage() {
             <DashboardButtonCol
               title='Messages'
               icon={<ChatDotsFill size={80} />}
-              onClick={() => navigate('/dashboard/messages')}
+              onClick={() => navigate('/dashboard/chat')}
             />
             <DashboardButtonCol
               title='Matches'

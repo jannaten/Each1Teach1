@@ -36,19 +36,19 @@ export default function UserManagementPage() {
     unwrapResult(dispatch(loadUsers()));
   }, []);
 
-  const filteredUsers = (type = 'object') =>
-    userState.users?.filter(
-      (user) =>
-        user?.email?.toLowerCase()?.includes(searchInputValue?.toLowerCase()) &&
-        typeof user.deletedAt === type
-    );
-
-  const paginatedUsers = paginate(
-    show ? filteredUsers('string') : filteredUsers(),
-    currentPage,
-    pageSize
+  const activeUsers = userState.users?.filter(
+    (user) =>
+      !user.deletedAt &&
+      user?.email?.toLowerCase()?.includes(searchInputValue?.toLowerCase())
+  );
+  const deletedUsers = userState.users?.filter(
+    (user) =>
+      user.deletedAt &&
+      user?.email?.toLowerCase()?.includes(searchInputValue?.toLowerCase())
   );
 
+  const filteredUsers = show ? deletedUsers : activeUsers;
+  const paginatedUsers = paginate(filteredUsers, currentPage, pageSize);
   return (
     <Container className='pt-3'>
       <div className='w-100 p-0 m-0'>
@@ -63,8 +63,11 @@ export default function UserManagementPage() {
       </div>
       <h1 className='text-left mt-4 mb-3'>User management</h1>
       <p className='text-left'>
-        {paginatedUsers?.length}
-        {paginatedUsers?.length > 1 ? ' users found' : ' user found'}
+        {!show ? activeUsers?.length : deletedUsers?.length}
+        {(!show && activeUsers?.length > 1) ||
+        (show && deletedUsers?.length > 1)
+          ? ' users found'
+          : ' user found'}
       </p>
       <Row className='my-3 mx-0 p-0 w-100 d-flex flex-wrap align-items-center'>
         <Col sm={12} md={10} lg={10}>
@@ -101,9 +104,7 @@ export default function UserManagementPage() {
       <Row>
         <div className='d-flex justify-content-center'>
           <Pagination
-            itemsCount={
-              !show ? userState.users?.length : filteredUsers('string')
-            }
+            itemsCount={filteredUsers.length}
             onPageChange={handlePageChange}
             currentPage={currentPage}
             pageSize={pageSize}
