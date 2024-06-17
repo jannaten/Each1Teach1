@@ -4,11 +4,13 @@ import newsSlice from './slices/newsSlice';
 import modalSlice from './slices/modalSlice';
 import matchSlice from './slices/matchSlice';
 import configSlice from './slices/configSlice';
+import chatSlice from './slices/chatSlice';
 
 const store = configureStore({
   reducer: {
     user: userSlice,
     news: newsSlice,
+    chats: chatSlice,
     modal: modalSlice,
     config: configSlice,
     matches: matchSlice

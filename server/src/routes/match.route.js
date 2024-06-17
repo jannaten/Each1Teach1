@@ -103,7 +103,7 @@ router.get(
 );
 
 router.get(
-  '/all',
+  '/chats',
   authHandler('student'),
   asyncErrorHandler(async (req, res) => {
     const matchService = new MatchService();
@@ -127,7 +127,6 @@ router.post(
     );
     if (existingMatch)
       return res.status(400).json({ message: 'Invitation already sent.' });
-    s;
     const match = await matchService.create({ requestUser, recipientUser });
     res.status(201).json(match);
   })
