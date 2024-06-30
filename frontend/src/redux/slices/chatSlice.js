@@ -15,6 +15,31 @@ export const loadChats = createAsyncThunk(
   }
 );
 
+export const saveMessage = createAsyncThunk(
+  'chat/saveMessage',
+  async ({ data, isEdit }, { rejectWithValue }) => {
+    try {
+      let response;
+      if (isEdit)
+        response = await axios.patch(
+          `${axios.defaults.url}/matches/chats/${data.id}`,
+          {
+            ...data,
+            id: undefined
+          }
+        );
+      else
+        response = await axios.post(
+          `${axios.defaults.url}/matches/chats`,
+          data
+        );
+      return { data: response.data, isEdit };
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const isPendingAction = (action) => {
   return action.type.startsWith('config/') && action.type.endsWith('/pending');
 };
@@ -36,6 +61,24 @@ const matchSlice = createSlice({
       .addCase(loadChats.fulfilled, (state, { payload }) => {
         state.data = payload;
         state.loading = false;
+      })
+      // SAVE
+      .addCase(saveMessage.fulfilled, (state, { payload }) => {
+        try {
+          state.loading = false;
+          if (payload.isEdit) {
+          } else {
+            state.data = [...state.data].map((el) => {
+              if (el.id === payload.data.matchId) el.chats.push(payload.data);
+              return el;
+            });
+            state.loading = false;
+          }
+        } catch (error) {
+          console.error('error: ', error);
+          state.errors = error;
+          state.loading = false;
+        }
       })
       // LOADING / PENDING
       .addMatcher(isPendingAction, (state) => {

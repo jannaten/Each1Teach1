@@ -1,7 +1,10 @@
 const router = require('express').Router();
+const { chatSchema } = require('../validation');
 const UserService = require('../services/UserService');
+const ChatService = require('../services/ChatService');
 const MatchService = require('../services/MatchService');
 const { authHandler } = require('../middlewares/authHandler');
+const { createError } = require('../middlewares/errorHandler');
 const validateObjectId = require('../middlewares/validateObjectId');
 const asyncErrorHandler = require('../middlewares/asyncMiddleware');
 
@@ -129,6 +132,20 @@ router.post(
       return res.status(400).json({ message: 'Invitation already sent.' });
     const match = await matchService.create({ requestUser, recipientUser });
     res.status(201).json(match);
+  })
+);
+
+router.post(
+  '/chats',
+  authHandler('student'),
+  asyncErrorHandler(async (req, res) => {
+    const chatService = new ChatService();
+    const { value, error } = chatSchema.validate(req.body);
+    if (error) throw createError(400, error.details[0].message);
+    let message;
+    message = await chatService.create(value);
+    message = await chatService.getById(message.id);
+    res.status(201).json(message);
   })
 );
 

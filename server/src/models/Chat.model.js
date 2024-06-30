@@ -15,7 +15,8 @@ const chatSchema = new mongoose.Schema(
     },
     receiver: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
+      required: true
     },
     message: {
       type: String,
@@ -23,7 +24,8 @@ const chatSchema = new mongoose.Schema(
     },
     attachment: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'File'
+      ref: 'File',
+      required: false
     },
     seen: {
       type: Boolean,

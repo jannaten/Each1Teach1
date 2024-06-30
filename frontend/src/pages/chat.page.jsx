@@ -9,7 +9,8 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, InputGroup, Form } from 'react-bootstrap';
 
 import { PrimaryButton } from '../styles';
-import { loadChats } from '../redux/slices/chatSlice';
+import { errorToast } from '../components/common/Toast';
+import { loadChats, saveMessage } from '../redux/slices/chatSlice';
 
 export default function ChatPage() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export default function ChatPage() {
   const { primary } = useTheme();
   const { from } = { from: { pathname: '/dashboard' } };
 
+  const [isEdit] = useState(false);
   const [chatBox, setChatBox] = useState(null);
   const [textField, setTextField] = useState('');
 
@@ -24,7 +26,16 @@ export default function ChatPage() {
   const chatState = useSelector((state) => state.chats);
 
   useEffect(() => {
-    unwrapResult(dispatch(loadChats()));
+    dispatch(loadChats())
+      .then(unwrapResult)
+      .then((result) => {
+        if (result?.length > 0) {
+          setChatBox(result[0]);
+        }
+      })
+      .catch((error) => {
+        errorToast(error.message);
+      });
   }, [dispatch]);
 
   const handleChange = (e) => {
@@ -35,6 +46,30 @@ export default function ChatPage() {
     if (requestUser.id === userState.data.id)
       return `${recipientUser.firstName} ${recipientUser.lastName}`;
     else return `${requestUser.firstName} ${requestUser.lastName}`;
+  };
+
+  const getRecipientUserId = () => {
+    if (chatBox.requestUser.id !== userState.data.id)
+      return chatBox.requestUser.id;
+    else return chatBox.recipientUser.id;
+  };
+
+  const onSubmitMessage = async (e) => {
+    e.preventDefault();
+    unwrapResult(
+      await dispatch(
+        saveMessage({
+          data: {
+            matchId: chatBox.id,
+            sender: userState.data.id,
+            receiver: getRecipientUserId(),
+            message: textField
+          },
+          isEdit
+        })
+      )
+    );
+    setTextField('');
   };
 
   return (
@@ -108,7 +143,8 @@ export default function ChatPage() {
           <div
             style={{
               width: '100%',
-              minHeight: '30rem',
+              height: '30rem',
+              maxHeight: '30rem',
               border: `0.1rem solid ${primary}`
             }}
             className='d-flex flex-column justify-content-between align-items-center p-3'>
@@ -121,28 +157,65 @@ export default function ChatPage() {
                     textAlign: 'center',
                     backgroundColor: primary
                   }}>
-                  <b>
-                    {getFullName(chatBox.requestUser, chatBox.recipientUser)}
-                  </b>
+                  {getFullName(chatBox.requestUser, chatBox.recipientUser)}
                 </div>
-                <InputGroup className='mb-3'>
-                  <Form.Control
-                    value={textField}
-                    aria-label='Default'
-                    className='rounded-0'
-                    onChange={handleChange}
-                    aria-describedby='inputGroup-sizing-default'
-                    style={{ border: `0.1rem solid ${primary}` }}
-                  />
-                  <PrimaryButton>Send</PrimaryButton>
-                </InputGroup>
+                <div
+                  className='flex-grow-1 w-100 my-3 p-2 overflow-auto'
+                  style={{
+                    flexGrow: 1,
+                    border: `0.1rem solid ${primary}`
+                  }}>
+                  {chatState.data
+                    ?.find((el) => el.id === chatBox.id)
+                    ?.chats.map((chat, index) => (
+                      <div
+                        key={index}
+                        className={`w-50 bg-light p-3 mx-3 my-3 d-flex flex-row flex-wrap align-items-center justify-content-start border border-dark ${
+                          chat.sender.id === userState.data.id
+                            ? 'ms-auto'
+                            : 'me-auto'
+                        }`}>
+                        <div className='mx-2'>
+                          <Avatar
+                            size={50}
+                            variant={chat.sender.avatar[0]}
+                            name={`${chat.sender.firstName} ${chat?.sender?.lastName}`}
+                            colors={[
+                              '#92A1C6',
+                              '#146A7C',
+                              '#F0AB3D',
+                              '#C271B4',
+                              '#C20D90'
+                            ]}
+                          />
+                        </div>
+                        <div key={index}>{chat.message}</div>
+                      </div>
+                    ))}
+                </div>
+                <Form className='w-100' onSubmit={onSubmitMessage}>
+                  <InputGroup>
+                    <Form.Control
+                      value={textField}
+                      aria-label='Default'
+                      className='rounded-0'
+                      onChange={handleChange}
+                      aria-describedby='inputGroup-sizing-default'
+                      style={{ border: `0.1rem solid ${primary}` }}
+                    />
+                    <PrimaryButton
+                      type='submit'
+                      disabled={textField.length < 1}>
+                      Send
+                    </PrimaryButton>
+                  </InputGroup>
+                </Form>
               </>
             ) : (
-              <h5>Select a chat</h5>
+              <h5 className='text-center my-auto'>Select a chat</h5>
             )}
           </div>
         </Col>
-        <Col></Col>
       </Row>
     </Container>
   );

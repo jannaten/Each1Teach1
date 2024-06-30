@@ -149,10 +149,18 @@ const newsPatchSchema = Joi.object({
   author: Joi.string().required()
 });
 
+const chatSchema = Joi.object({
+  matchId: Joi.string().required(),
+  sender: Joi.string().required(),
+  receiver: Joi.string().required(),
+  message: Joi.string().required().max(200)
+});
+
 module.exports = {
   userValidationSchema,
   loginValidationSchema,
   newsValidationSchema,
   newsPatchSchema,
-  userPatchSchema
+  userPatchSchema,
+  chatSchema
 };

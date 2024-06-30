@@ -12,7 +12,17 @@ class ChatService {
   };
 
   getById = async function (id) {
-    return await ChatService.getModel().then((Model) => Model.findById(id));
+    return await ChatService.getModel().then((Model) =>
+      Model.findById(id)
+        .populate({
+          path: 'sender',
+          select: 'firstName lastName email avatar'
+        })
+        .populate({
+          path: 'receiver',
+          select: 'firstName lastName email avatar'
+        })
+    );
   };
 
   create = async function (data) {

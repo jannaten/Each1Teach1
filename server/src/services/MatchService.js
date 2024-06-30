@@ -46,6 +46,14 @@ class MatchService {
     const matchIds = matches.map((match) => match._id);
     const chats = await MatchService.getChatModel().then((Chat) =>
       Chat.find({ matchId: { $in: matchIds } })
+        .populate({
+          path: 'sender',
+          select: 'firstName lastName email avatar'
+        })
+        .populate({
+          path: 'receiver',
+          select: 'firstName lastName email avatar'
+        })
     );
     const matchesWithChats = matches.map((match) => {
       const relatedChats = chats.filter(
