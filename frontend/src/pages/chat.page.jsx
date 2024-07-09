@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Avatar from 'boring-avatars';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -5,19 +6,19 @@ import { useTheme } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { ArrowLeft } from 'react-bootstrap-icons';
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, InputGroup, Form } from 'react-bootstrap';
+import React, { useEffect, useRef, useState } from 'react';
+import { Container, Row, Col, InputGroup, Form, Badge } from 'react-bootstrap';
 
-import { PrimaryButton } from '../styles';
 import { errorToast } from '../components/common/Toast';
+import { FormControlStyled, PrimaryButton } from '../styles';
 import { loadChats, saveMessage } from '../redux/slices/chatSlice';
 
 export default function ChatPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { primary } = useTheme();
+  const chatContainerRef = useRef(null);
   const { from } = { from: { pathname: '/dashboard' } };
-
   const [isEdit] = useState(false);
   const [chatBox, setChatBox] = useState(null);
   const [textField, setTextField] = useState('');
@@ -38,6 +39,13 @@ export default function ChatPage() {
       });
   }, [dispatch]);
 
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [chatBox, chatState]);
+
   const handleChange = (e) => {
     setTextField(e.target.value);
   };
@@ -46,6 +54,11 @@ export default function ChatPage() {
     if (requestUser.id === userState.data.id)
       return `${recipientUser.firstName} ${recipientUser.lastName}`;
     else return `${requestUser.firstName} ${requestUser.lastName}`;
+  };
+
+  const getRecipientUser = (requestUser, recipientUser) => {
+    if (requestUser.id === userState.data.id) return recipientUser;
+    else return requestUser;
   };
 
   const getRecipientUserId = () => {
@@ -72,10 +85,39 @@ export default function ChatPage() {
     setTextField('');
   };
 
+  const isActive = (requestUser, recipientUser) => {
+    const user = getRecipientUser(requestUser, recipientUser);
+    const lastAccessTime = new Date(user.lastUserAccess);
+    const currentTime = new Date();
+    const differenceInMinutes = (currentTime - lastAccessTime) / (1000 * 60);
+    return (
+      <>
+        {differenceInMinutes < 10 ? <Badge bg='success'>Active</Badge> : null}
+      </>
+    );
+  };
+
+  const lastAccessFormatted = (lastUserAccess) => {
+    const lastAccessMoment = moment(lastUserAccess);
+    if (moment().diff(lastAccessMoment, 'days') < 7) {
+      return lastAccessMoment.calendar(null, {
+        sameDay: '[Today at] LT',
+        nextDay: '[Tomorrow at] LT',
+        nextWeek: 'dddd [at] LT',
+        lastDay: '[Yesterday at] LT',
+        lastWeek: '[Last] dddd [at] LT',
+        sameElse: 'DD/MM/YYYY [at] LT'
+      });
+    } else {
+      // More than a week ago
+      return `${lastAccessMoment.fromNow()}`;
+    }
+  };
+
   return (
     <Container
       className='my-5 d-flex flex-column align-items-center'
-      style={{ border: `0.1rem solid ${primary}`, minHeight: '30rem' }}>
+      style={{ border: `0.1rem solid ${primary}`, height: '100%' }}>
       <div className='w-100 d-flex flex-row align-items-center'>
         <ArrowLeft
           width={35}
@@ -91,12 +133,13 @@ export default function ChatPage() {
           Chats
         </h1>
       </div>
-      <Row className='w-100 mb-3'>
+      <Row className='w-100 h-100 mb-3'>
         <Col sm={12} md={4} lg={3}>
           <div
             style={{
               width: '100%',
-              minHeight: '30rem',
+              maxHeight: '70vh',
+              marginBottom: '1rem',
               border: `0.1rem solid ${primary}`
             }}>
             {chatState.data?.map(
@@ -112,28 +155,38 @@ export default function ChatPage() {
                     chatBox?.id === id
                       ? { backgroundColor: primary, color: 'white' }
                       : null)
-                  }
-                  className='d-flex flex-row align-items-center justify-content-around m-2 px-3 py-2'>
-                  <Avatar
-                    className='mx-2'
-                    size={50}
-                    variant={
-                      requestUser.id === userState.data.id
-                        ? recipientUser.avatar[0]
-                        : requestUser.avatar[0]
-                    }
-                    name={getFullName(requestUser, recipientUser)}
-                    colors={[
-                      '#92A1C6',
-                      '#146A7C',
-                      '#F0AB3D',
-                      '#C271B4',
-                      '#C20D90'
-                    ]}
-                  />
-                  <div className='mx-2'>
-                    {getFullName(requestUser, recipientUser)}
-                  </div>
+                  }>
+                  <Row className='mx-2 p-2 text-center'>
+                    <Col xs={4} sm={4} md={6} lg={4} className='text-center'>
+                      <Avatar
+                        size={50}
+                        variant={
+                          requestUser.id === userState.data.id
+                            ? recipientUser.avatar[0]
+                            : requestUser.avatar[0]
+                        }
+                        name={getFullName(requestUser, recipientUser)}
+                        colors={[
+                          '#92A1C6',
+                          '#146A7C',
+                          '#F0AB3D',
+                          '#C271B4',
+                          '#C20D90'
+                        ]}
+                      />
+                    </Col>
+                    <Col
+                      xs={8}
+                      sm={8}
+                      md={6}
+                      lg={8}
+                      className='d-flex flex-column flex-wrap justify-content-center align-items-start'>
+                      <p className='m-0'>
+                        {getFullName(requestUser, recipientUser)}
+                      </p>{' '}
+                      {isActive(requestUser, recipientUser)}
+                    </Col>
+                  </Row>
                 </div>
               )
             )}
@@ -143,8 +196,7 @@ export default function ChatPage() {
           <div
             style={{
               width: '100%',
-              height: '30rem',
-              maxHeight: '30rem',
+              height: '70vh',
               border: `0.1rem solid ${primary}`
             }}
             className='d-flex flex-column justify-content-between align-items-center p-3'>
@@ -157,12 +209,21 @@ export default function ChatPage() {
                     textAlign: 'center',
                     backgroundColor: primary
                   }}>
-                  {getFullName(chatBox.requestUser, chatBox.recipientUser)}
+                  <h3>
+                    {getFullName(chatBox.requestUser, chatBox.recipientUser)}
+                  </h3>
+                  last seen:{' '}
+                  {lastAccessFormatted(
+                    getRecipientUser(chatBox.requestUser, chatBox.recipientUser)
+                      .lastUserAccess
+                  )}
                 </div>
                 <div
-                  className='flex-grow-1 w-100 my-3 p-2 overflow-auto'
+                  className='flex-grow-1 w-100 my-3 p-2'
+                  ref={chatContainerRef}
                   style={{
                     flexGrow: 1,
+                    overflowY: 'auto',
                     border: `0.1rem solid ${primary}`
                   }}>
                   {chatState.data
@@ -195,14 +256,11 @@ export default function ChatPage() {
                 </div>
                 <Form className='w-100' onSubmit={onSubmitMessage}>
                   <InputGroup>
-                    <Form.Control
+                    <FormControlStyled
+                      type='text'
                       value={textField}
-                      aria-label='Default'
-                      className='rounded-0'
                       onChange={handleChange}
-                      aria-describedby='inputGroup-sizing-default'
-                      style={{ border: `0.1rem solid ${primary}` }}
-                    />
+                      placeholder='type here...'></FormControlStyled>
                     <PrimaryButton
                       type='submit'
                       disabled={textField.length < 1}>

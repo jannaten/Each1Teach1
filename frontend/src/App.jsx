@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { ThemeProvider } from 'styled-components';
@@ -6,8 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { themes } from './utilities/colors';
-import { getUserInfo } from './redux/slices/userSlice';
 import ProtectedRoute from './components/ProtectedRoute';
+import { getUserInfo, updateUser } from './redux/slices/userSlice';
 import { ProfileManagementPage, NotFoundPage, ChatPage } from './pages';
 import { ErrorBoundary, NavBar, ModalRootComponent } from './components';
 import { HomePage, LoginPage, RegisterPage, MatchesPage } from './pages';
@@ -16,6 +16,7 @@ import { UserManagementPage, NewsManagementPage, DashboardPage } from './pages';
 export default function App() {
   const location = useLocation();
   const dispatch = useDispatch();
+  const [count, setCount] = useState(0);
   const userState = useSelector((state) => state.user);
 
   const isRootPage =
@@ -26,6 +27,20 @@ export default function App() {
   useEffect(() => {
     if (!isRootPage) loadUser();
   }, []);
+
+  useEffect(() => {
+    if (!isRootPage) {
+      const interval = setInterval(() => {
+        dispatch(
+          updateUser({
+            data: { id: userState.data.id, lastUserAccess: new Date() }
+          })
+        );
+        setCount((prevCount) => prevCount + 1);
+      }, 300000);
+      return () => clearInterval(interval);
+    }
+  }, [userState.data, location.pathname]);
 
   const loadUser = async () => {
     try {

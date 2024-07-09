@@ -36,11 +36,11 @@ class MatchService {
       Model.find(query)
         .populate({
           path: 'requestUser',
-          select: 'firstName lastName email avatar'
+          select: 'firstName lastName email avatar lastUserAccess'
         })
         .populate({
           path: 'recipientUser',
-          select: 'firstName lastName email avatar'
+          select: 'firstName lastName email avatar lastUserAccess'
         })
     );
     const matchIds = matches.map((match) => match._id);
