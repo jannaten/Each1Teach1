@@ -16,11 +16,11 @@ class ChatService {
       Model.findById(id)
         .populate({
           path: 'sender',
-          select: 'firstName lastName email avatar'
+          select: 'firstName lastName email avatar images'
         })
         .populate({
           path: 'receiver',
-          select: 'firstName lastName email avatar'
+          select: 'firstName lastName email avatar images'
         })
     );
   };

@@ -140,13 +140,13 @@ const loginValidationSchema = Joi.object({
 
 const newsValidationSchema = Joi.object({
   title: Joi.string().required().min(5).max(100),
-  content: Joi.string().required().min(5).max(500),
+  content: Joi.string().required().min(5).max(2000),
   author: Joi.string().required()
 });
 
 const newsPatchSchema = Joi.object({
   title: Joi.string().min(5).max(100),
-  content: Joi.string().min(5).max(500),
+  content: Joi.string().min(5).max(2000),
   author: Joi.string().required()
 });
 

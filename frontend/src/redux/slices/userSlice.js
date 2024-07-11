@@ -200,7 +200,9 @@ const userSlice = createSlice({
       })
       // UPDATE
       .addCase(updateUser.fulfilled, (state, { payload }) => {
-        if (payload.isManagement) {
+        if (!payload.isEdit && payload.isManagement && !payload.isRegister) {
+          state.users = [...state.users, payload.data];
+        } else if (payload.isManagement) {
           state.users = state.users.map((user) =>
             user.id === payload.data.id ? payload.data : user
           );

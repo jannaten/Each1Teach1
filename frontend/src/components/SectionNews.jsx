@@ -1,9 +1,10 @@
-// import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useTheme } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Image, Row } from 'react-bootstrap';
 
+import { PrimaryButton } from '../styles';
 import { getDate } from '../utilities/getDate';
 import NewsPicture from '../assets/images/2.jpg';
 import { loadNews } from '../redux/slices/newsSlice';
@@ -30,10 +31,11 @@ const SvgExample = ({ color, width = 139, height = 139 }) => (
 
 const SectionNews = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { primary } = useTheme();
 
   useEffect(() => {
-    dispatch(loadNews({ limit: 2 }));
+    dispatch(loadNews({ limit: 4 }));
   }, [dispatch]);
 
   const newsState = useSelector((state) => state.news);
@@ -54,25 +56,28 @@ const SectionNews = () => {
           <h1 className='text-light' style={{ fontWeight: 700 }}>
             News
           </h1>
-          <div className='d-flex flex-row justify-content-center align-items-center'>
+          <div
+            className='d-flex flex-row justify-content-center align-items-center'
+            role='button'>
             <p className='m-0 text-light' style={{ fontWeight: 500 }}>
-              latest news
+              all news
             </p>
             <Image
               loading='lazy'
               className='mx-3'
               src={ToggleIcon}
               alt='toggle button'
+              style={{ transform: 'rotate(-90deg)' }}
             />
           </div>
         </div>
         <Container>
           <Row className='m-0 px-5 py-5'>
             {newsState.data?.map(
-              ({ title, author, content, updatedAt }, index) => (
+              ({ id, title, author, content, updatedAt }, index) => (
                 <Col sm={12} md={12} lg={6} xl={6} className='mt-3' key={index}>
                   <div
-                    style={{ minHeight: '26rem' }}
+                    style={{ minHeight: '28rem' }}
                     className='p-3 bg-light d-flex flex-column align-items-center'>
                     <div className='mx-3 mb-3'>
                       <SvgExample color={primary} />
@@ -105,8 +110,23 @@ const SectionNews = () => {
                         fontWeight: '500',
                         color: `${primary}CC`
                       }}>
-                      {content}
+                      <small className='text-muted'>
+                        {content?.length > 200 ? (
+                          <>
+                            {' '}
+                            {content.substring(0, 200)}
+                            {'....'}{' '}
+                          </>
+                        ) : (
+                          <>{content}</>
+                        )}
+                      </small>
                     </p>
+                    <PrimaryButton
+                      onClick={() => navigate('/news/' + id)}
+                      className='mt-auto'>
+                      Read More
+                    </PrimaryButton>
                   </div>
                 </Col>
               )

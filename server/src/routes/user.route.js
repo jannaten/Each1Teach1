@@ -75,7 +75,7 @@ router.post(
         value.images = [file.id];
       }
     }
-    if (value.roles.includes('student')) value.approved = false;
+    value.approved = false;
     user = await userService.create({
       ...value,
       password: hashedPassword

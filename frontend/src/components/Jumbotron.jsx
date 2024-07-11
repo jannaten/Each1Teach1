@@ -22,7 +22,7 @@ const Jumbotron = () => {
           style={{
             top: '100px',
             width: '500px',
-            height: '400px',
+            height: '380px',
             marginLeft: '200px',
             boxShadow: `0px 10px 20px ${basic.dark}33`
           }}>
@@ -52,22 +52,6 @@ const Jumbotron = () => {
                 onClick={() => navigate('/register')}>
                 Don't have an account?
               </Button>
-            </div>
-            <div className='d-flex flex-row align-items-center'>
-              <p
-                className='m-0 p-0'
-                style={{
-                  color: primary,
-                  fontWeight: '500'
-                }}>
-                Go to <b>Tuni moodle</b>
-              </p>
-              <ArrowRight
-                width={20}
-                height={20}
-                color={primary}
-                className='mx-2'
-              />
             </div>
           </div>
         </Row>

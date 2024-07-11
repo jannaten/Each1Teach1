@@ -14,7 +14,7 @@ export default function UserManagementPage() {
   return (
     <Container
       className='h-100 my-5 d-flex flex-column justify-content-center align-items-center'
-      style={{ maxWidth: '60rem', border: `0.1rem solid ${primary}` }}>
+      style={{ border: `0.1rem solid ${primary}` }}>
       <div className='w-100'>
         <ArrowLeft
           width={35}

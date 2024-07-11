@@ -80,6 +80,33 @@ const NavBar = () => {
               borderRadius: '0%',
               border: '0.1rem solid white'
             }}>
+            {userState.data.roles.includes('student') && (
+              <>
+                <NavDropdown.Item onClick={() => navigate('/dashboard/chat')}>
+                  Messages
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item
+                  onClick={() => navigate('/dashboard/matches')}>
+                  Matches
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+              </>
+            )}
+            {!userState.data.roles.includes('student') && (
+              <>
+                <NavDropdown.Item
+                  onClick={() => navigate('/dashboard/user-management')}>
+                  User Management
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item
+                  onClick={() => navigate('/dashboard/news-management')}>
+                  News Management
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+              </>
+            )}
             <NavDropdown.Item onClick={() => navigate('/dashboard/my-profile')}>
               My Profile
             </NavDropdown.Item>

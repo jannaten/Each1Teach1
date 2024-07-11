@@ -5,8 +5,9 @@ import { useTheme } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { unwrapResult } from '@reduxjs/toolkit';
 import React, { useEffect, useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import { ProgressBar, Button, Image } from 'react-bootstrap';
 import { ArrowLeft, SendPlusFill } from 'react-bootstrap-icons';
-import { Container, Row, Col, ProgressBar, Button } from 'react-bootstrap';
 import { EnvelopeCheckFill, EnvelopeDashFill } from 'react-bootstrap-icons';
 
 import { PrimaryButton, ToggleButton } from '../styles';
@@ -129,18 +130,27 @@ export default function MatchesPage() {
                     border: `0.1rem solid ${primary}`
                   }}
                   className='my-2 px-5 py-4 d-flex flex-column flex-wrap justify-content-center align-items-center text-center'>
-                  <Avatar
-                    size={100}
-                    name={user.loginName}
-                    variant={user.avatar[0]}
-                    colors={[
-                      '#92A1C6',
-                      '#146A7C',
-                      '#F0AB3D',
-                      '#C271B4',
-                      '#C20D90'
-                    ]}
-                  />
+                  {user.images[0] ? (
+                    <Image
+                      width={100}
+                      alt='match picture'
+                      className='rounded-circle'
+                      src={'/api/files/' + user.images[0]}
+                    />
+                  ) : (
+                    <Avatar
+                      size={100}
+                      name={user.loginName}
+                      variant={user.avatar[0]}
+                      colors={[
+                        '#92A1C6',
+                        '#146A7C',
+                        '#F0AB3D',
+                        '#C271B4',
+                        '#C20D90'
+                      ]}
+                    />
+                  )}
                   <h3 className='my-4'>{user.loginName}</h3>
                   <div className='w-100 mb-3'>
                     {user.languages_for_teach?.map((lang, index) => (

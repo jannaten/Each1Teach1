@@ -36,11 +36,11 @@ class MatchService {
       Model.find(query)
         .populate({
           path: 'requestUser',
-          select: 'firstName lastName email avatar lastUserAccess'
+          select: 'firstName lastName email avatar lastUserAccess images'
         })
         .populate({
           path: 'recipientUser',
-          select: 'firstName lastName email avatar lastUserAccess'
+          select: 'firstName lastName email avatar lastUserAccess images'
         })
     );
     const matchIds = matches.map((match) => match._id);
@@ -48,11 +48,11 @@ class MatchService {
       Chat.find({ matchId: { $in: matchIds } })
         .populate({
           path: 'sender',
-          select: 'firstName lastName email avatar'
+          select: 'firstName lastName email avatar images'
         })
         .populate({
           path: 'receiver',
-          select: 'firstName lastName email avatar'
+          select: 'firstName lastName email avatar images'
         })
     );
     const matchesWithChats = matches.map((match) => {
