@@ -4,6 +4,7 @@ import Avatar from 'boring-avatars';
 import Cropper from 'react-easy-crop';
 import { useTheme } from 'styled-components';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { FloatingLabel } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useCallback } from 'react';
@@ -294,11 +295,6 @@ const UserForm = ({
                         className='rounded-circle'
                         src={croppedImage}
                       />
-                      {/* <img
-                        alt='Cropped'
-                        src={croppedImage}
-                        style={{ maxHeight: '200px', borderRadius: '50%' }}
-                      /> */}
                     </div>
                   )}
                 </>
@@ -314,71 +310,87 @@ const UserForm = ({
         {({ handleSubmit, handleChange, touched, values, errors }) => (
           <Form className='mt-5 w-100 px-5' onSubmit={handleSubmit}>
             <Row>
-              <Col>
+              <Col sm={12} md={12} lg={6}>
                 <FormGroup className='mb-3' controlId='formFirstName'>
-                  <FormLabel>First name</FormLabel>
-                  <FormControlStyled
-                    type='text'
-                    name='firstName'
-                    onChange={handleChange}
-                    value={values.firstName}
-                    placeholder='Enter first name'
-                    isValid={touched.firstName && !errors.firstName}
-                    isInvalid={touched.firstName && errors.firstName}
-                  />
-                  <Form.Control.Feedback type='invalid'>
-                    {errors.firstName}
-                  </Form.Control.Feedback>
+                  <FloatingLabel
+                    className='mb-3'
+                    label='First name'
+                    controlId='floatingInput-firstName'>
+                    <FormControlStyled
+                      type='text'
+                      name='firstName'
+                      onChange={handleChange}
+                      value={values.firstName}
+                      placeholder='Enter first name'
+                      isValid={touched.firstName && !errors.firstName}
+                      isInvalid={touched.firstName && errors.firstName}
+                    />
+                    <Form.Control.Feedback type='invalid'>
+                      {errors.firstName}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
                 </FormGroup>
               </Col>
-              <Col>
+              <Col sm={12} md={12} lg={6}>
                 <FormGroup className='mb-3' controlId='formLastName'>
-                  <FormLabel>Last name</FormLabel>
-                  <FormControlStyled
-                    type='text'
-                    name='lastName'
-                    onChange={handleChange}
-                    value={values.lastName}
-                    placeholder='Enter last name'
-                    isValid={touched.lastName && !errors.lastName}
-                    isInvalid={touched.lastName && errors.lastName}
-                  />
-                  <Form.Control.Feedback type='invalid'>
-                    {errors.lastName}
-                  </Form.Control.Feedback>
+                  <FloatingLabel
+                    className='mb-3'
+                    label='Last name'
+                    controlId='floatingInput-lastName'>
+                    <FormControlStyled
+                      type='text'
+                      name='lastName'
+                      onChange={handleChange}
+                      value={values.lastName}
+                      placeholder='Enter last name'
+                      isValid={touched.lastName && !errors.lastName}
+                      isInvalid={touched.lastName && errors.lastName}
+                    />
+                    <Form.Control.Feedback type='invalid'>
+                      {errors.lastName}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
                 </FormGroup>
               </Col>
             </Row>
             <FormGroup className='mb-3' controlId='formEmail'>
-              <FormLabel>Email address</FormLabel>
-              <FormControlStyled
-                type='email'
-                name='email'
-                value={values.email}
-                onChange={handleChange}
-                placeholder='Enter email'
-                isValid={touched.email && !errors.email}
-                isInvalid={touched.email && errors.email}
-                disabled={user?.roles.includes('superuser') && isEdit}
-              />
-              <Form.Control.Feedback type='invalid'>
-                {errors.email}
-              </Form.Control.Feedback>
+              <FloatingLabel
+                label='Email Address'
+                className='mb-3'
+                controlId='floatingInput-email'>
+                <FormControlStyled
+                  type='email'
+                  name='email'
+                  value={values.email}
+                  onChange={handleChange}
+                  placeholder='Enter email'
+                  isValid={touched.email && !errors.email}
+                  isInvalid={touched.email && errors.email}
+                  disabled={user?.roles.includes('superuser') && isEdit}
+                />
+                <Form.Control.Feedback type='invalid'>
+                  {errors.email}
+                </Form.Control.Feedback>
+              </FloatingLabel>
             </FormGroup>
             <FormGroup className='mb-3' controlId='formPassword'>
-              <FormLabel>Password</FormLabel>
-              <FormControlStyled
-                name='password'
-                placeholder='Password'
-                value={values.password}
-                onChange={handleChange}
-                type={showPassword ? 'text' : 'password'}
-                isValid={touched.password && !errors.password}
-                isInvalid={touched.password && errors.password}
-              />
-              <Form.Control.Feedback type='invalid'>
-                {errors.password}
-              </Form.Control.Feedback>
+              <FloatingLabel
+                label='Password'
+                className='mb-3'
+                controlId='floatingInput-password'>
+                <FormControlStyled
+                  name='password'
+                  placeholder='Password'
+                  value={values.password}
+                  onChange={handleChange}
+                  type={showPassword ? 'text' : 'password'}
+                  isValid={touched.password && !errors.password}
+                  isInvalid={touched.password && errors.password}
+                />
+                <Form.Control.Feedback type='invalid'>
+                  {errors.password}
+                </Form.Control.Feedback>
+              </FloatingLabel>
               <Form.Check
                 type='switch'
                 className='mt-1'

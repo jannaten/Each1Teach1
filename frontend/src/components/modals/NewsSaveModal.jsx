@@ -3,9 +3,9 @@ import React from 'react';
 import * as formik from 'formik';
 import { useTheme } from 'styled-components';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { FormLabel, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Form, FormGroup } from 'react-bootstrap';
+import { FormLabel, Modal, FloatingLabel } from 'react-bootstrap';
 // importing redux slices
 import { newsSchema } from '../../utilities/schema';
 import { saveNews } from '../../redux/slices/newsSlice';
@@ -62,19 +62,23 @@ export default function NewsSaveModal({ news, isEdit = false }) {
           <Form onSubmit={handleSubmit}>
             <Modal.Body style={{ backgroundColor: '#fafdff' }}>
               <Form.Group asa={Col} className='mb-3' controlId='formTitle'>
-                <Form.Label>title</Form.Label>
-                <FormControlStyled
-                  type='text'
-                  name='title'
-                  value={values.title}
-                  onChange={handleChange}
-                  placeholder='Enter title'
-                  isValid={touched.title && !errors.title}
-                  isInvalid={touched.title && errors.title}
-                />
-                <Form.Control.Feedback type='invalid'>
-                  {errors.title}
-                </Form.Control.Feedback>
+                <FloatingLabel
+                  label='Title'
+                  className='mb-3'
+                  controlId='floatingInput-title'>
+                  <FormControlStyled
+                    type='text'
+                    name='title'
+                    value={values.title}
+                    onChange={handleChange}
+                    placeholder='Enter title'
+                    isValid={touched.title && !errors.title}
+                    isInvalid={touched.title && errors.title}
+                  />
+                  <Form.Control.Feedback type='invalid'>
+                    {errors.title}
+                  </Form.Control.Feedback>
+                </FloatingLabel>
               </Form.Group>
               <FormGroup className='mb-3' controlId='formContent'>
                 <FormLabel>content</FormLabel>

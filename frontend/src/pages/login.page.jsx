@@ -1,11 +1,12 @@
 import * as formik from 'formik';
 import { useTheme } from 'styled-components';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { FloatingLabel } from 'react-bootstrap';
 import { ArrowLeft } from 'react-bootstrap-icons';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FormLabel, FormGroup, Row, Form, Container } from 'react-bootstrap';
+import { FormGroup, Row, Form, Container } from 'react-bootstrap';
 
 import { loginSchema } from '../utilities/schema';
 import { FormControlStyled, PrimaryButton } from '../styles';
@@ -77,34 +78,42 @@ export default function LoginPage() {
         {({ handleSubmit, handleChange, touched, values, errors }) => (
           <Form className='mt-5 w-100 px-5' onSubmit={handleSubmit}>
             <FormGroup className='mb-3' controlId='formEmail'>
-              <FormLabel>Email address</FormLabel>
-              <FormControlStyled
-                name='email'
-                type='email'
-                value={values.email}
-                onChange={handleChange}
-                placeholder='Enter email'
-                isValid={touched.email && !errors.email}
-                isInvalid={touched.email && errors.email}
-              />
-              <Form.Control.Feedback type='invalid'>
-                {errors.email}
-              </Form.Control.Feedback>
+              <FloatingLabel
+                className='mb-3'
+                label='Email address'
+                controlId='floatingInput-email'>
+                <FormControlStyled
+                  name='email'
+                  type='email'
+                  value={values.email}
+                  onChange={handleChange}
+                  placeholder='Enter email'
+                  isValid={touched.email && !errors.email}
+                  isInvalid={touched.email && errors.email}
+                />
+                <Form.Control.Feedback type='invalid'>
+                  {errors.email}
+                </Form.Control.Feedback>
+              </FloatingLabel>
             </FormGroup>
             <FormGroup className='mb-3' controlId='formPassword'>
-              <FormLabel>Password</FormLabel>
-              <FormControlStyled
-                name='password'
-                value={values.password}
-                onChange={handleChange}
-                placeholder='Enter Password'
-                type={showPassword ? 'text' : 'password'}
-                isValid={touched.password && !errors.password}
-                isInvalid={touched.password && errors.password}
-              />
-              <Form.Control.Feedback type='invalid'>
-                {errors.password}
-              </Form.Control.Feedback>
+              <FloatingLabel
+                className='mb-3'
+                label='Password'
+                controlId='floatingInput-password'>
+                <FormControlStyled
+                  name='password'
+                  value={values.password}
+                  onChange={handleChange}
+                  placeholder='Enter Password'
+                  type={showPassword ? 'text' : 'password'}
+                  isValid={touched.password && !errors.password}
+                  isInvalid={touched.password && errors.password}
+                />
+                <Form.Control.Feedback type='invalid'>
+                  {errors.password}
+                </Form.Control.Feedback>
+              </FloatingLabel>
               <Form.Check
                 type='switch'
                 className='mt-1'

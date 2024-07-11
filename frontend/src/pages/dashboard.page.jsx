@@ -25,7 +25,7 @@ export default function DashboardPage() {
   return (
     <Container className='pt-5'>
       <h1 className='text-center mt-5'>Dashboard</h1>
-      <h6 className='text-center mt-3'>Welcome {userState.data?.loginName}</h6>
+      <h6 className='text-center mt-3'>Welcome, {userState.data?.loginName}</h6>
       {!userState.data?.approved && (
         <h3 className='text-center mt-3 text-danger'>
           Status: Waiting for approval
