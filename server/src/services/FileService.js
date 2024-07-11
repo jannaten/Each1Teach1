@@ -1,9 +1,11 @@
 const fs = require('fs');
 const FileModel = require('../models/File.model');
+const UserModel = require('../models/User.model');
 
 class FileService {
   constructor(context) {
     this.context = context;
+    this.User = UserModel(context);
     this.File = FileModel(context);
     this.path = `${process.env.SERVER_UPLOAD_PATH || '/app/files'}/${
       context.name

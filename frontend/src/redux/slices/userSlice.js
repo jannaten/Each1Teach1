@@ -55,12 +55,12 @@ export const updateUser = createAsyncThunk(
   ) => {
     try {
       let response;
-      if (isEdit)
-        response = await axios.patch(`${axios.defaults.url}/users/${data.id}`, {
-          ...data,
-          id: undefined
-        });
-      else if (isRegister)
+      const id = data.get('id');
+      if (isEdit) {
+        data.delete('id');
+        data.append('id', JSON.stringify(undefined));
+        response = await axios.patch(`${axios.defaults.url}/users/${id}`, data);
+      } else if (isRegister)
         response = await axios.post(
           `${axios.defaults.url}/auth/register`,
           data
@@ -219,7 +219,6 @@ const userSlice = createSlice({
         state.loading = false;
       })
       .addCase(removeUser.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.users = state.users.map((user) => {
           if (user.id === action.payload.id)
             user.deletedAt = action.payload.deletedAt;

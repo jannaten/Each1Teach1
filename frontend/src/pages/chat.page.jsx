@@ -133,148 +133,154 @@ export default function ChatPage() {
           Chats
         </h1>
       </div>
-      <Row className='w-100 h-100 mb-3'>
-        <Col sm={12} md={4} lg={3}>
-          <div
-            style={{
-              width: '100%',
-              maxHeight: '70vh',
-              marginBottom: '1rem',
-              border: `0.1rem solid ${primary}`
-            }}>
-            {chatState.data?.map(
-              ({ id, requestUser, recipientUser, chats }) => (
-                <div
-                  key={id}
-                  role='button'
-                  onClick={() =>
-                    setChatBox({ id, requestUser, recipientUser, chats })
-                  }
-                  style={
-                    ({ borderBottom: `0.1rem solid ${primary}` },
-                    chatBox?.id === id
-                      ? { backgroundColor: primary, color: 'white' }
-                      : null)
-                  }>
-                  <Row className='mx-2 p-2 text-center'>
-                    <Col xs={4} sm={4} md={6} lg={4} className='text-center'>
-                      <Avatar
-                        size={50}
-                        variant={
-                          requestUser.id === userState.data.id
-                            ? recipientUser.avatar[0]
-                            : requestUser.avatar[0]
-                        }
-                        name={getFullName(requestUser, recipientUser)}
-                        colors={[
-                          '#92A1C6',
-                          '#146A7C',
-                          '#F0AB3D',
-                          '#C271B4',
-                          '#C20D90'
-                        ]}
-                      />
-                    </Col>
-                    <Col
-                      xs={8}
-                      sm={8}
-                      md={6}
-                      lg={8}
-                      className='d-flex flex-column flex-wrap justify-content-center align-items-start'>
-                      <p className='m-0'>
-                        {getFullName(requestUser, recipientUser)}
-                      </p>{' '}
-                      {isActive(requestUser, recipientUser)}
-                    </Col>
-                  </Row>
-                </div>
-              )
-            )}
-          </div>
-        </Col>
-        <Col sm={12} md={8} lg={9}>
-          <div
-            style={{
-              width: '100%',
-              height: '70vh',
-              border: `0.1rem solid ${primary}`
-            }}
-            className='d-flex flex-column justify-content-between align-items-center p-3'>
-            {chatBox ? (
-              <>
-                <div
-                  className='w-100 p-2'
-                  style={{
-                    color: 'white',
-                    textAlign: 'center',
-                    backgroundColor: primary
-                  }}>
-                  <h3>
-                    {getFullName(chatBox.requestUser, chatBox.recipientUser)}
-                  </h3>
-                  last seen:{' '}
-                  {lastAccessFormatted(
-                    getRecipientUser(chatBox.requestUser, chatBox.recipientUser)
-                      .lastUserAccess
-                  )}
-                </div>
-                <div
-                  className='flex-grow-1 w-100 my-3 p-2'
-                  ref={chatContainerRef}
-                  style={{
-                    flexGrow: 1,
-                    overflowY: 'auto',
-                    border: `0.1rem solid ${primary}`
-                  }}>
-                  {chatState.data
-                    ?.find((el) => el.id === chatBox.id)
-                    ?.chats.map((chat, index) => (
-                      <div
-                        key={index}
-                        className={`w-50 bg-light p-3 mx-3 my-3 d-flex flex-row flex-wrap align-items-center justify-content-start border border-dark ${
-                          chat.sender.id === userState.data.id
-                            ? 'ms-auto'
-                            : 'me-auto'
-                        }`}>
-                        <div className='mx-2'>
-                          <Avatar
-                            size={50}
-                            variant={chat.sender.avatar[0]}
-                            name={`${chat.sender.firstName} ${chat?.sender?.lastName}`}
-                            colors={[
-                              '#92A1C6',
-                              '#146A7C',
-                              '#F0AB3D',
-                              '#C271B4',
-                              '#C20D90'
-                            ]}
-                          />
+      {chatState.data.length === 0 ? (
+        <p className='my-5 pb-5'>No Chat Available</p>
+      ) : (
+        <Row className='w-100 h-100 mb-3'>
+          <Col sm={12} md={4} lg={3}>
+            <div
+              style={{
+                width: '100%',
+                maxHeight: '70vh',
+                marginBottom: '1rem',
+                border: `0.1rem solid ${primary}`
+              }}>
+              {chatState.data?.map(
+                ({ id, requestUser, recipientUser, chats }) => (
+                  <div
+                    key={id}
+                    role='button'
+                    onClick={() =>
+                      setChatBox({ id, requestUser, recipientUser, chats })
+                    }
+                    style={
+                      ({ borderBottom: `0.1rem solid ${primary}` },
+                      chatBox?.id === id
+                        ? { backgroundColor: primary, color: 'white' }
+                        : null)
+                    }>
+                    <Row className='mx-2 p-2 text-center'>
+                      <Col xs={4} sm={4} md={6} lg={4} className='text-center'>
+                        <Avatar
+                          size={50}
+                          variant={
+                            requestUser.id === userState.data.id
+                              ? recipientUser.avatar[0]
+                              : requestUser.avatar[0]
+                          }
+                          name={getFullName(requestUser, recipientUser)}
+                          colors={[
+                            '#92A1C6',
+                            '#146A7C',
+                            '#F0AB3D',
+                            '#C271B4',
+                            '#C20D90'
+                          ]}
+                        />
+                      </Col>
+                      <Col
+                        xs={8}
+                        sm={8}
+                        md={6}
+                        lg={8}
+                        className='d-flex flex-column flex-wrap justify-content-center align-items-start'>
+                        <p className='m-0'>
+                          {getFullName(requestUser, recipientUser)}
+                        </p>{' '}
+                        {isActive(requestUser, recipientUser)}
+                      </Col>
+                    </Row>
+                  </div>
+                )
+              )}
+            </div>
+          </Col>
+          <Col sm={12} md={8} lg={9}>
+            <div
+              style={{
+                width: '100%',
+                height: '70vh',
+                border: `0.1rem solid ${primary}`
+              }}
+              className='d-flex flex-column justify-content-between align-items-center p-3'>
+              {chatBox ? (
+                <>
+                  <div
+                    className='w-100 p-2'
+                    style={{
+                      color: 'white',
+                      textAlign: 'center',
+                      backgroundColor: primary
+                    }}>
+                    <h3>
+                      {getFullName(chatBox.requestUser, chatBox.recipientUser)}
+                    </h3>
+                    last seen:{' '}
+                    {lastAccessFormatted(
+                      getRecipientUser(
+                        chatBox.requestUser,
+                        chatBox.recipientUser
+                      ).lastUserAccess
+                    )}
+                  </div>
+                  <div
+                    className='flex-grow-1 w-100 my-3 p-2'
+                    ref={chatContainerRef}
+                    style={{
+                      flexGrow: 1,
+                      overflowY: 'auto',
+                      border: `0.1rem solid ${primary}`
+                    }}>
+                    {chatState.data
+                      ?.find((el) => el.id === chatBox.id)
+                      ?.chats.map((chat, index) => (
+                        <div
+                          key={index}
+                          className={`w-50 bg-light p-3 mx-3 my-3 d-flex flex-row flex-wrap align-items-center justify-content-start border border-dark ${
+                            chat.sender.id === userState.data.id
+                              ? 'ms-auto'
+                              : 'me-auto'
+                          }`}>
+                          <div className='mx-2'>
+                            <Avatar
+                              size={50}
+                              variant={chat.sender.avatar[0]}
+                              name={`${chat.sender.firstName} ${chat?.sender?.lastName}`}
+                              colors={[
+                                '#92A1C6',
+                                '#146A7C',
+                                '#F0AB3D',
+                                '#C271B4',
+                                '#C20D90'
+                              ]}
+                            />
+                          </div>
+                          <div key={index}>{chat.message}</div>
                         </div>
-                        <div key={index}>{chat.message}</div>
-                      </div>
-                    ))}
-                </div>
-                <Form className='w-100' onSubmit={onSubmitMessage}>
-                  <InputGroup>
-                    <FormControlStyled
-                      type='text'
-                      value={textField}
-                      onChange={handleChange}
-                      placeholder='type here...'></FormControlStyled>
-                    <PrimaryButton
-                      type='submit'
-                      disabled={textField.length < 1}>
-                      Send
-                    </PrimaryButton>
-                  </InputGroup>
-                </Form>
-              </>
-            ) : (
-              <h5 className='text-center my-auto'>Select a chat</h5>
-            )}
-          </div>
-        </Col>
-      </Row>
+                      ))}
+                  </div>
+                  <Form className='w-100' onSubmit={onSubmitMessage}>
+                    <InputGroup>
+                      <FormControlStyled
+                        type='text'
+                        value={textField}
+                        onChange={handleChange}
+                        placeholder='type here...'></FormControlStyled>
+                      <PrimaryButton
+                        type='submit'
+                        disabled={textField.length < 1}>
+                        Send
+                      </PrimaryButton>
+                    </InputGroup>
+                  </Form>
+                </>
+              ) : (
+                <h5 className='text-center my-auto'>Select a chat</h5>
+              )}
+            </div>
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 }

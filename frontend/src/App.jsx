@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { ThemeProvider } from 'styled-components';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
@@ -9,8 +9,8 @@ import { themes } from './utilities/colors';
 import ProtectedRoute from './components/ProtectedRoute';
 import { getUserInfo, updateUser } from './redux/slices/userSlice';
 import { ProfileManagementPage, NotFoundPage, ChatPage } from './pages';
-import { ErrorBoundary, NavBar, ModalRootComponent } from './components';
 import { HomePage, LoginPage, RegisterPage, MatchesPage } from './pages';
+import { ErrorBoundary, NavBar, ModalRootComponent } from './components';
 import { UserManagementPage, NewsManagementPage, DashboardPage } from './pages';
 
 export default function App() {
@@ -31,11 +31,10 @@ export default function App() {
   useEffect(() => {
     if (!isRootPage) {
       const interval = setInterval(() => {
-        dispatch(
-          updateUser({
-            data: { id: userState.data.id, lastUserAccess: new Date() }
-          })
-        );
+        const formData = new FormData();
+        formData.append('id', userState.data.id);
+        formData.append('lastUserAccess', new Date());
+        dispatch(updateUser({ data: formData }));
         setCount((prevCount) => prevCount + 1);
       }, 300000);
       return () => clearInterval(interval);
@@ -45,7 +44,7 @@ export default function App() {
   const loadUser = async () => {
     try {
       if (!userState?.data && localStorage.getItem('access-token'))
-        unwrapResult(await dispatch(getUserInfo()));
+        unwrapResult(dispatch(getUserInfo()));
     } catch (error) {
       console.error('error: ', error);
     }

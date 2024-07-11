@@ -4,7 +4,8 @@ import { useTheme } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Navbar, NavDropdown, NavbarBrand } from 'react-bootstrap';
+import { NavDropdown, NavbarBrand } from 'react-bootstrap';
+import { Navbar, Image, Container } from 'react-bootstrap';
 
 import { logout } from '../redux/slices/userSlice';
 import { errorToast, successToast } from './common/Toast';
@@ -48,7 +49,14 @@ const NavBar = () => {
               <div
                 className='d-flex flex-wrap flex-row align-items-center justify-content-around px-3 py-2 opacity-nav-forward'
                 style={{ minWidth: '15rem' }}>
-                {!userState.data?.image && (
+                {userState.data?.images[0] ? (
+                  <Image
+                    width={40}
+                    alt='profile picture'
+                    className='rounded-circle'
+                    src={'/api/files/' + userState.data?.images[0]}
+                  />
+                ) : (
                   <Avatar
                     size={40}
                     name={userState.data?.loginName}

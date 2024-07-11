@@ -4,6 +4,7 @@ const UserService = require('../services/UserService');
 const FileService = require('../services/FileService');
 const { userValidationSchema } = require('../validation');
 const { loginValidationSchema } = require('../validation');
+const { sharedContext } = require('../utilities/dbContext');
 const { authHandler } = require('../middlewares/authHandler');
 const { createError } = require('../middlewares/errorHandler');
 const asyncErrorHandler = require('../middlewares/asyncMiddleware');
@@ -28,6 +29,11 @@ const userToJson = (user, token) => ({
   createdAt: user.createdAt,
   token
 });
+
+const getFileService = async () => {
+  const context = await sharedContext();
+  return new FileService(context);
+};
 
 router.post(
   '/login',
@@ -54,17 +60,23 @@ router.get(
 router.post(
   '/register',
   asyncErrorHandler(async (req, res) => {
-    const { value, error } = userValidationSchema.validate(req.body);
+    const { avatar, languages_to_learn, languages_for_teach } = req.body;
+    const { value, error } = userValidationSchema.validate({
+      ...req.body,
+      avatar: JSON.parse(avatar),
+      languages_to_learn: JSON.parse(languages_to_learn),
+      languages_for_teach: JSON.parse(languages_for_teach)
+    });
     if (error) throw createError(400, error.details[0].message);
     const userService = new UserService();
     let user = await userService.getByEmail(value.email);
     if (user) throw createError(400, 'email is already taken');
     const hashedPassword = AuthService.createPasswordHash(value.password);
     if (req.files && Object.keys(req.files).length) {
-      const fileService = new FileService(req.dbContext);
+      const fileService = await getFileService();
       for (let [fileId, fileData] of Object.entries(req.files)) {
         const file = await fileService.create({ ...fileData, fileId });
-        value.images = file.id;
+        value.images = [file.id];
       }
     }
     user = await userService.create({

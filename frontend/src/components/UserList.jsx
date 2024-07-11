@@ -2,8 +2,8 @@ import React from 'react';
 import Avatar from 'boring-avatars';
 import { useTheme } from 'styled-components';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { Button, FormCheck } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { Button, FormCheck, Image } from 'react-bootstrap';
 import { ArrowLeftCircleFill, Trash2, VectorPen } from 'react-bootstrap-icons';
 
 import { PrimaryButton } from '../styles';
@@ -37,12 +37,19 @@ export default function UserList({ user }) {
   return (
     <tr style={{ borderBottom: `0.05rem solid ${primary}` }}>
       <td className='m-0 p-2' style={{ color: primary }}>
-        {!user?.image && (
+        {!user?.images[0] ? (
           <Avatar
             size={40}
             name={user?.firstName + ' ' + user?.lastName}
             variant={user?.avatar[0] || 'beam'}
             colors={['#92A1C6', '#146A7C', '#F0AB3D', '#C271B4', '#C20D90']}
+          />
+        ) : (
+          <Image
+            width={40}
+            alt='profile picture'
+            className='rounded-circle'
+            src={'/api/files/' + user?.images}
           />
         )}
       </td>
@@ -62,12 +69,12 @@ export default function UserList({ user }) {
           type='switch'
           id='active-switch'
           checked={user?.active}
-          disabled={userState?.data.id === user?.id}
+          disabled={userState?.data?.id === user?.id}
           onChange={async (e) => {
-            await onUpdate({
-              id: user?.id,
-              active: e.target.checked
-            });
+            const formData = new FormData();
+            formData.append('id', user?.id);
+            formData.append('active', e.target.checked);
+            await onUpdate(formData);
           }}
         />
       </td>
@@ -78,12 +85,12 @@ export default function UserList({ user }) {
           type='switch'
           id='approve-switch'
           checked={user?.approved}
-          disabled={userState.data.id === user.id}
+          disabled={userState?.data?.id === user?.id}
           onChange={async (e) => {
-            await onUpdate({
-              id: user?.id,
-              approved: e.target.checked
-            });
+            const formData = new FormData();
+            formData.append('id', user?.id);
+            formData.append('approved', e.target.checked);
+            await onUpdate(formData);
           }}
         />
       </td>
@@ -127,10 +134,10 @@ export default function UserList({ user }) {
               role='button'
               style={{ color: primary }}
               onClick={async () => {
-                await onUpdate({
-                  id: user?.id,
-                  deletedAt: null
-                });
+                const formData = new FormData();
+                formData.append('id', user?.id);
+                formData.append('deletedAt', JSON.stringify(null));
+                await onUpdate(formData);
               }}
             />
           )}

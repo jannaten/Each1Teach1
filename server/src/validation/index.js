@@ -73,7 +73,7 @@ const userValidationSchema = Joi.object({
 });
 
 const userPatchSchema = Joi.object({
-  id: Joi.string(),
+  id: Joi.any(),
   firstName: Joi.string().max(50),
   lastName: Joi.string().max(50),
   email: Joi.string().email().regex(getEmailDomainRegex(allowedEmailDomains)),
@@ -93,6 +93,7 @@ const userPatchSchema = Joi.object({
   expiresAt: Joi.date(),
   lastUserAccess: Joi.date(),
   images: Joi.any(),
+  status: Joi.any(),
   languages_to_learn: Joi.array()
     .items(
       Joi.object({

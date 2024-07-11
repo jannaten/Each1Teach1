@@ -1,15 +1,17 @@
 import * as formik from 'formik';
 import Select from 'react-select';
 import Avatar from 'boring-avatars';
+import Cropper from 'react-easy-crop';
 import { useTheme } from 'styled-components';
 import { unwrapResult } from '@reduxjs/toolkit';
-import React, { useState, useEffect } from 'react';
-import { FormLabel, FormGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Row, Col, Form, Table, Button } from 'react-bootstrap';
+import React, { useState, useEffect, useCallback } from 'react';
 import { PlusCircleFill, Trash3Fill } from 'react-bootstrap-icons';
+import { FormLabel, FormGroup, Alert, Image } from 'react-bootstrap';
+import { Row, Col, Form, Table, Button, Container } from 'react-bootstrap';
 
+import getCroppedImg from '../utilities/cropImage';
 import { updateUser } from '../redux/slices/userSlice';
 import { closeModal } from '../redux/slices/modalSlice';
 import { loadConfig } from '../redux/slices/configSlice';
@@ -33,6 +35,58 @@ const UserForm = ({
 
   const { from } = location.state || {
     from: { pathname: '/dashboard' }
+  };
+
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedArea, setCroppedArea] = useState(null);
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [error, setError] = useState('');
+  const [showUpload, setShowUpload] = useState(false);
+  const [deletedImage, setDeletedImage] = useState(false);
+  const [replaceImage, setReplaceImage] = useState(false);
+  const [defaultImage, setDefaultImage] = useState(user?.images[0]);
+
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    setCroppedArea(croppedAreaPixels);
+  }, []);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const validImageTypes = ['image/jpeg', 'image/png'];
+      if (!validImageTypes.includes(file.type)) {
+        setError('Please upload a valid image file (jpeg, png).');
+        return;
+      }
+      if (file.size > 3 * 1024 * 1024) {
+        setError('The image size should not exceed 3MB.');
+        return;
+      }
+      setError('');
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleCrop = async () => {
+    const croppedImage = await getCroppedImg(preview, croppedArea);
+    setCroppedImage(croppedImage);
+    if (deletedImage) {
+      setReplaceImage(true);
+    }
+  };
+
+  const handleToggleUpload = () => {
+    setShowUpload(!showUpload);
+    setImage(null);
+    setPreview(null);
+    setCroppedImage(null);
+    setError('');
+    if (!showUpload) setDefaultImage(null);
+    else setDefaultImage(user?.images[0] || null);
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -74,16 +128,33 @@ const UserForm = ({
     try {
       const languages_to_learn = refactorLocalization(learningLanguages);
       const languages_for_teach = refactorLocalization(teachingLanguages);
+      const formData = new FormData();
+      Object.keys(form).forEach((key) => {
+        formData.append(key, form[key]);
+      });
+      if (user?.id) formData.append('id', user.id);
+      formData.append('languages_to_learn', JSON.stringify(languages_to_learn));
+      formData.append(
+        'languages_for_teach',
+        JSON.stringify(languages_for_teach)
+      );
+      formData.append('avatar', JSON.stringify([avatar]));
+      if (croppedImage && replaceImage && deletedImage) {
+        const blob = await fetch(croppedImage).then((res) => res.blob());
+        formData.append('images', blob, 'image.png');
+        formData.append('status', `replaced ${JSON.stringify(user.images[0])}`);
+        if (replaceImage) formData.append('status', 'replace');
+      } else if (!croppedImage && deletedImage) {
+        formData.append('images', JSON.stringify(user.images));
+        formData.append('status', 'deleted');
+      } else if (croppedImage) {
+        const blob = await fetch(croppedImage).then((res) => res.blob());
+        formData.append('images', blob, 'image.png');
+      }
       unwrapResult(
         await dispatch(
           updateUser({
-            data: {
-              ...form,
-              id: user?.id,
-              languages_to_learn,
-              languages_for_teach,
-              avatar: [avatar]
-            },
+            data: formData,
             isManagement,
             isRegister,
             isEdit
@@ -97,8 +168,13 @@ const UserForm = ({
       );
     } catch (error) {
       errorToast(error);
-      console.log('error: ', error);
+      console.log('error: ', error.message);
     }
+  };
+
+  const deleteImage = async () => {
+    setDefaultImage(null);
+    setDeletedImage(true);
   };
 
   useEffect(() => {
@@ -115,31 +191,122 @@ const UserForm = ({
 
   return (
     <>
-      {!user?.image && (
-        <div className='w-100 d-flex flex-column align-items-center justify-content-center'>
-          <div className='my-5'>
-            <Avatar
-              size={50}
-              variant={avatar}
-              name={user?.firstName + ' ' + user?.lastName}
-              colors={['#92A1C6', '#146A7C', '#F0AB3D', '#C271B4', '#C20D90']}
+      <div className='w-100 d-flex flex-column align-items-center justify-content-center'>
+        <div className='my-5'>
+          <Avatar
+            size={50}
+            variant={avatar}
+            name={user?.firstName + ' ' + user?.lastName}
+            colors={['#92A1C6', '#146A7C', '#F0AB3D', '#C271B4', '#C20D90']}
+          />
+        </div>
+        <div className='d-flex flex-row flex-wrap align-items-center justify-content-center'>
+          {configState.data?.avatars.map((variant) => (
+            <Form.Check
+              inline
+              type='radio'
+              key={variant}
+              label={variant}
+              id={`radio-${variant}`}
+              checked={variant === avatar}
+              onChange={() => setAvatar(variant)}
+            />
+          ))}
+        </div>
+      </div>
+      {defaultImage && (
+        <div className='w-100 d-flex flex-column flex-wrap justify-content-center align-items-center'>
+          <div className='mt-3'>
+            <Image
+              width={100}
+              alt='profile picture'
+              className='rounded-circle'
+              src={'/api/files/' + defaultImage}
             />
           </div>
-          <div className='d-flex flex-row flex-wrap align-items-center justify-content-center'>
-            {configState.data?.avatars.map((variant) => (
-              <Form.Check
-                inline
-                type='radio'
-                key={variant}
-                label={variant}
-                id={`radio-${variant}`}
-                checked={variant === avatar}
-                onChange={() => setAvatar(variant)}
-              />
-            ))}
+          <div className='my-3'>
+            <PrimaryButton onClick={deleteImage}>Delete Image</PrimaryButton>
           </div>
         </div>
       )}
+      {!defaultImage && (
+        <div className='d-flex flex-row justify-content-center mt-3'>
+          <Form.Check
+            type='checkbox'
+            label={
+              !defaultImage
+                ? 'Do you want to upload a profile picture?'
+                : 'Do you want to change the picture?'
+            }
+            checked={showUpload}
+            onChange={handleToggleUpload}
+          />
+        </div>
+      )}
+      <Container>
+        <Row className='justify-content-md-center'>
+          {!defaultImage && (
+            <Col md='6'>
+              {showUpload && (
+                <>
+                  <Form className='mt-3'>
+                    <Form.Group className='text-center'>
+                      <Form.Control
+                        type='file'
+                        id='imageUpload'
+                        accept='image/*'
+                        onChange={handleImageChange}
+                      />
+                    </Form.Group>
+                  </Form>
+                  {error && <Alert variant='danger'>{error}</Alert>}
+                  {preview && (
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '400px',
+                        position: 'relative'
+                      }}>
+                      <Cropper
+                        aspect={1}
+                        crop={crop}
+                        zoom={zoom}
+                        image={preview}
+                        cropShape='round'
+                        onCropChange={setCrop}
+                        onZoomChange={setZoom}
+                        onCropComplete={onCropComplete}
+                      />
+                    </div>
+                  )}
+                  {preview && (
+                    <div className='text-center mt-3'>
+                      <PrimaryButton variant='primary' onClick={handleCrop}>
+                        Crop Image
+                      </PrimaryButton>
+                    </div>
+                  )}
+                  {croppedImage && (
+                    <div className='text-center my-3'>
+                      <Image
+                        width={100}
+                        alt='cropped picture'
+                        className='rounded-circle'
+                        src={croppedImage}
+                      />
+                      {/* <img
+                        alt='Cropped'
+                        src={croppedImage}
+                        style={{ maxHeight: '200px', borderRadius: '50%' }}
+                      /> */}
+                    </div>
+                  )}
+                </>
+              )}
+            </Col>
+          )}
+        </Row>
+      </Container>
       <Formik
         onSubmit={onUpdate}
         initialValues={initialValues}
@@ -550,7 +717,7 @@ const UserForm = ({
                   variant='none'
                   style={{ border: 'none' }}
                   onClick={() => dispatch(closeModal())}>
-                  cancel'
+                  cancel
                 </Button>
               )}
             </Row>

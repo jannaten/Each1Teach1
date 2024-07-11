@@ -81,10 +81,12 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now
     },
-    images: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'File'
-    },
+    images: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'File'
+      }
+    ],
     languages_to_learn: [languageSchema],
     languages_for_teach: [languageSchema],
     deletedAt: {
