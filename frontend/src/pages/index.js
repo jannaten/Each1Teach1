@@ -8,16 +8,18 @@ import DashboardPage from './dashboard.page';
 import UserManagementPage from './user-management.page';
 import NewsManagementPage from './news-management.page';
 import ProfileManagementPage from './profile-management.page';
+import AllNews from './all-news.page';
 
 export {
-  ChatPage,
-  HomePage,
-  LoginPage,
-  MatchesPage,
-  RegisterPage,
-  NotFoundPage,
-  DashboardPage,
-  UserManagementPage,
-  NewsManagementPage,
-  ProfileManagementPage
+	AllNews,
+	ChatPage,
+	HomePage,
+	LoginPage,
+	MatchesPage,
+	RegisterPage,
+	NotFoundPage,
+	DashboardPage,
+	UserManagementPage,
+	NewsManagementPage,
+	ProfileManagementPage
 };

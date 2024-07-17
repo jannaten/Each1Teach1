@@ -8,7 +8,12 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { themes } from './utilities/colors';
 import ProtectedRoute from './components/ProtectedRoute';
 import { getUserInfo, updateUser } from './redux/slices/userSlice';
-import { ProfileManagementPage, NotFoundPage, ChatPage } from './pages';
+import {
+  ProfileManagementPage,
+  NotFoundPage,
+  ChatPage,
+  AllNews
+} from './pages';
 import { HomePage, LoginPage, RegisterPage, MatchesPage } from './pages';
 import { ErrorBoundary, NavBar, ModalRootComponent } from './components';
 import { UserManagementPage, NewsManagementPage, DashboardPage } from './pages';
@@ -63,6 +68,7 @@ export default function App() {
           <Route exact path='/' element={<HomePage />} />
           <Route exact path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
+          <Route path='/allnews' element={<AllNews />} />
           <Route
             path='/'
             element={

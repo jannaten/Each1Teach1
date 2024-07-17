@@ -58,7 +58,8 @@ const SectionNews = () => {
           </h1>
           <div
             className='d-flex flex-row justify-content-center align-items-center'
-            role='button'>
+            role='button'
+            onClick={() => navigate('/allnews')}>
             <p className='m-0 text-light' style={{ fontWeight: 500 }}>
               all news
             </p>

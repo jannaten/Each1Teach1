@@ -18,25 +18,33 @@ import NewsDeleteModal from './modals/NewsDeleteModal';
 import DeleteUserModal from './modals/UserDeleteModal';
 import SectionLocalization from './SectionLocalization';
 import ModalRootComponent from './common/ModalRootComponent';
+import SearchInput from './common/Search-Input';
+import FormInput from './common/Form-input';
+import NewsHolder from './NewsHolder';
+import ParagraphButton from './common/ParagraphButton';
 export {
-  SectionLocalization,
-  ModalRootComponent,
-  LocalizationList,
-  DeleteUserModal,
-  NewsDeleteModal,
-  SectionProcess,
-  ErrorBoundary,
-  SectionChoose,
-  NewsSaveModal,
-  HomeContainer,
-  UserSaveModal,
-  SectionAbout,
-  SectionNews,
-  Pagination,
-  Jumbotron,
-  NewsList,
-  UserForm,
-  UserList,
-  Footer,
-  NavBar
+	SectionLocalization,
+	ModalRootComponent,
+	LocalizationList,
+	DeleteUserModal,
+	NewsDeleteModal,
+	ParagraphButton,
+	SectionProcess,
+	ErrorBoundary,
+	SectionChoose,
+	NewsSaveModal,
+	HomeContainer,
+	UserSaveModal,
+	SectionAbout,
+	SectionNews,
+	SearchInput,
+	Pagination,
+	Jumbotron,
+	NewsHolder,
+	FormInput,
+	NewsList,
+	UserForm,
+	UserList,
+	Footer,
+	NavBar
 };
