@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { unwrapResult } from '@reduxjs/toolkit';
 import { useNavigate } from 'react-router-dom';
-import { loadNews } from '../redux/slices/newsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Breadcrumb } from 'react-bootstrap';
+import { unwrapResult } from '@reduxjs/toolkit';
+
 import { Container } from 'react-bootstrap';
 import { paginate } from '../utilities/paginate';
+import { loadNews } from '../redux/slices/newsSlice';
 import { NewsHolder, Pagination, SearchInput } from '../components';
 
 export default function AllNews() {
@@ -19,7 +20,7 @@ export default function AllNews() {
   const [searchInputValue, setSearchInputValue] = useState('');
 
   useEffect(() => {
-    unwrapResult(dispatch(loadNews()));
+    dispatch(loadNews());
   }, [dispatch]);
 
   const handlePageChange = (page) => {
@@ -38,12 +39,13 @@ export default function AllNews() {
     setCurrentPage(currentPage + 1);
   };
 
-  const filteredNews = newsState.data.filter((blog) => {
-    if (blog.title.toLowerCase().includes(searchInputValue.toLowerCase())) {
-      return true;
-    }
-    return false;
-  });
+  if (!newsState.data) {
+    return <p>Loading...</p>;
+  }
+
+  const filteredNews = newsState.data.filter((news) =>
+    news.title.toLowerCase().includes(searchInputValue.toLowerCase())
+  );
 
   const filtered =
     selectedNews && selectedNews.targetAudience
@@ -53,7 +55,6 @@ export default function AllNews() {
       : filteredNews;
 
   const paginatedNews = paginate(filtered, currentPage, pageSize);
-
   return (
     <>
       <Breadcrumb
@@ -71,8 +72,6 @@ export default function AllNews() {
       </Breadcrumb>
       <Container>
         <h1 className='mb-5 text-secondary'>All News</h1>
-        {/* <Count item={filtered} label="news" />
-         */}
         <SearchInput
           value={searchInputValue}
           placeholder='search blog articles'
@@ -82,7 +81,7 @@ export default function AllNews() {
           {' '}
           <Col sm={12} md={12} lg={12}>
             <>
-              {paginatedNews.map((news) => (
+              {paginatedNews?.map((news) => (
                 <NewsHolder key={news.id} news={news} />
               ))}
               <Container className='pt-5'>

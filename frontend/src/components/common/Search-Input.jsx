@@ -2,8 +2,11 @@ import React from 'react';
 import { Search } from 'react-bootstrap-icons';
 import { Button, InputGroup } from 'react-bootstrap';
 import { FormInput } from '../';
+import { useTheme } from 'styled-components';
 
 function SearchInput({ placeholder, handleChange, value, ...props }) {
+  const { primary } = useTheme();
+
   return (
     <InputGroup size='lg' className='mb-3'>
       <FormInput
@@ -16,11 +19,8 @@ function SearchInput({ placeholder, handleChange, value, ...props }) {
         <Button
           aria-label='search'
           variant=''
-          // style={outLineNoneWithBgPrimary}
-        >
-          <Search
-          // style={colorBright}
-          />
+          style={{ outline: 'none', backgroundColor: primary }}>
+          <Search style={{ color: '#ffffff' }} />
         </Button>
       </InputGroup.Text>
     </InputGroup>
