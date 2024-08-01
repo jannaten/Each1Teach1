@@ -1,15 +1,19 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
-import { Col, Image, Row } from 'react-bootstrap';
+import { Col, Image, Row, Container } from 'react-bootstrap';
 import FooterPicture from '../assets/images/4.jpg';
+import { Linkedin } from 'react-bootstrap-icons';
+import { useNavigate } from 'react-router-dom';
+import { developer_masood } from '../data/linkedin';
 
 const Footer = () => {
+  const navigate = useNavigate();
   const { primary } = useTheme();
   return (
     <div
       className='position-relative'
       style={{
-        height: '300px',
+        height: '320px',
         backgroundColor: `${primary}E6`
       }}>
       <Image
@@ -22,7 +26,7 @@ const Footer = () => {
       <div
         className='w-100 position-relative'
         style={{
-          height: '300px',
+          height: '320px',
           backgroundColor: `${primary}E6`
         }}>
         <Row className='text-center m-0'>
@@ -38,6 +42,34 @@ const Footer = () => {
               +358 294 5222
               <br /> info@unitandem.fi
             </p>
+          </Col>
+        </Row>
+        <Row className='text-center m-0 justify-content-center'>
+          <Col xs lg='1' className='text-light' style={{ marginLeft: '0' }}>
+            Developers:
+          </Col>
+          <Col md='auto' className='text-light'>
+            Masood Ahmadi
+            <Linkedin
+              size={20}
+              role='link'
+              style={{ marginLeft: '7px', marginTop: '-5px' }}
+              onClick={(event) => {
+                event.preventDefault();
+                window.open(developer_masood, '_blank');
+              }}
+            />
+          </Col>
+          <Col md='auto' className='text-light'>
+            Jannaten Nayem{' '}
+            <Linkedin
+              size={20}
+              style={{ marginLeft: '7px', marginTop: '-5px' }}
+              onClick={(event) => {
+                event.preventDefault();
+                window.open(developer_jannaten, '_blank');
+              }}
+            />
           </Col>
         </Row>
       </div>
