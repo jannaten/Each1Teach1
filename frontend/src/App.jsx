@@ -12,7 +12,8 @@ import {
   ProfileManagementPage,
   NotFoundPage,
   ChatPage,
-  AllNews
+  AllNews,
+  NewsPage
 } from './pages';
 import { HomePage, LoginPage, RegisterPage, MatchesPage } from './pages';
 import { ErrorBoundary, NavBar, ModalRootComponent } from './components';
@@ -66,9 +67,11 @@ export default function App() {
         <ModalRootComponent />
         <Routes>
           <Route exact path='/' element={<HomePage />} />
+          <Route path='/news/:newsId' element={<NewsPage />} />
           <Route exact path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
-          <Route path='/allnews' element={<AllNews />} />
+
+          <Route path='/news' element={<AllNews />} />
           <Route
             path='/'
             element={

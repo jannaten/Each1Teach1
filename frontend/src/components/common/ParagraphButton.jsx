@@ -9,7 +9,7 @@ function ParagraphButton({ newsId }) {
     <Container>
       <p
         className='mt-2 pt-1'
-        onClick={() => navigate(`/news/${newsId}$` + newsId)}
+        onClick={() => navigate(`/news/${newsId}`)}
         style={{ color: 'primary', cursor: 'pointer' }}>
         Read More
       </p>

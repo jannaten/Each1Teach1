@@ -9,11 +9,13 @@ import UserManagementPage from './user-management.page';
 import NewsManagementPage from './news-management.page';
 import ProfileManagementPage from './profile-management.page';
 import AllNews from './all-news.page';
+import NewsPage from './newsId.page';
 
 export {
 	AllNews,
 	ChatPage,
 	HomePage,
+	NewsPage,
 	LoginPage,
 	MatchesPage,
 	RegisterPage,

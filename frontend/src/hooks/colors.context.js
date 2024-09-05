@@ -1,21 +1,21 @@
 import { createContext, useState } from 'react';
-import { colors } from '../config';
+import { colors } from '../utilities/colors';
 
 export const ColorContext = createContext();
 
 const ColorContextProvider = ({ children }) => {
-  const { defaultColor } = colors;
-  const [primary, setPrimary] = useState(defaultColor);
+	const { defaultColor } = colors;
+	const [primary, setPrimary] = useState(defaultColor);
 
-  return (
-    <ColorContext.Provider
-      value={{
-        setPrimary,
-        primary
-      }}>
-      {children}
-    </ColorContext.Provider>
-  );
+	return (
+		<ColorContext.Provider
+			value={{
+				setPrimary,
+				primary
+			}}>
+			{children}
+		</ColorContext.Provider>
+	);
 };
 
 export default ColorContextProvider;

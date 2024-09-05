@@ -1,9 +1,8 @@
+// all-news-page.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Breadcrumb } from 'react-bootstrap';
-import { unwrapResult } from '@reduxjs/toolkit';
-
 import { Container } from 'react-bootstrap';
 import { paginate } from '../utilities/paginate';
 import { loadNews } from '../redux/slices/newsSlice';

@@ -22,6 +22,8 @@ import SearchInput from './common/Search-Input';
 import FormInput from './common/Form-input';
 import NewsHolder from './NewsHolder';
 import ParagraphButton from './common/ParagraphButton';
+import BreadCrumb from './common/Bread-Crump';
+
 export {
 	SectionLocalization,
 	ModalRootComponent,
@@ -44,6 +46,7 @@ export {
 	FormInput,
 	NewsList,
 	UserForm,
+	BreadCrumb,
 	UserList,
 	Footer,
 	NavBar

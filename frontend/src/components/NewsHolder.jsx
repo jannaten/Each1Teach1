@@ -29,7 +29,7 @@ export default function NewsHolder({ news }) {
       <ListGroup className='list-group-flush'>
         <ListGroupItem>{news.content}</ListGroupItem>
       </ListGroup>
-      <ParagraphButton newsId={news.title} />
+      <ParagraphButton newsId={news.id} />
     </Card>
   );
 }
