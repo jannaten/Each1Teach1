@@ -112,7 +112,7 @@ body {
 .chat {
   display: flex;
   flex-direction: column-reverse;
-  height: 100%;
+  max-height: 40rem;
   overflow: hidden;
   border: 1px #ccc dashed;
   font: 0.85rem/1.5 Arial;

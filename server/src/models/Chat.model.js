@@ -28,8 +28,13 @@ const chatSchema = new mongoose.Schema(
       required: false
     },
     seen: {
-      type: Boolean,
-      default: false
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User'
+        }
+      ],
+      default: []
     },
     deletedAt: {
       type: Date,

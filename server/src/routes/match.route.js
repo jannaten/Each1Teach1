@@ -149,6 +149,21 @@ router.post(
   })
 );
 
+router.patch(
+  '/chats/:id',
+  validateObjectId,
+  authHandler('student'),
+  asyncErrorHandler(async (req, res) => {
+    const chatService = new ChatService();
+    const chat = await chatService.getById(req.params.id);
+    if (!chat) throw createError(404, 'chat not found');
+    let message;
+    message = await chatService.update(req.params.id, req.body);
+    message = await chatService.getById(message.id);
+    res.json(message);
+  })
+);
+
 router.put(
   '/:id',
   validateObjectId,

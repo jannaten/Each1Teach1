@@ -154,7 +154,8 @@ const chatSchema = Joi.object({
   matchId: Joi.string().required(),
   sender: Joi.string().required(),
   receiver: Joi.string().required(),
-  message: Joi.string().required().max(200)
+  message: Joi.string().required().max(200),
+  seen: Joi.array().items(Joi.string())
 });
 
 module.exports = {

@@ -67,6 +67,15 @@ const matchSlice = createSlice({
         try {
           state.loading = false;
           if (payload.isEdit) {
+            state.data = [...state.data].map((el) => {
+              if (el.id === payload.data.matchId) {
+                el.chats = el.chats.map((chat) => {
+                  if (chat.id === payload.data.id) return payload.data;
+                  return chat;
+                });
+              }
+              return el;
+            });
           } else {
             state.data = [...state.data].map((el) => {
               if (el.id === payload.data.matchId) el.chats.push(payload.data);

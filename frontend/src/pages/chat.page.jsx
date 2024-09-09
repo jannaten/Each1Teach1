@@ -40,6 +40,42 @@ export default function ChatPage() {
   }, [dispatch]);
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch(loadChats());
+    }, 15000);
+    return () => clearInterval(interval);
+  }, [dispatch, chatBox]);
+
+  useEffect(() => {
+    if (chatBox) {
+      const recipientUserObj =
+        chatBox.recipientUser.id === userState.data.id
+          ? chatBox.requestUser
+          : chatBox.recipientUser;
+
+      const unreadMessagesCount = chatBox.chats.filter((chat) => {
+        return (
+          chat.seen.length === 1 && chat.seen.includes(recipientUserObj.id)
+        );
+      });
+
+      if (unreadMessagesCount.length > 0) {
+        for (let i = 0; i < unreadMessagesCount.length; i++) {
+          dispatch(
+            saveMessage({
+              data: {
+                id: unreadMessagesCount[i].id,
+                seen: unreadMessagesCount[i].seen.concat(userState.data.id)
+              },
+              isEdit: true
+            })
+          );
+        }
+      }
+    }
+  }, [chatBox]);
+
+  useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
@@ -76,7 +112,8 @@ export default function ChatPage() {
             matchId: chatBox.id,
             sender: userState.data.id,
             receiver: getRecipientUserId(),
-            message: textField
+            message: textField,
+            seen: [userState.data.id]
           },
           isEdit
         })
@@ -132,6 +169,23 @@ export default function ChatPage() {
       )}
     </>
   );
+
+  const renderUnreadMessagesCount = (chats, requestUser, recipientUser) => {
+    const recipientUserObj = getRecipientUser(requestUser, recipientUser);
+    const unreadMessagesCount = chats.filter((chat) => {
+      return chat.seen.length === 1 && chat.seen.includes(recipientUserObj.id);
+    }).length;
+    return (
+      <>
+        {unreadMessagesCount > 0 && (
+          <b>
+            {unreadMessagesCount} unread{' '}
+            {unreadMessagesCount > 1 ? 'messages' : 'message'}
+          </b>
+        )}
+      </>
+    );
+  };
 
   return (
     <Container
@@ -206,6 +260,11 @@ export default function ChatPage() {
                           {getFullName(requestUser, recipientUser)}
                         </p>{' '}
                         {isActive(requestUser, recipientUser)}
+                        {renderUnreadMessagesCount(
+                          chats,
+                          requestUser,
+                          recipientUser
+                        )}
                       </Col>
                     </Row>
                   </div>

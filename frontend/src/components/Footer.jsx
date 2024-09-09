@@ -1,13 +1,11 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
-import { Col, Image, Row, Container } from 'react-bootstrap';
-import FooterPicture from '../assets/images/4.jpg';
 import { Linkedin } from 'react-bootstrap-icons';
-import { useNavigate } from 'react-router-dom';
-import { developer_masood } from '../data/linkedin';
+import FooterPicture from '../assets/images/4.jpg';
+import { Col, Image, Row, Container } from 'react-bootstrap';
+import { developer_masood, developer_jannaten } from '../data/linkedin';
 
 const Footer = () => {
-  const navigate = useNavigate();
   const { primary } = useTheme();
   return (
     <div
@@ -49,27 +47,32 @@ const Footer = () => {
             Developers:
           </Col>
           <Col md='auto' className='text-light'>
-            Masood Ahmadi
-            <Linkedin
-              size={20}
-              role='link'
-              style={{ marginLeft: '7px', marginTop: '-5px' }}
+            <div
+              style={{ cursor: 'pointer' }}
               onClick={(event) => {
                 event.preventDefault();
                 window.open(developer_masood, '_blank');
-              }}
-            />
+              }}>
+              Masood Ahmadi{' '}
+              <Linkedin
+                size={20}
+                style={{ marginLeft: '7px', marginTop: '-5px' }}
+              />
+            </div>
           </Col>
           <Col md='auto' className='text-light'>
-            Jannaten Nayem{' '}
-            <Linkedin
-              size={20}
-              style={{ marginLeft: '7px', marginTop: '-5px' }}
+            <div
+              style={{ cursor: 'pointer' }}
               onClick={(event) => {
                 event.preventDefault();
                 window.open(developer_jannaten, '_blank');
-              }}
-            />
+              }}>
+              Jannaten Nayem{' '}
+              <Linkedin
+                size={20}
+                style={{ marginLeft: '7px', marginTop: '-5px' }}
+              />
+            </div>
           </Col>
         </Row>
       </div>
