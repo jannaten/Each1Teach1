@@ -37,16 +37,13 @@ router.get(
         teachers: teachersCount
       };
     });
-    // const filteredLanguageStats = languageStats.filter(
-    //   (lang) => lang.students > 0 || lang.teachers > 0
-    // );
-    languageStats.sort((a, b) => {
+    languageStats?.sort((a, b) => {
       const totalA = a.students + a.teachers;
       const totalB = b.students + b.teachers;
       if (totalA === totalB) return b.students - a.students;
       return totalB - totalA;
     });
-    return res.json(languageStats);
+    return res.json(languageStats || []);
   })
 );
 
