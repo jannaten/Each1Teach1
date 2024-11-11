@@ -1,3 +1,4 @@
+const AuthService = require('../src/services/AuthService');
 const UserService = require('../src/services/UserService');
 
 async function up() {
@@ -40,6 +41,7 @@ async function up() {
   for (const user of users) {
     const existingUser = await userService.getByEmail(user.email);
     if (!existingUser) {
+      user.password = AuthService.createPasswordHash(user.password);
       await userService.create(user);
       console.log(`User created: ${user.email}`);
     } else {
