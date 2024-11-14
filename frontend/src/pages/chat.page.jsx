@@ -55,7 +55,7 @@ export default function ChatPage() {
 
       const unreadMessagesCount = chatBox.chats.filter((chat) => {
         return (
-          chat.seen.length === 1 && chat.seen.includes(recipientUserObj.id)
+          chat?.seen?.length === 1 && chat?.seen?.includes(recipientUserObj.id)
         );
       });
 
@@ -173,7 +173,9 @@ export default function ChatPage() {
   const renderUnreadMessagesCount = (chats, requestUser, recipientUser) => {
     const recipientUserObj = getRecipientUser(requestUser, recipientUser);
     const unreadMessagesCount = chats.filter((chat) => {
-      return chat.seen.length === 1 && chat.seen.includes(recipientUserObj.id);
+      return (
+        chat?.seen?.length === 1 && chat?.seen?.includes(recipientUserObj.id)
+      );
     }).length;
     return (
       <>
