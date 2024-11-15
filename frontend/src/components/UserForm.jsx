@@ -110,6 +110,10 @@ const UserForm = ({
   const [learningLanguages, setLearningLanguages] = useState(
     filterAndStructure(configState, user?.languages_to_learn) || []
   );
+  const [errorLanguageSelection, setErrorLanguageSelection] = useState({
+    teaching: false,
+    learning: false
+  });
 
   const handleLocaleChange = (type, field, selectedOptions) => {
     if (type === 'teaching') {
@@ -129,6 +133,15 @@ const UserForm = ({
     try {
       const languages_to_learn = refactorLocalization(learningLanguages);
       const languages_for_teach = refactorLocalization(teachingLanguages);
+      if (
+        (languages_for_teach.length === 0 || languages_to_learn.length === 0) &&
+        isRegister
+      ) {
+        setErrorLanguageSelection({ teaching: true, learning: true });
+        return;
+      } else {
+        setErrorLanguageSelection({ teaching: false, learning: false });
+      }
       const formData = new FormData();
       Object.keys(form).forEach((key) => {
         formData.append(key, form[key]);
@@ -568,6 +581,10 @@ const UserForm = ({
                     <PlusCircleFill className='' />
                     <p className='ps-2 m-0'>Add language</p>
                   </Button>
+                  {errorLanguageSelection.learning &&
+                    teachingLanguages.length === 0 && (
+                      <p className='text-danger'>No language was selected</p>
+                    )}
                 </Form.Group>
                 <Form.Group
                   className='mb-3'
@@ -717,6 +734,10 @@ const UserForm = ({
                     <PlusCircleFill className='' />
                     <p className='ps-2 m-0'>Add language</p>
                   </Button>
+                  {errorLanguageSelection.teaching &&
+                    learningLanguages.length === 0 && (
+                      <p className='text-danger'>No language was selected</p>
+                    )}
                 </Form.Group>
               </>
             )}

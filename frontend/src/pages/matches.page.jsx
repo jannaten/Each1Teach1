@@ -97,7 +97,13 @@ export default function MatchesPage() {
         <h1
           className='my-5 text-center'
           style={{ fontWeight: '700', color: primary }}>
-          Matches ({filteredMatches?.length})
+          Matches (
+          {
+            matchState.data.filter(
+              (user) => Object.keys(user.invited).length === 0
+            ).length
+          }
+          )
         </h1>
         <div className='d-flex flex-row justify-content-center align-items-center mb-3'>
           <ToggleButton
@@ -110,13 +116,23 @@ export default function MatchesPage() {
             variant=''
             active={filter === 'pending'}
             onClick={() => handleFilterChange('pending')}>
-            pending
+            pending -
+            {
+              matchState.data.filter((user) =>
+                user.invited?.status?.includes('pending')
+              ).length
+            }
           </ToggleButton>
           <ToggleButton
             variant=''
             active={filter === 'approved'}
             onClick={() => handleFilterChange('approved')}>
-            approved
+            approved -{' '}
+            {
+              matchState.data.filter((user) =>
+                user.invited?.status?.includes('approved')
+              ).length
+            }
           </ToggleButton>
         </div>
         {filteredMatches.length > 0 ? (
@@ -228,7 +244,13 @@ export default function MatchesPage() {
             ))}
           </Row>
         ) : (
-          <h6 className='mt-3'>No matches found</h6>
+          <h6 className='mt-3'>
+            {filter === 'pending'
+              ? 'No pending request found'
+              : filter === 'approved'
+              ? 'No approved matches found'
+              : 'No matches found'}
+          </h6>
         )}
       </div>
     </Container>
