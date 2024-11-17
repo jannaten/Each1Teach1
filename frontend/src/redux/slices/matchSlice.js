@@ -15,6 +15,18 @@ export const loadMatches = createAsyncThunk(
   }
 );
 
+export const loadAllMatches = createAsyncThunk(
+  'match/loadAllMatches',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${axios.defaults.url}/matches/all`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const sendInvitation = createAsyncThunk(
   'match/sendInvitation',
   async (data, { rejectWithValue }) => {
@@ -63,18 +75,26 @@ const isRejectedAction = (action) => {
   return action.type.startsWith('config/') && action.type.endsWith('/rejected');
 };
 
+const initialState = {
+  loading: false,
+  errors: false,
+  data: []
+};
+
 const matchSlice = createSlice({
   name: 'match',
-  initialState: {
-    loading: false,
-    errors: false,
-    data: []
+  initialState,
+  reducers: {
+    resetMatchState: (state) => initialState
   },
-  reducers: {},
   extraReducers: (builder) => {
     builder
       // LOAD
       .addCase(loadMatches.fulfilled, (state, { payload }) => {
+        state.data = payload;
+        state.loading = false;
+      })
+      .addCase(loadAllMatches.fulfilled, (state, { payload }) => {
         state.data = payload;
         state.loading = false;
       })
@@ -121,4 +141,5 @@ const matchSlice = createSlice({
   }
 });
 
+export const { resetMatchState } = matchSlice.actions;
 export default matchSlice.reducer;

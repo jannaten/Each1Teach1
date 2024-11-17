@@ -1,18 +1,17 @@
 import { useTheme } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { unwrapResult } from '@reduxjs/toolkit';
-import React, { useEffect, useState } from 'react';
+import { ArrowLeft } from 'react-bootstrap-icons';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ArrowLeft, PlusLg } from 'react-bootstrap-icons';
 import { Col, Container, Row, Table } from 'react-bootstrap';
 
+import { FormControlStyled } from '../styles';
 import { paginate } from '../utilities/paginate';
-import { loadNews } from '../redux/slices/newsSlice';
-import { openModal } from '../redux/slices/modalSlice';
-import { FormControlStyled, PrimaryButton } from '../styles';
-import { Pagination, NewsList, NewsSaveModal } from '../components';
+import { Pagination, MatchList } from '../components';
+import { loadAllMatches } from '../redux/slices/matchSlice';
 
-export default function NewsManagementPage() {
+export default function MatchManagementPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { primary } = useTheme();
@@ -20,7 +19,7 @@ export default function NewsManagementPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchInputValue, setSearchInputValue] = useState('');
 
-  const newsState = useSelector((state) => state.news);
+  const matchState = useSelector((state) => state.matches);
 
   const handleSearch = (e) => {
     setSearchInputValue(e.target.value);
@@ -29,18 +28,41 @@ export default function NewsManagementPage() {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
-    unwrapResult(dispatch(loadNews()));
+    unwrapResult(dispatch(loadAllMatches()));
   }, []);
 
-  const filteredNews = newsState.data?.filter((news) =>
-    news?.title?.toLowerCase()?.includes(searchInputValue?.toLowerCase())
-  );
+  const isUserMatch = (user, searchTerm) => {
+    const firstName = user.firstName.toLowerCase();
+    const lastName = user.lastName.toLowerCase();
+    const fullName = `${firstName} ${lastName}`;
+    const email = user.email.toLowerCase();
 
-  const paginatedNews = paginate(filteredNews, currentPage, pageSize);
+    return (
+      firstName.includes(searchTerm) ||
+      lastName.includes(searchTerm) ||
+      fullName.includes(searchTerm) ||
+      email.includes(searchTerm)
+    );
+  };
 
+  // Filter matches based on user search
+  const filteredMatches = useMemo(() => {
+    const searchTerm = searchInputValue.toLowerCase().trim();
+
+    if (!searchTerm) return matchState.data;
+
+    return matchState.data.filter(
+      (match) =>
+        isUserMatch(match.requestUser, searchTerm) ||
+        isUserMatch(match.recipientUser, searchTerm)
+    );
+  }, [matchState.data, searchInputValue]);
+
+  const paginatedMatches = paginate(filteredMatches, currentPage, pageSize);
   return (
     <Container className='pt-3'>
       <div className='w-100 p-0 m-0'>
@@ -53,37 +75,27 @@ export default function NewsManagementPage() {
           onClick={() => navigate('/dashboard')}
         />
       </div>
-      <h1 className='text-left mt-4 mb-3'>News management</h1>
-      <p className='text-left'>{paginatedNews?.length} news found</p>
+      <h1 className='text-left mt-4 mb-3'>Match management</h1>
+      <p className='text-left'>
+        {filteredMatches?.length > 1
+          ? `${filteredMatches?.length} matches found`
+          : `${filteredMatches?.length} match found`}
+      </p>
       <Row className='my-3 mx-0 p-0 w-100 d-flex flex-wrap align-items-center'>
-        <Col sm={12} md={10} lg={10}>
+        <Col sm={12} md={12} lg={12}>
           <FormControlStyled
             className='w-100'
             onChange={handleSearch}
-            aria-label='Search news'
-            placeholder='Search news'
-            aria-describedby='search-news'
+            aria-label='Search matches'
+            placeholder='Search matches'
+            aria-describedby='search-matches'
           />
-        </Col>
-        <Col sm={12} md={10} lg={2}>
-          <PrimaryButton
-            className='w-100'
-            onClick={() =>
-              dispatch(
-                openModal({
-                  content: <NewsSaveModal />,
-                  options: { size: 'lg' }
-                })
-              )
-            }>
-            <PlusLg width={22} height={22} />
-          </PrimaryButton>
         </Col>
       </Row>
       <Row>
         <div className='d-flex justify-content-center'>
           <Pagination
-            itemsCount={newsState.data?.length}
+            itemsCount={filteredMatches.length}
             onPageChange={handlePageChange}
             currentPage={currentPage}
             pageSize={pageSize}
@@ -95,37 +107,29 @@ export default function NewsManagementPage() {
           <tr style={{ borderBottom: `1px solid ${primary}` }}>
             <th
               className='m-0 p-2'
-              style={{ color: primary, fontWeight: '600' }}></th>
-            <th
-              className='m-0 p-2'
               style={{ color: primary, fontWeight: '600' }}>
-              title
+              inviter
             </th>
             <th
               className='m-0 p-2'
               style={{ color: primary, fontWeight: '600' }}>
-              author
+              invitee
             </th>
             <th
               className='m-0 p-2'
               style={{ color: primary, fontWeight: '600' }}>
-              content
+              status
             </th>
             <th
-              className='m-0 p-2 text-center'
+              className='m-0 p-2'
               style={{ color: primary, fontWeight: '600' }}>
-              edit
-            </th>
-            <th
-              className='m-0 p-2 text-center'
-              style={{ color: primary, fontWeight: '600' }}>
-              delete
+              created at
             </th>
           </tr>
         </thead>
         <tbody>
-          {paginatedNews?.map((news) => (
-            <NewsList news={news} key={news.id} currentPage={currentPage} />
+          {paginatedMatches?.map((match) => (
+            <MatchList match={match} key={match.id} currentPage={currentPage} />
           ))}
         </tbody>
       </Table>

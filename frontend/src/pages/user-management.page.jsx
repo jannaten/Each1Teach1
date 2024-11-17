@@ -74,9 +74,9 @@ export default function UserManagementPage() {
           <FormControlStyled
             className='w-100'
             onChange={handleSearch}
-            aria-label='Search news'
-            placeholder='Search news'
-            aria-describedby='search-news'
+            aria-label='Search users'
+            placeholder='Search users'
+            aria-describedby='search-users'
           />
         </Col>
         <Col sm={12} md={10} lg={2}>

@@ -17,6 +17,14 @@ class MatchService {
     return await MatchService.getModel().then((Model) => Model.find(query));
   };
 
+  getMatchesWithUsers = async function (query = {}) {
+    const Model = await MatchService.getModel();
+    return await Model.find(query)
+      .populate('requestUser', '-password')
+      .populate('recipientUser', '-password')
+      .sort({ createdAt: -1 });
+  };
+
   getById = async function (id) {
     return await MatchService.getModel().then((Model) => Model.findById(id));
   };

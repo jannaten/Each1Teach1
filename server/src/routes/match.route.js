@@ -105,6 +105,12 @@ router.get(
   })
 );
 
+router.get('/all', authHandler('teacher'), async (req, res) => {
+  const matchService = new MatchService();
+  const matches = await matchService.getMatchesWithUsers();
+  res.json(matches);
+});
+
 router.get(
   '/chats',
   authHandler('student'),

@@ -8,13 +8,8 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { themes } from './utilities/colors';
 import ProtectedRoute from './components/ProtectedRoute';
 import { getUserInfo, updateUser } from './redux/slices/userSlice';
-import {
-  ProfileManagementPage,
-  NotFoundPage,
-  ChatPage,
-  AllNews,
-  NewsPage
-} from './pages';
+import { AllNews, ChatPage, NewsPage, NotFoundPage } from './pages';
+import { MatchManagementPage, ProfileManagementPage } from './pages';
 import { HomePage, LoginPage, RegisterPage, MatchesPage } from './pages';
 import { ErrorBoundary, NavBar, ModalRootComponent } from './components';
 import { UserManagementPage, NewsManagementPage, DashboardPage } from './pages';
@@ -70,7 +65,6 @@ export default function App() {
           <Route path='/news/:newsId' element={<NewsPage />} />
           <Route exact path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
-
           <Route path='/news' element={<AllNews />} />
           <Route
             path='/'
@@ -95,6 +89,10 @@ export default function App() {
             <Route
               path='/dashboard/news-management'
               element={<NewsManagementPage />}
+            />
+            <Route
+              path='/dashboard/match-management'
+              element={<MatchManagementPage />}
             />
           </Route>
           <Route element={<NotFoundPage />} />

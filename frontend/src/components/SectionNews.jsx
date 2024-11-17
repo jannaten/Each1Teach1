@@ -75,7 +75,7 @@ const SectionNews = () => {
         <Container>
           <Row className='m-0 px-5 py-5'>
             {newsState.data?.map(
-              ({ id, title, author, content, updatedAt }, index) => (
+              ({ id, title, author, content, createdAt }, index) => (
                 <Col sm={12} md={12} lg={6} xl={6} className='mt-3' key={index}>
                   <div
                     style={{ minHeight: '28rem' }}
@@ -97,7 +97,7 @@ const SectionNews = () => {
                         fontWeight: '500'
                       }}>
                       {author?.firstName} {author?.lastName} -{' '}
-                      {getDate(updatedAt)}
+                      {getDate(createdAt)}
                     </p>
                     <div
                       className='mb-3'

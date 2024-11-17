@@ -40,6 +40,11 @@ export default function DashboardPage() {
               onClick={() => navigate('/dashboard/user-management')}
             />
             <DashboardButtonCol
+              title='Match management'
+              icon={<Shuffle size={80} />}
+              onClick={() => navigate('/dashboard/match-management')}
+            />
+            <DashboardButtonCol
               title='News management'
               icon={<Newspaper size={80} />}
               onClick={() => navigate('/dashboard/news-management')}

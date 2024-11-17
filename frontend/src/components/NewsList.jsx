@@ -1,18 +1,33 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useTheme } from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { Trash2, VectorPen } from 'react-bootstrap-icons';
+import { Trash2, VectorPen, EyeFill } from 'react-bootstrap-icons';
 
 import { PrimaryButton } from '../styles';
 import { getDate } from '../utilities/getDate';
-import { NewsDeleteModal, NewsSaveModal } from '.';
 import { openModal } from '../redux/slices/modalSlice';
+import { NewsDeleteModal, NewsSaveModal, NewsViewModal } from '.';
 
 export default function NewsList({ news }) {
   const dispatch = useDispatch();
   const { primary } = useTheme();
   return (
     <tr style={{ borderBottom: `0.05rem solid ${primary}` }}>
+      <td className='m-0 p-2' style={{ color: primary }}>
+        <EyeFill
+          width={20}
+          height={20}
+          role='button'
+          onClick={() =>
+            dispatch(
+              openModal({
+                content: <NewsViewModal news={news} isEdit={true} />,
+                options: { size: 'lg' }
+              })
+            )
+          }
+        />
+      </td>
       <td className='m-0 p-2' style={{ color: primary }}>
         {news.title}
       </td>

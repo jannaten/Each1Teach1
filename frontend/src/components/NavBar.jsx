@@ -9,6 +9,7 @@ import { Navbar, Image, Container } from 'react-bootstrap';
 
 import { logout } from '../redux/slices/userSlice';
 import { errorToast, successToast } from './common/Toast';
+import { resetMatchState } from '../redux/slices/matchSlice';
 
 const NavBar = () => {
   const { primary } = useTheme();
@@ -20,7 +21,8 @@ const NavBar = () => {
     event.preventDefault();
     try {
       unwrapResult(dispatch(logout()));
-      navigate('/login');
+      dispatch(resetMatchState());
+      navigate('/');
       successToast('You have been logged out successfully');
     } catch (error) {
       errorToast(error);
