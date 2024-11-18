@@ -60,9 +60,10 @@ router.get(
 router.post(
   '/register',
   asyncErrorHandler(async (req, res) => {
-    const { avatar, languages_to_learn, languages_for_teach } = req.body;
+    const { avatar, roles, languages_to_learn, languages_for_teach } = req.body;
     const { value, error } = userValidationSchema.validate({
       ...req.body,
+      roles: JSON.parse(roles),
       avatar: JSON.parse(avatar),
       languages_to_learn: JSON.parse(languages_to_learn),
       languages_for_teach: JSON.parse(languages_for_teach)

@@ -3,10 +3,10 @@ import Select from 'react-select';
 import Avatar from 'boring-avatars';
 import Cropper from 'react-easy-crop';
 import { useTheme } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { FloatingLabel } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useCallback } from 'react';
 import { PlusCircleFill, Trash3Fill } from 'react-bootstrap-icons';
 import { FormLabel, FormGroup, Alert, Image } from 'react-bootstrap';
@@ -29,7 +29,6 @@ const UserForm = ({
 }) => {
   const { Formik } = formik;
   const dispatch = useDispatch();
-  const location = useLocation();
   const navigate = useNavigate();
   const { primary } = useTheme();
   const configState = useSelector((state) => state.config);

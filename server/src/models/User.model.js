@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
+const { emailDomains } = require('../data/emailDomains');
 const { createMD5 } = require('../utilities/crypto');
 const { toJSON } = require('../utilities/models');
+const {
+  getEmailDomainRegex,
+  formatDomainList
+} = require('../utilities/email-helper');
 
 const languageSchema = new mongoose.Schema(
   {
@@ -42,9 +47,11 @@ const userSchema = new mongoose.Schema(
       unique: true,
       validate: {
         validator: function (value) {
-          return value.endsWith('@tuni.fi');
+          return getEmailDomainRegex(emailDomains).test(value);
         },
-        message: 'Email must be from @tuni.fi domain'
+        message: `Email must be from an approved educational institution. Allowed domains are: ${formatDomainList(
+          emailDomains
+        )}`
       }
     },
     password: {

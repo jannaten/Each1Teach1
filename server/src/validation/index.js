@@ -1,21 +1,22 @@
 const Joi = require('joi');
-
-function getEmailDomainRegex(allowedDomains) {
-  const domainRegex = allowedDomains
-    .map((domain) => domain.replace('.', '\\.'))
-    .join('|');
-  return new RegExp(`@(${domainRegex})$`);
-}
-
-const allowedEmailDomains = ['tuni.fi'];
+const { emailDomains } = require('../data/emailDomains');
+const {
+  getEmailDomainRegex,
+  formatDomainList
+} = require('../utilities/email-helper');
 
 const userValidationSchema = Joi.object({
   firstName: Joi.string().required().max(50),
   lastName: Joi.string().required().max(50),
   email: Joi.string()
     .required()
-    .email()
-    .regex(getEmailDomainRegex(allowedEmailDomains)),
+    .email({ multiple: true })
+    .regex(getEmailDomainRegex(emailDomains))
+    .message(
+      `Email must be from an approved educational institution. Allowed domains are: ${formatDomainList(
+        emailDomains
+      )}`
+    ),
   password: Joi.string()
     .required()
     .pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/)
@@ -76,7 +77,14 @@ const userPatchSchema = Joi.object({
   id: Joi.any(),
   firstName: Joi.string().max(50),
   lastName: Joi.string().max(50),
-  email: Joi.string().email().regex(getEmailDomainRegex(allowedEmailDomains)),
+  email: Joi.string()
+    .email()
+    .regex(getEmailDomainRegex(emailDomains))
+    .message(
+      `Email must be from an approved educational institution. Allowed domains are: ${formatDomainList(
+        emailDomains
+      )}`
+    ),
   password: Joi.string().min(0).default(''),
   description: Joi.string().min(0).max(200).default(''),
   deletedAt: Joi.alternatives().try(Joi.date(), Joi.allow(null)),
@@ -134,7 +142,12 @@ const loginValidationSchema = Joi.object({
   email: Joi.string()
     .required()
     .email()
-    .regex(getEmailDomainRegex(allowedEmailDomains)),
+    .regex(getEmailDomainRegex(emailDomains))
+    .message(
+      `Email must be from an approved educational institution. Allowed domains are: ${formatDomainList(
+        emailDomains
+      )}`
+    ),
   password: Joi.string().required()
 });
 

@@ -103,6 +103,11 @@ const NavBar = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item
+                  onClick={() => navigate('/dashboard/match-management')}>
+                  Match Management
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item
                   onClick={() => navigate('/dashboard/news-management')}>
                   News Management
                 </NavDropdown.Item>

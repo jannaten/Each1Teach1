@@ -1,10 +1,30 @@
 import * as Yup from 'yup';
+import { emailDomains } from '../data';
+
+const getEmailDomainRegex = (allowedDomains) => {
+  const domainRegex = allowedDomains
+    .map((domain) => domain.replace('.', '\\.'))
+    .join('|');
+  return new RegExp(`@(${domainRegex})$`);
+};
+
+const formatDomainList = (domains) => {
+  return domains
+    .map((domain) => `@${domain}`)
+    .sort()
+    .join(', ');
+};
 
 export const loginSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid email')
-    .matches(/^[a-zA-Z0-9._%+-]+@tuni\.fi$/, 'Email must end with @tuni.fi')
-    .required('Email is required'),
+    .required()
+    .email()
+    .matches(
+      getEmailDomainRegex(emailDomains),
+      `Email must be from an approved educational institution. Allowed domains are: ${formatDomainList(
+        emailDomains
+      )}`
+    ),
   password: Yup.string().required('Password is required')
 });
 
@@ -27,9 +47,14 @@ export const registerSchema = Yup.object().shape({
     .required('Last name is required')
     .max(50, 'Last name cannot exceed 50 characters'),
   email: Yup.string()
-    .email('Invalid email')
-    .matches(/^[a-zA-Z0-9._%+-]+@tuni\.fi$/, 'Email must end with @tuni.fi')
-    .required('Email is required'),
+    .required()
+    .email()
+    .matches(
+      getEmailDomainRegex(emailDomains),
+      `Email must be from an approved educational institution. Allowed domains are: ${formatDomainList(
+        emailDomains
+      )}`
+    ),
   password: Yup.string()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
@@ -51,9 +76,14 @@ export const userUpdateSchema = Yup.object().shape({
     .required('Last name is required')
     .max(50, 'Last name cannot exceed 50 characters'),
   email: Yup.string()
-    .email('Invalid email')
-    .required('Email is required')
-    .matches(/^[a-zA-Z0-9._%+-]+@tuni\.fi$/, 'Email must end with @tuni.fi'),
+    .required()
+    .email()
+    .matches(
+      getEmailDomainRegex(emailDomains),
+      `Email must be from an approved educational institution. Allowed domains are: ${formatDomainList(
+        emailDomains
+      )}`
+    ),
   password: Yup.string().matches(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
     'Password must have at least 8 characters, including lowercase letters, uppercase letters, and a number'
