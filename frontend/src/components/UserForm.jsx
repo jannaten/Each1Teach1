@@ -34,10 +34,6 @@ const UserForm = ({
   const { primary } = useTheme();
   const configState = useSelector((state) => state.config);
 
-  const { from } = location.state || {
-    from: { pathname: '/dashboard' }
-  };
-
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -92,6 +88,7 @@ const UserForm = ({
 
   const [showPassword, setShowPassword] = useState(false);
   const [avatar, setAvatar] = useState(user?.avatar[0] || 'beam');
+  const [userRole, setUserRole] = useState(user?.roles[0] || 'student');
   const [teachingLanguage, setTeachingLanguage] = useState({
     language: '',
     credits: '',
@@ -135,7 +132,7 @@ const UserForm = ({
       const languages_for_teach = refactorLocalization(teachingLanguages);
       if (
         (languages_for_teach.length === 0 || languages_to_learn.length === 0) &&
-        isRegister
+        (isRegister || (isManagement && !isRegister))
       ) {
         setErrorLanguageSelection({ teaching: true, learning: true });
         return;
@@ -153,6 +150,7 @@ const UserForm = ({
         JSON.stringify(languages_for_teach)
       );
       formData.append('avatar', JSON.stringify([avatar]));
+      formData.append('roles', JSON.stringify([userRole]));
       if (croppedImage && replaceImage && deletedImage) {
         const blob = await fetch(croppedImage).then((res) => res.blob());
         formData.append('images', blob, 'image.png');
@@ -316,6 +314,24 @@ const UserForm = ({
           )}
         </Row>
       </Container>
+      {isManagement ? (
+        <div className='mt-5 d-flex flex-column flex-wrap align-items-center justify-content-center'>
+          <p>User role</p>
+          <div className='d-flex flex-row flex-wrap align-items-center justify-content-center'>
+            {configState.data?.userRoles.map((role) => (
+              <Form.Check
+                inline
+                type='radio'
+                key={role}
+                label={role}
+                id={`radio-${role}`}
+                checked={role === userRole}
+                onChange={() => setUserRole(role)}
+              />
+            ))}
+          </div>
+        </div>
+      ) : null}
       <Formik
         onSubmit={onUpdate}
         initialValues={initialValues}
@@ -431,7 +447,8 @@ const UserForm = ({
               </Form.Control.Feedback>
             </FormGroup>
             {(user?.roles.includes('student') ||
-              (!isManagement && isRegister)) && (
+              (!isManagement && isRegister) ||
+              (isManagement && !isRegister && userRole === 'student')) && (
               <>
                 <Form.Group
                   className='mb-3'

@@ -1,178 +1,877 @@
-export const languages = [
-	{ value: 'abkhaz', label: 'Abkhaz' },
-	{ value: 'adyghe', label: 'Adyghe' },
-	{ value: 'akan', label: 'Akan' },
-	{ value: 'albanian', label: 'Albanian' },
-	{ value: 'amharic', label: 'Amharic' },
-	{ value: 'arabic', label: 'Arabic' },
-	{ value: 'aragonese', label: 'Aragonese' },
-	{ value: 'arbëresh', label: 'Arbëresh' },
-	{ value: 'aromanian', label: 'Aromanian' },
-	{ value: 'assamese', label: 'Assamese' },
-	{ value: 'asturian', label: 'Asturian (Astur-Leonese)' },
-	{ value: 'avar', label: 'Avar' },
-	{ value: 'awadhi', label: 'Awadhi' },
-	{ value: 'azerbaijani', label: 'Azerbaijani' },
-	{ value: 'balochi', label: 'Balochi' },
-	{ value: 'bashkir', label: 'Bashkir' },
-	{ value: 'basque', label: 'Basque' },
-	{ value: 'belarusian', label: 'Belarusian' },
-	{ value: 'bengali', label: 'Bengali (Bangla)' },
-	{ value: 'bhojpuri', label: 'Bhojpuri' },
-	{ value: 'bosnian', label: 'Bosnian' },
-	{ value: 'breton', label: 'Breton' },
-	{ value: 'bulgarian', label: 'Bulgarian' },
-	{ value: 'burmese', label: 'Burmese' },
-	{ value: 'catalan', label: 'Catalan' },
-	{ value: 'cebuano', label: 'Cebuano (Visayan)' },
-	{ value: 'chechen', label: 'Chechen' },
-	{ value: 'chewa', label: 'Chewa' },
-	{ value: 'chhattisgarhi', label: 'Chhattisgarhi' },
-	{ value: 'chinese_mandarin', label: 'Chinese, Mandarin' },
-	{ value: 'chinese_wu', label: 'Chinese, Wu (inc. Shanghainese)' },
-	{ value: 'chinese_yue', label: 'Chinese, Yue (inc. Cantonese)' },
-	{ value: 'chittagonian', label: 'Chittagonian' },
-	{ value: 'chuvash', label: 'Chuvash' },
-	{ value: 'corsican', label: 'Corsican' },
-	{ value: 'crimean_tatar', label: 'Crimean Tatar' },
-	{ value: 'croatian', label: 'Croatian' },
-	{ value: 'czech', label: 'Czech' },
-	{ value: 'danish', label: 'Danish' },
-	{ value: 'dari', label: 'Dari' },
-	{ value: 'deccan', label: 'Deccan' },
-	{ value: 'dhundhari', label: 'Dhundhari' },
-	{ value: 'dutch', label: 'Dutch' },
-	{ value: 'eastern_min', label: 'Eastern Min (inc. Fuzhou dialect)' },
-	{ value: 'english', label: 'English' },
-	{ value: 'erzya', label: 'Erzya' },
-	{ value: 'estonian', label: 'Estonian' },
-	{ value: 'extremaduran', label: 'Extremaduran' },
-	{ value: 'faroese', label: 'Faroese' },
-	{ value: 'finnish', label: 'Finnish' },
-	{ value: 'franco-provençal', label: 'Franco-Provençal' },
-	{ value: 'french', label: 'French' },
-	{ value: 'frisian', label: 'Frisian' },
-	{ value: 'fula', label: 'Fula' },
-	{ value: 'gagauz', label: 'Gagauz' },
-	{ value: 'galician', label: 'Galician' },
-	{ value: 'gan', label: 'Gan' },
-	{ value: 'german', label: 'German' },
-	{ value: 'greek', label: 'Greek' },
-	{ value: 'gujarati', label: 'Gujarati' },
-	{ value: 'haitian_creole', label: 'Haitian Creole' },
-	{ value: 'hakka', label: 'Hakka' },
-	{ value: 'haryanvi', label: 'Haryanvi' },
-	{ value: 'hausa', label: 'Hausa' },
-	{ value: 'hebrew', label: 'Hebrew' },
-	{ value: 'hiligaynon_ilonggo', label: 'Hiligaynon/Ilonggo (Visayan)' },
-	{ value: 'hungarian', label: 'Hungarian' },
-	{ value: 'hindi', label: 'Hindi' },
-	{ value: 'hmong', label: 'Hmong' },
-	{ value: 'icelandic', label: 'Icelandic' },
-	{ value: 'igbo', label: 'Igbo' },
-	{ value: 'ingush', label: 'Ingush' },
-	{ value: 'ilocano', label: 'Ilocano' },
-	{ value: 'italian', label: 'Italian' },
-	{ value: 'irish', label: 'Irish' },
-	{ value: 'japanese', label: 'Japanese' },
-	{ value: 'javanese', label: 'Javanese' },
-	{ value: 'jin', label: 'Jin' },
-	{ value: 'kabardian', label: 'Kabardian' },
-	{ value: 'kalmyk', label: 'Kalmyk' },
-	{ value: 'kannada', label: 'Kannada' },
-	{ value: 'karachay-balkar', label: 'Karachay-Balkar' },
-	{ value: 'karelian', label: 'Karelian' },
-	{ value: 'kashubian', label: 'Kashubian' },
-	{ value: 'kazakh', label: 'Kazakh' },
-	{ value: 'khmer', label: 'Khmer' },
-	{ value: 'kinyarwanda', label: 'Kinyarwanda' },
-	{ value: 'kirundi', label: 'Kirundi' },
-	{ value: 'komi', label: 'Komi' },
-	{ value: 'konkani', label: 'Konkani' },
-	{ value: 'korean', label: 'Korean' },
-	{ value: 'kurdish', label: 'Kurdish' },
-	{ value: 'latin', label: 'Latin' },
-	{ value: 'latvian', label: 'Latvian' },
-	{ value: 'ligurian', label: 'Ligurian' },
-	{ value: 'lithuanian', label: 'Lithuanian' },
-	{ value: 'lombard', label: 'Lombard' },
-	{ value: 'luxembourgish', label: 'Luxembourgish' },
-	{ value: 'macedonian', label: 'Macedonian' },
-	{ value: 'madurese', label: 'Madurese' },
-	{ value: 'magahi', label: 'Magahi' },
-	{ value: 'maithili', label: 'Maithili' },
-	{ value: 'malagasy', label: 'Malagasy' },
-	{ value: 'malay', label: 'Malay (inc. Indonesian and Malaysian)' },
-	{ value: 'malayalam', label: 'Malayalam' },
-	{ value: 'maltese', label: 'Maltese' },
-	{ value: 'marathi', label: 'Marathi' },
-	{ value: 'mari', label: 'Mari' },
-	{ value: 'marwari', label: 'Marwari' },
-	{ value: 'montenegrin', label: 'Montenegrin' },
-	{ value: 'mossi', label: 'Mossi' },
-	{ value: 'nepali', label: 'Nepali' },
-	{ value: 'norman', label: 'Norman' },
-	{ value: 'northern_min', label: 'Northern Min' },
-	{ value: 'norwegian', label: 'Norwegian' },
-	{ value: 'occitan', label: 'Occitan' },
-	{ value: 'odia', label: 'Odia (Oriya)' },
-	{ value: 'oromo', label: 'Oromo' },
-	{ value: 'ossetian', label: 'Ossetian' },
-	{ value: 'pashto', label: 'Pashto' },
-	{ value: 'persian', label: 'Persian' },
-	{ value: 'picard', label: 'Picard' },
-	{ value: 'piedmontese', label: 'Piedmontese' },
-	{ value: 'polish', label: 'Polish' },
-	{ value: 'portuguese', label: 'Portuguese' },
-	{ value: 'punjabi', label: 'Punjabi' },
-	{ value: 'quechua', label: 'Quechua' },
-	{ value: 'rhaeto-romance', label: 'Rhaeto-Romance' },
-	{ value: 'ripuarian', label: 'Ripuarian (Platt)' },
-	{ value: 'romani', label: 'Romani' },
-	{ value: 'romanian', label: 'Romanian' },
-	{ value: 'russian', label: 'Russian' },
-	{ value: 'sami', label: 'Sami (the Finnish variants)' },
-	{ value: 'saraiki', label: 'Saraiki' },
-	{ value: 'sardinian', label: 'Sardinian' },
-	{ value: 'scots', label: 'Scots' },
-	{ value: 'scottish_gaelic', label: 'Scottish Gaelic' },
-	{ value: 'serbian', label: 'Serbian' },
-	{ value: 'shona', label: 'Shona' },
-	{ value: 'sicilian', label: 'Sicilian' },
-	{ value: 'silesian', label: 'Silesian' },
-	{ value: 'sindhi', label: 'Sindhi' },
-	{ value: 'sinhalese', label: 'Sinhalese' },
-	{ value: 'slovak', label: 'Slovak' },
-	{ value: 'slovene', label: 'Slovene' },
-	{ value: 'somali', label: 'Somali' },
-	{ value: 'southern_min', label: 'Southern Min' },
-	{ value: 'spanish', label: 'Spanish (Castillian)' },
-	{ value: 'sundanese', label: 'Sundanese' },
-	{ value: 'swahili', label: 'Swahili' },
-	{ value: 'swedish', label: 'Swedish' },
-	{ value: 'sylheti', label: 'Sylheti' },
-	{ value: 'tabasaran', label: 'Tabasaran' },
-	{ value: 'tagalog', label: 'Tagalog (Filipino)' },
-	{ value: 'tamil', label: 'Tamil' },
-	{ value: 'tat', label: 'Tat' },
-	{ value: 'tatar', label: 'Tatar' },
-	{ value: 'telugu', label: 'Telugu' },
-	{ value: 'thai', label: 'Thai' },
-	{ value: 'turkish', label: 'Turkish' },
-	{ value: 'turkmen', label: 'Turkmen' },
-	{ value: 'udmurt', label: 'Udmurt' },
-	{ value: 'ukrainian', label: 'Ukrainian' },
-	{ value: 'urdu', label: 'Urdu' },
-	{ value: 'uyghur', label: 'Uyghur' },
-	{ value: 'uzbek', label: 'Uzbek' },
-	{ value: 'vietnamese', label: 'Vietnamese' },
-	{ value: 'võro', label: 'Võro' },
-	{ value: 'walloon', label: 'Walloon' },
-	{ value: 'welsh', label: 'Welsh' },
-	{ value: 'xhosa', label: 'Xhosa' },
-	{ value: 'xiang', label: 'Xiang' },
-	{ value: 'yiddish', label: 'Yiddish' },
-	{ value: 'yoruba', label: 'Yoruba' },
-	{ value: 'zhuang', label: 'Zhuang' },
-	{ value: 'zulu', label: 'Zulu' }
+export const localizations = [
+  {
+    language: 'Abkhaz',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Adyghe',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Akan',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Albanian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Amharic',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Arabic',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Aragonese',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Arbëresh',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Aromanian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Assamese',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Asturian (Astur-Leonese)',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Avar',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Awadhi',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Azerbaijani',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Bengali (Bangla)',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Balochi',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Bashkir',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Basque',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Belarusian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Bhojpuri',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Bosnian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Breton',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Bulgarian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Burmese',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Catalan',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Cebuano (Visayan)',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Chechen',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Chewa',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Chhattisgarhi',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Chinese, Mandarin',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Chinese, Wu (inc. Shanghainese)',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Chinese, Yue (inc. Cantonese)',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Chittagonian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Chuvash',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Corsican',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Crimean Tatar',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Croatian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Czech',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Danish',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Deccan',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Dhundhari',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Dutch',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Eastern Min (inc. Fuzhou dialect)',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Erzya',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Estonian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Extremaduran',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'English',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Faroese',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Finnish',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Franco-Provençal',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'French',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Frisian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Fula',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Gagauz',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Galician',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Gan',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'German',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Greek',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Gujarati',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Haitian Creole',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Hakka',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Haryanvi',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Hausa',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Hebrew',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Hiligaynon/Ilonggo (Visayan)',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Hungarian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Hindi',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Hmong',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Icelandic',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Igbo',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Ingush',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Ilocano',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Italian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Irish',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Japanese',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Javanese',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Jin',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Kabardian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Kalmyk',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Kannada',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Karachay-Balkar',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Karelian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Kashubian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Kazakh',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Khmer',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Kinyarwanda',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Kirundi',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Komi',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Konkani',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Korean',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Kurdish',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Latin',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Latvian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Ligurian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Lithuanian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Lombard',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Luxembourgish',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Macedonian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Madurese',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Magahi',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Maithili',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Malagasy',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Malay (inc. Indonesian and Malaysian)',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Malayalam',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Maltese',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Marathi',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Mari',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Marwari',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Montenegrin',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Mossi',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Nepali',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Norman',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Northern Min',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Norwegian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Occitan',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Odia (Oriya)',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Oromo',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Ossetian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Persian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Pashto',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Picard',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Piedmontese',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Polish',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Portuguese',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Punjabi',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Quechua',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Rhaeto-Romance',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Ripuarian (Platt)',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Romani',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Romanian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Russian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Sami (the Finnish variants)',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Saraiki',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Sardinian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Scots',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Scottish Gaelic',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Serbian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Shona',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Sicilian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Silesian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Sindhi',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Sinhalese',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Slovak',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Slovene',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Somali',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Southern Min',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Spanish (Castillian)',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Sundanese',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Swahili',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Swedish',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Sylheti',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Tabasaran',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Tagalog (Filipino)',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Tamil',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Tat',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Tatar',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Telugu',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Thai',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Turkmen',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Turkish',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Udmurt',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Ukrainian',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Urdu',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Uyghur',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Uzbek',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Vietnamese',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Võro',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Walloon',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Welsh',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Xhosa',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Xiang',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Yiddish',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Yoruba',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Zhuang',
+    students: 0,
+    teachers: 0
+  },
+  {
+    language: 'Zulu',
+    students: 0,
+    teachers: 0
+  }
 ];

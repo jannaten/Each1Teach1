@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { languages, study_credits } from '../../data';
+import { localizations, language_level } from '../../data';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { language_level, languages, study_credits } from '../../data';
 
 axios.defaults.url = '/api';
 
@@ -37,36 +38,42 @@ const isRejectedAction = (action) => {
   return action.type.startsWith('config/') && action.type.endsWith('/rejected');
 };
 
+const initialState = {
+  languages,
+  language_level,
+  study_credits,
+  localizations,
+  avatars: ['beam', 'marble', 'pixel', 'sunset', 'ring', 'bauhaus'],
+  userRoles: ['student', 'teacher', 'superuser']
+};
+
 const configSlice = createSlice({
   name: 'config',
   initialState: {
     loading: false,
     errors: false,
-    data: {
-      languages,
-      language_level,
-      study_credits,
-      localizations: [],
-      avatars: ['beam', 'marble', 'pixel', 'sunset', 'ring', 'bauhaus']
-    }
+    data: initialState
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       // LOAD
       .addCase(loadConfig.fulfilled, (state, { payload }) => {
-        state.data = {
-          languages: payload.languages,
-          language_level: payload.language_level,
-          study_credits: payload.study_credits,
-          avatars: payload.avatars
-        };
+        state.data = payload
+          ? {
+              languages: payload.languages,
+              language_level: payload.language_level,
+              study_credits: payload.study_credits,
+              avatars: payload.avatars,
+              userRoles: payload.userRoles
+            }
+          : initialState;
         state.loading = false;
       })
       .addCase(loadLocalizations.fulfilled, (state, { payload }) => {
         state.data = {
           ...state.data,
-          localizations: payload
+          localizations: payload.length ? payload : initialState.localizations
         };
         state.loading = false;
       })

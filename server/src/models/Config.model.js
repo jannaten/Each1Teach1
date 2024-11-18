@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { avatars } = require('../data/avatars');
 const { toJSON } = require('../utilities/models');
+const { userRoles } = require('../data/userRoles');
 const { languages } = require('../data/localizations');
 const { studyCredits } = require('../data/study_credits');
 const { languageLevels } = require('../data/language_level');
@@ -22,6 +23,10 @@ const configSchema = new mongoose.Schema(
     avatars: {
       type: [String],
       default: avatars
+    },
+    userRoles: {
+      type: [String],
+      default: userRoles
     },
     deletedAt: {
       type: Date,

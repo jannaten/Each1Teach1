@@ -55,9 +55,10 @@ router.post(
   '/',
   authHandler('teacher'),
   asyncErrorHandler(async (req, res) => {
-    const { avatar, languages_to_learn, languages_for_teach } = req.body;
+    const { avatar, roles, languages_to_learn, languages_for_teach } = req.body;
     const { value, error } = userValidationSchema.validate({
       ...req.body,
+      roles: JSON.parse(roles),
       avatar: JSON.parse(avatar),
       languages_to_learn: JSON.parse(languages_to_learn),
       languages_for_teach: JSON.parse(languages_for_teach)
@@ -98,6 +99,7 @@ router.patch(
     const { value, error } = userPatchSchema.validate({
       ...req.body,
       ...(req.body.id !== 'undefined' ? { id: JSON.parse(req.body.id) } : {}),
+      ...(req.body.roles ? { roles: JSON.parse(req.body.roles) } : {}),
       ...(req.body.avatar ? { avatar: JSON.parse(req.body.avatar) } : {}),
       ...(req.body.languages_to_learn
         ? { languages_to_learn: JSON.parse(req.body.languages_to_learn) }
