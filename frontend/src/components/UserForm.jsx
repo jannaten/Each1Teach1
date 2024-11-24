@@ -20,6 +20,7 @@ import { errorToast, successToast } from './common/Toast';
 import { FormControlStyled, PrimaryButton } from '../styles';
 import { registerSchema, userUpdateSchema } from '../utilities/schema';
 import { refactorLocalization, filterAndStructure } from '../utilities';
+import { TermsEnglishDialog } from '../components';
 
 const UserForm = ({
   user,
@@ -757,6 +758,9 @@ const UserForm = ({
                 </Form.Group>
               </>
             )}
+            <Row className=''>
+              <TermsEnglishDialog />
+            </Row>
             <Row className='mx-5 my-5 d-flex justify-content-center'>
               <PrimaryButton variant='' type='submit'>
                 {isEdit ? 'Update' : 'Register'}
