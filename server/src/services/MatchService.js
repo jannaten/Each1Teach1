@@ -22,7 +22,7 @@ class MatchService {
     return await Model.find(query)
       .populate('requestUser', '-password')
       .populate('recipientUser', '-password')
-      .sort({ createdAt: -1 });
+      .sort({ status: 1, updatedAt: 1 });
   };
 
   getById = async function (id) {

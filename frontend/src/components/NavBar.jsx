@@ -95,7 +95,7 @@ const NavBar = () => {
                 <NavDropdown.Divider />
               </>
             )}
-            {!userState.data.roles.includes('student') && (
+            {!userState.data.roles.includes('student') ? (
               <>
                 <NavDropdown.Item
                   onClick={() => navigate('/dashboard/user-management')}>
@@ -110,6 +110,14 @@ const NavBar = () => {
                 <NavDropdown.Item
                   onClick={() => navigate('/dashboard/news-management')}>
                   News Management
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+              </>
+            ) : (
+              <>
+                <NavDropdown.Item
+                  onClick={() => navigate('/dashboard/all-news')}>
+                  All News
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
               </>

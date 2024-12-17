@@ -20,6 +20,7 @@ export default function AllNews() {
   const [pageSize] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
   const newsState = useSelector((state) => state.news);
+  const userState = useSelector((state) => state.user);
   const [searchInputValue, setSearchInputValue] = useState('');
 
   useEffect(() => {
@@ -127,7 +128,11 @@ export default function AllNews() {
                   </small>
                 </p>
                 <PrimaryButton
-                  onClick={() => navigate('/news/' + news.id)}
+                  onClick={() =>
+                    userState.data.roles.includes('student')
+                      ? navigate('/dashboard/all-news/' + news.id)
+                      : navigate('/news/' + news.id)
+                  }
                   className='mt-auto mb-3'>
                   Read More
                 </PrimaryButton>

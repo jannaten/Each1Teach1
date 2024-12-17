@@ -13,6 +13,7 @@ export default function NewsPage() {
   const { newsId } = useParams();
   const { primary } = useTheme();
   const newsState = useSelector((state) => state.news);
+  const userState = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(loadNewsById(newsId));
@@ -36,7 +37,11 @@ export default function NewsPage() {
           role='button'
           color={primary}
           className='opacity-forward p-0 m-0'
-          onClick={() => navigate('/news')}
+          onClick={() =>
+            userState.data.roles.includes('student')
+              ? navigate('/dashboard/all-news')
+              : navigate('/news')
+          }
         />
       </div>
       <Row className='my-5 p-0'>

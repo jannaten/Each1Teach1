@@ -77,6 +77,8 @@ export default function App() {
               element={<ProfileManagementPage />}
             />
             <Route path='/dashboard/matches' element={<MatchesPage />} />
+            <Route path='/dashboard/all-news' element={<AllNews />} />
+            <Route path='/dashboard/all-news/:newsId' element={<NewsPage />} />
             <Route path='/dashboard/chat' element={<ChatPage />} />
           </Route>
           <Route

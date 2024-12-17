@@ -28,7 +28,6 @@ export default function MatchManagementPage() {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    setCurrentPage(1);
   };
 
   useEffect(() => {
