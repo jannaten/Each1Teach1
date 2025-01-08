@@ -54,7 +54,7 @@ export default function TermsEnglishDialog() {
               </Card.Text>
               <ListGroup className='mb-3' style={{ borderRadius: '0%' }}>
                 <ListGroup.Item>
-                  <strong>Tampere Universities:</strong> Henri Annala, Emmanuel
+                  <strong>Tampere Universities:</strong>Emmanuel
                   Abruquah
                 </ListGroup.Item>
                 <ListGroup.Item>Email: info (at) unitandem.fi</ListGroup.Item>
