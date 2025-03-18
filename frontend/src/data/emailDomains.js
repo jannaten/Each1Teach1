@@ -40,7 +40,8 @@ const emailDomains = [
   'lab.fi',
   'uwasa.fi',
   'edu.xamk.fi',
-  'student.uwasa.fi'
+  'student.uwasa.fi',
+  'students.oamk.fi'
 ];
 
 module.exports = { emailDomains };
