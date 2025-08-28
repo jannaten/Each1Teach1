@@ -129,9 +129,9 @@ export default function AllNews() {
                 </p>
                 <PrimaryButton
                   onClick={() =>
-                    userState.data.roles.includes('student')
-                      ? navigate('/dashboard/all-news/' + news.id)
-                      : navigate('/news/' + news.id)
+                    userState?.data?.roles?.includes('student')
+                      ? navigate('/dashboard/all-news/' + news?.id)
+                      : navigate('/news/' + news?.id)
                   }
                   className='mt-auto mb-3'>
                   Read More

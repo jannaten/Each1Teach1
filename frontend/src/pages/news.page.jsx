@@ -38,7 +38,7 @@ export default function NewsPage() {
           color={primary}
           className='opacity-forward p-0 m-0'
           onClick={() =>
-            userState.data.roles.includes('student')
+            userState?.data?.roles?.includes('student')
               ? navigate('/dashboard/all-news')
               : navigate('/news')
           }
