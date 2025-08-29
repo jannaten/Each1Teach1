@@ -26,7 +26,7 @@ export default function NewsPage() {
       </Container>
     );
   }
-
+  console.log(newsState, 'you can see roles here');
   const { title, author, content, createdAt } = newsState.news;
   return (
     <Container className='pt-3'>

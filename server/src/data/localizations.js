@@ -119,6 +119,7 @@ const languages = [
 	{ value: 'oromo', label: 'Oromo' },
 	{ value: 'ossetian', label: 'Ossetian' },
 	{ value: 'pashto', label: 'Pashto' },
+	{ value: 'papiamentu', label: 'Papiamentu' },
 	{ value: 'persian', label: 'Persian' },
 	{ value: 'picard', label: 'Picard' },
 	{ value: 'piedmontese', label: 'Piedmontese' },
